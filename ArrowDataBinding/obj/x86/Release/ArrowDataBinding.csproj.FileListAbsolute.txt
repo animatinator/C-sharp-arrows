@@ -1,0 +1,5 @@
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowDataBinding\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowDataBinding\bin\Release\ArrowDataBinding.exe
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowDataBinding\bin\Release\ArrowDataBinding.pdb
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowDataBinding\obj\x86\Release\ArrowDataBinding.exe
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowDataBinding\obj\x86\Release\ArrowDataBinding.pdb

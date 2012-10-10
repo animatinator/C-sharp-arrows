@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ArrowDataBinding.tests;
 
 namespace ArrowDataBinding
 {
-    class Tester
+    class Program
     {
         static void Main(string[] args)
         {
