@@ -3,3 +3,5 @@ C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowDataB
 C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowDataBinding\bin\Release\ArrowDataBinding.pdb
 C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowDataBinding\obj\x86\Release\ArrowDataBinding.exe
 C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowDataBinding\obj\x86\Release\ArrowDataBinding.pdb
+C:\Users\David\documents\visual studio 2010\Projects\ArrowDataBinding\ArrowDataBinding\bin\Release\nunit.framework.dll
+C:\Users\David\documents\visual studio 2010\Projects\ArrowDataBinding\ArrowDataBinding\bin\Release\nunit.framework.xml
