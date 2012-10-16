@@ -25,10 +25,11 @@ namespace ArrowDataBinding.demos
             Arrow<int, int>.func demo1 = x => x * x + 3;
 
             // Simple arrow test - 'test' is passed through the function 'demo1' to 'result'
-            BindingSource<int> test = new BindingSource<int>(3);
+            TestSourceObject source = new TestSourceObject();
+            source.value = 3;
             BindingDestination<int> result = new BindingDestination<int>(0);
             Arrow<int, int> testArrow = new Arrow<int, int>(demo1);
-            Binding<int, int> testBinding = new Binding<int, int>(test, testArrow, result);
+            Binding<int, int> testBinding = new Binding<int, int>(source, "value", testArrow, result);
 
             // Change the value of 'test' randomly and assert that 'result' changes accordingly
             Console.WriteLine("Testing single binding...");
@@ -37,8 +38,8 @@ namespace ArrowDataBinding.demos
 
             for (int i = 0; i < 500; i++)
             {
-                test.Value = random.Next(0, 1000);
-                Assert.AreEqual(result, demo1(test.Value));
+                source.value = random.Next(0, 1000);
+                Assert.AreEqual(result, demo1(source.value));
             }
 
             Console.WriteLine("Tests passed!");
