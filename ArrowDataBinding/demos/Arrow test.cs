@@ -215,7 +215,7 @@ namespace ArrowDataBinding.demos.ArrowTestThing
         }
     }
 
-    class Binding<T1, T2> where T1 : new()
+    class Binding<T1, T2>
     {
         /*
          * Stores a binding consisting of a BindingSource, a BindingDestination and an Arrow to
@@ -239,8 +239,8 @@ namespace ArrowDataBinding.demos.ArrowTestThing
         public virtual void NotifyChange(object sender, EventArgs e)
         {
             // Nasty code D:
-            Type test = (new T1()).GetType();
-            destination.Value = arrow.Execute((T1) Convert.ChangeType(source.GetType().GetProperty(propertyName).GetValue(source, null), test));
+            Type t1 = typeof(T1);
+            destination.Value = arrow.Execute((T1) Convert.ChangeType(source.GetType().GetProperty(propertyName).GetValue(source, null), t1));
         }
     }
 

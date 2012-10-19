@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ArrowDataBinding.demos;
 using ArrowDataBinding.demos.ArrowTestThing;
 using NUnit.Framework;
 
@@ -15,6 +16,7 @@ namespace ArrowDataBinding.demos
             Console.WriteLine("Running tests...");
             Console.WriteLine();
             TestArrowDemo();
+            TestLambdaCombinatorDemo();
         }
 
         [Test]
@@ -71,6 +73,25 @@ namespace ArrowDataBinding.demos
             Console.WriteLine();
 
             Console.WriteLine("All tests passed successfully.\n\n");
+        }
+
+        [Test]
+        public void TestLambdaCombinatorDemo()
+        {
+            Func<int, int> f1 = x => x * x;
+            Func<int, string> f2 = x =>
+            {
+                if (x > 5)
+                {
+                    return "Shite!";
+                }
+                else return "Okay";
+            };
+            Func<int, string> combination = LambdaCombinator.CombineLambdas<int, int, string>(f1, f2);
+            Console.WriteLine(combination(3));
+            Console.WriteLine(combination(2));
+
+            ISimpleArrow test = LambdaCombinator.Comb(new SimpleArrow<int, int>(f1), new SimpleArrow<int, string>(f2));
         }
     }
 }

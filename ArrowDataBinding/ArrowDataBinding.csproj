@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="demos\LambdaCombinator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="demos\Arrow test.cs" />
     <Compile Include="demos\Tester.cs" />
