@@ -83,15 +83,19 @@ namespace ArrowDataBinding.demos
             {
                 if (x > 5)
                 {
-                    return "Shite!";
+                    return "X^2 > 5!";
                 }
-                else return "Okay";
+                else return "X^2 < 5 :O";
             };
             Func<int, string> combination = LambdaCombinator.CombineLambdas<int, int, string>(f1, f2);
             Console.WriteLine(combination(3));
             Console.WriteLine(combination(2));
+            Console.WriteLine();
 
-            ISimpleArrow test = LambdaCombinator.Comb(new SimpleArrow<int, int>(f1), new SimpleArrow<int, string>(f2));
+            Console.WriteLine("Now trying it with a type-parameter-free combinator...");
+            ISimpleArrow result = LambdaCombinator.Comb(new SimpleArrow<int, int>(f1), new SimpleArrow<int, string>(f2));
+            SimpleArrow<int, string> arrowResult = (SimpleArrow<int, string>)result;
+            Console.WriteLine(arrowResult.function.Invoke(3));
         }
     }
 }
