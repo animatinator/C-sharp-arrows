@@ -66,26 +66,51 @@ namespace ArrowDataBinding.demos
 
         public static ISimpleArrow Comb(ISimpleArrow a1, ISimpleArrow a2)
         {
+            // Get the three generic types
             Type t1 = a1.a;
             Type t2 = a1.b;
             Type t3 = a2.b;
 
-            // Create an appropriate type
+            // Create types for the combined function and the two source functions
             Type funcType = typeof(Func<,>).MakeGenericType(t1, t3);
             Type a1FuncType = typeof(Func<,>).MakeGenericType(t1, t2);
             Type a2FuncType = typeof(Func<,>).MakeGenericType(t2, t3);
 
+            // Get the types of the two arrows
             Type a1Type = a1.GetType();
             Type a2Type = a2.GetType();
 
-            Type[] types = new Type[1];
-            types[0] = funcType;
+            // Get an arrow constructor, genericised
+            Type[] arrowConstructorTypes = new Type[1];
+            arrowConstructorTypes[0] = funcType;
+            ConstructorInfo arrowConstructor = typeof(SimpleArrow<,>).MakeGenericType(t1, t3).GetConstructor(arrowConstructorTypes);
 
-            // Get the constructor, genericised
-            ConstructorInfo arrowConstructor = typeof(SimpleArrow<,>).MakeGenericType().GetConstructor(types);
-            //dynamic result = arrowConstructor.Invoke(x => x);  Something like this now
+            // Get the two arrows' lambda functions (type safety is cast asunder from here on...)
+            dynamic ar1 = a1;
+            dynamic ar2 = a2;
+            dynamic l1 = ar1.function;
+            dynamic l2 = ar2.function;
 
-            return null;
+            // Get a genericised version of the CombineLambdas function
+            Type[] types2 = new Type[3];
+            types2[0] = t1;
+            types2[1] = t2;
+            types2[2] = t3;
+            MethodInfo combinator = typeof(LambdaCombinator).GetMethod("CombineLambdas");
+            combinator = combinator.MakeGenericMethod(types2);
+
+            // Invoke the genericised CombineLambdas function on the extracted lambda functions
+            dynamic[] combineArgs = new dynamic[2];
+            combineArgs[0] = l1;
+            combineArgs[1] = l2;
+            dynamic combinedFunc = combinator.Invoke(null, combineArgs);
+
+            // Invoke the genericised arrow constructor on the result of the CombineLambdas function
+            dynamic[] parameters = new dynamic[1];
+            parameters[0] = combinedFunc;
+            dynamic result = arrowConstructor.Invoke(parameters);
+
+            return result;
         }
     }
 }
