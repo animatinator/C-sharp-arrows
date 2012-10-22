@@ -11,6 +11,8 @@ namespace ArrowDataBinding.demos
     {
         Type a { get; }
         Type b { get; }
+
+        dynamic Invoke(dynamic input);
     }
 
     public class SimpleArrow<T1, T2> : ISimpleArrow
@@ -52,6 +54,11 @@ namespace ArrowDataBinding.demos
         public static SimpleArrow<T1, T2> arr(Func<T1, T2> function)
         {
             return null;
+        }
+
+        public dynamic Invoke(dynamic input)
+        {
+            return function(input);
         }
     }
 

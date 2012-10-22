@@ -78,6 +78,7 @@ namespace ArrowDataBinding.demos
         [Test]
         public void TestLambdaCombinatorDemo()
         {
+            // Combining with messy type parameterisation
             Func<int, int> f1 = x => x * x;
             Func<int, string> f2 = x =>
             {
@@ -92,10 +93,27 @@ namespace ArrowDataBinding.demos
             Console.WriteLine(combination(2));
             Console.WriteLine();
 
+            // Nicer combination
             Console.WriteLine("Now trying it with a type-parameter-free combinator...");
             ISimpleArrow result = LambdaCombinator.Comb(new SimpleArrow<int, int>(f1), new SimpleArrow<int, string>(f2));
             SimpleArrow<int, string> arrowResult = (SimpleArrow<int, string>)result;
             Console.WriteLine(arrowResult.function.Invoke(3));
+
+            // Combining in one line
+            SimpleArrow<string, string> another = new SimpleArrow<string, string>(x => x.Length.ToString());
+            SimpleArrow<int, string> anotherResult = (SimpleArrow<int, string>)(LambdaCombinator.Comb(
+                LambdaCombinator.Comb(
+                    new SimpleArrow<int, int>(f1),
+                    new SimpleArrow<int, string>(f2)),
+                another));
+            Console.WriteLine(anotherResult.function.Invoke(3));
+
+            // Combining in one line without downcasting (using only arrow interfaces now)
+            ISimpleArrow thingy = LambdaCombinator.Comb(
+                new SimpleArrow<int, string>(x => x.ToString()),
+                new SimpleArrow<string, int>(x => x.Length)
+            );
+            Console.WriteLine(thingy.Invoke(1234));
         }
     }
 }
