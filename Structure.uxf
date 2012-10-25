@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="11.3">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>660</x>
+      <y>220</y>
+      <w>170</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;IArrow&gt;&gt;
+--
++a : Type
++b : Type
+--
+/+Execute() : dynamic/</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>680</x>
+      <y>390</y>
+      <w>120</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>Arrow&lt;A, B&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>710</x>
+      <y>290</y>
+      <w>50</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;100</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>710</x>
+      <y>320</y>
+      <w>220</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>30;30;200;30;200;60</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>710</x>
+      <y>390</y>
+      <w>50</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;90</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>670</x>
+      <y>480</y>
+      <w>150</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>InvertibleArrow&lt;A, B&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>840</x>
+      <y>380</y>
+      <w>130</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;IInvertibleArrow&gt;&gt;
+--
+/+Invert() : void/</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>710</x>
+      <y>400</y>
+      <w>220</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>200;30;200;60;30;60</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>260</x>
+      <y>270</y>
+      <w>350</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>BindableAttribute : LocationInterceptionAspect
+--
++OnSetValue(args : LocationInterceptionArgs) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>40</x>
+      <y>150</y>
+      <w>320</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Bindable&gt;&gt;
+--
+-BindingUpdateHandler : delegate
++event ValueChanged : BindingUpdateHandler
+--
++SendUpdate(varName : string) : dynamic
++SetVariable&lt;T&gt;(varName : string) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>470</x>
+      <y>0</y>
+      <w>320</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Binding&lt;T1, T2&gt;
+--
+-source : Bindable
+-propertyName : string
+-arrow : Arrow&lt;T1, T2&gt;
+-destination : Bindable
+--
++NotifyChange(varName : string) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>280</x>
+      <y>290</y>
+      <w>170</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;90;150;90;150;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>100</x>
+      <y>340</y>
+      <w>210</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>_object: Object_
+--
++[Bindable] variableName : type
+etc...</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>610</x>
+      <y>110</y>
+      <w>150</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;70;130;70;130;110</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>170</x>
+      <y>220</y>
+      <w>50</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;120</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>170</x>
+      <y>40</y>
+      <w>320</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+m1=2</panel_attributes>
+    <additional_attributes>300;30;30;30;30;110</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>100</x>
+      <y>450</y>
+      <w>510</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>ArrowOperators
+--
++Arr&lt;A, B&gt;(function : Func&lt;A, B&gt;) : Arrow&lt;A, B&gt;
++Combine(arr1 : IArrow, arr2 : IArrow) : IArrow
++First(arr : Arrow&lt;A, B&gt;) : Arrow&lt;Pair&lt;A, A&gt;, Pair&lt;B, B&gt; &gt;
++First&lt;C, D&gt;(arr : Arrow&lt;A, B&gt;) : Arrow&lt;Pair&lt;A, C&gt;, Pair&lt;B, D&gt; &gt;
++And(add1 : Arrow&lt;A, B&gt;, arr2 : Arrow&lt;C, D&gt;) : Arrow&lt;Pair&lt;A, C&gt;, Pair&lt;B, D&gt; &gt;
+--
+/Combine could also be implemented by/
+/overloading the + operator on arrows/
+/More operators may be added/</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
