@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ArrowDataBinding.demos;
 using ArrowDataBinding.demos.ArrowTestThing;
+using ArrowDataBinding.demos.TwoWay;
 using NUnit.Framework;
 
 namespace ArrowDataBinding.demos
@@ -16,7 +17,8 @@ namespace ArrowDataBinding.demos
             Console.WriteLine("Running tests...");
             Console.WriteLine();
             TestArrowDemo();
-            TestLambdaCombinatorDemo();
+            LambdaCombinatorDemo();
+            TwoWayBindingDemo();
         }
 
         [Test]
@@ -31,7 +33,7 @@ namespace ArrowDataBinding.demos
             source.value = 3;
             BindingDestination<int> result = new BindingDestination<int>(0);
             Arrow<int, int> testArrow = new Arrow<int, int>(demo1);
-            Binding<int, int> testBinding = new Binding<int, int>(source, "value", testArrow, result);
+            ArrowTestThing.Binding<int, int> testBinding = new ArrowTestThing.Binding<int, int>(source, "value", testArrow, result);
 
             // Change the value of 'test' randomly and assert that 'result' changes accordingly
             Console.WriteLine("Testing single binding...");
@@ -75,8 +77,7 @@ namespace ArrowDataBinding.demos
             Console.WriteLine("All tests passed successfully.\n\n");
         }
 
-        [Test]
-        public void TestLambdaCombinatorDemo()
+        public void LambdaCombinatorDemo()
         {
             // Combining with messy type parameterisation
             Func<int, int> f1 = x => x * x;
@@ -114,6 +115,19 @@ namespace ArrowDataBinding.demos
                 new SimpleArrow<string, int>(x => x.Length)
             );
             Console.WriteLine(thingy.Invoke(1234));
+        }
+
+        public void TwoWayBindingDemo()
+        {
+            Console.WriteLine("Demoing two-way binding...");
+
+            IntegerLeft left = new IntegerLeft(5);
+            IntegerRight right = new IntegerRight(5);
+            BindingManager.CreateBinding(left, "magic", right, "spiffy");
+            left.magic = 10;
+            Console.WriteLine(right.spiffy);
+            right.spiffy = 20;
+            Console.WriteLine(left.magic);
         }
     }
 }

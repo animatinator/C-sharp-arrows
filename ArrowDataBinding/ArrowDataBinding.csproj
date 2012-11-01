@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="demos\LambdaCombinator.cs" />
+    <Compile Include="demos\Two-way binding.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="demos\Arrow test.cs" />
     <Compile Include="demos\Tester.cs" />

@@ -5,7 +5,7 @@ C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowDataB
 C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowDataBinding\bin\Debug\nunit.framework.xml
 C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowDataBinding\bin\Debug\PostSharp.xml
 C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowDataBinding\bin\Debug\ArrowDataBinding.pssym
-C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowDataBinding\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowDataBinding\obj\x86\Debug\ArrowDataBinding.exe
 C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowDataBinding\obj\x86\Debug\ArrowDataBinding.pdb
 C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowDataBinding\obj\x86\Debug\ArrowDataBinding.exe.postsharp
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowDataBinding\obj\x86\Debug\ArrowDataBinding.csprojResolveAssemblyReference.cache

@@ -247,6 +247,6 @@ namespace ArrowDataBinding.demos.ArrowTestThing
     class TestSourceObject : Bindable
     {
         [Bindable]
-        public int value;
+        public int value {get; set;}
     }
 }
