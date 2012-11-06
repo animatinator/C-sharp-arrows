@@ -183,4 +183,10 @@ namespace ArrowDataBinding.demos.TwoWay
             spiffy = s;
         }
     }
+
+    class Third : Bindable
+    {
+        [Bindable]
+        public int third { get; set; }
+    }
 }

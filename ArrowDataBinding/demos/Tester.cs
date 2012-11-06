@@ -128,6 +128,12 @@ namespace ArrowDataBinding.demos
             Console.WriteLine(right.spiffy);
             right.spiffy = 20;
             Console.WriteLine(left.magic);
+
+            // Make a chain of bindings
+            Third theThird = new Third();
+            BindingManager.CreateBinding(right, "spiffy", theThird, "third");
+            left.magic = 1;
+            Console.WriteLine(theThird.third);
         }
     }
 }

@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Arrows.cs" />
     <Compile Include="demos\LambdaCombinator.cs" />
     <Compile Include="demos\Two-way binding.cs" />
     <Compile Include="Program.cs" />
