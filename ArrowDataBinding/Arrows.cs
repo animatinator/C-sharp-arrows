@@ -77,13 +77,28 @@ namespace ArrowDataBinding.Arrows
 
     public class Op
     {
+        // TODO: Identity arrow. See the note above the Swap function - basically, would be cool
+        // if one could define an identity arrow without needing to specify what concrete type it
+        // should work on.
+
+
         public static Arrow<A, B> Arr<A, B>(Func<A, B> func)
         {
+            /*
+             * Basic arrow construction operator from a Func<A, B>
+             */
+
             return new Arrow<A, B>(func);
         }
 
         public static Arrow<A, C> Combine<A, B, C>(Arrow<A, B> a1, Arrow<B, C> a2)
         {
+            /*
+             * Combine arrows end-to-end (defined in the Arrow class itself for now)
+             */
+
+            // TODO: Should the combine thing be completely outside the class, ie defined here?
+            // Or maybe an extension method so the arrow.Combine(arrow) syntax can remain?
             return a1.Combine<C>(a2);
         }
 
@@ -103,6 +118,11 @@ namespace ArrowDataBinding.Arrows
                 );
         }
 
+        // TODO: In the following code, a function is used to generate an arrow whose concrete
+        // types don't matter and are decided on usage. Other examples of this sort of thing
+        // exist - for instance, an identity arrow which simply returns the input needn't know the
+        // type of that input. Could there be a way of defining arrows like these without the hack
+        // of writing a function to return a concretely typed arrow?
         public static Arrow<Tuple<A, B>, Tuple<B, A>> Swap<A, B>()
         {
             /*
@@ -136,6 +156,11 @@ namespace ArrowDataBinding.Arrows
 
         public static Arrow<Tuple<A, C>, Tuple<B, D>> And<A, B, C, D>(Arrow<A, B> a1, Arrow<C, D> a2)
         {
+            /*
+             * Used to create an arrow which is effectively running two normal arrows side-by-side
+             * on an input Tuple.
+             */
+
             return new Arrow<Tuple<A, C>, Tuple<B, D>>(
                 (Tuple<A, C> x) =>
                     new Tuple<B, D>(
