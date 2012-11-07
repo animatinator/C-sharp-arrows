@@ -58,24 +58,24 @@ namespace ArrowDataBinding.Arrows
         }
 
 
-        public Arrow<A, C> Combine<C>(Arrow<B, C> other)
-        {
-            Func<B, C> otherFunc = other.func;
-            Arrow<A, C> result = new Arrow<A, C>(
-                x => other.func(this.func(x))
-                );
-
-            return result;
-        }
-
+        // TODO: Stop putting random test functions in the arrow class
         public static void blah()
         {
             Arrow<int, string> test = Op.Arr((int x) => x + 1).Combine(Op.Arr((int x) => x.ToString()));
+            Arrow<int, string> test1 = Op.Combine(Op.Arr((int x) => x + 1), Op.Arr((int x) => x.ToString()));
+        }
+
+        public static void blahblah()
+        {
+            Arrow<int, double> pythagoras = Op.LiftA2((int x, int y) => x + y,
+                    Op.Arr((int x) => x * x),
+                    Op.Arr((int y) => y * y))
+                .Combine(Op.Arr((int x) => Math.Sqrt(x)));
         }
     }
 
 
-    public class Op
+    public static class Op
     {
         // TODO: Identity arrow. See the note above the Swap function - basically, would be cool
         // if one could define an identity arrow without needing to specify what concrete type it
@@ -91,18 +91,20 @@ namespace ArrowDataBinding.Arrows
             return new Arrow<A, B>(func);
         }
 
-        public static Arrow<A, C> Combine<A, B, C>(Arrow<A, B> a1, Arrow<B, C> a2)
+        public static Arrow<A, C> Combine<A, B, C>(this Arrow<A, B> a1, Arrow<B, C> a2)
         {
             /*
              * Combine arrows end-to-end (defined in the Arrow class itself for now)
              */
 
-            // TODO: Should the combine thing be completely outside the class, ie defined here?
-            // Or maybe an extension method so the arrow.Combine(arrow) syntax can remain?
-            return a1.Combine<C>(a2);
+            Arrow<A, C> result = new Arrow<A, C>(
+                x => a2.Invoke(a1.Invoke(x))
+                );
+
+            return result;
         }
 
-        public static Arrow<Tuple<A, C>, Tuple<B, C>> First<A, B, C>(Arrow<A, B> arr)
+        public static Arrow<Tuple<A, C>, Tuple<B, C>> First<A, B, C>(this Arrow<A, B> arr)
         {
             /*
              * Takes an Arrow<A, B> and returns an arrow from a Tuple<A, C> to a Tuple<B, C> by
@@ -140,7 +142,7 @@ namespace ArrowDataBinding.Arrows
                 );
         }
 
-        public static Arrow<Tuple<C, A>, Tuple<C, B>> Second<A, B, C>(Arrow<A, B> arr)
+        public static Arrow<Tuple<C, A>, Tuple<C, B>> Second<A, B, C>(this Arrow<A, B> arr)
         {
             /*
              * Built upon First, but uses the Swap function above in combination with it to return
@@ -154,20 +156,57 @@ namespace ArrowDataBinding.Arrows
                 .Combine(Swap<B, C>());  // Swap the tuple back
         }
 
-        public static Arrow<Tuple<A, C>, Tuple<B, D>> And<A, B, C, D>(Arrow<A, B> a1, Arrow<C, D> a2)
+        public static Arrow<Tuple<A, C>, Tuple<B, D>> And<A, B, C, D>(this Arrow<A, B> a1, Arrow<C, D> a2)
         {
             /*
              * Used to create an arrow which is effectively running two normal arrows side-by-side
              * on an input Tuple.
              */
 
+            // TODO: Make this parallel?
             return new Arrow<Tuple<A, C>, Tuple<B, D>>(
                 (Tuple<A, C> x) =>
                     new Tuple<B, D>(
                         a1.Invoke(x.Item1),
                         a2.Invoke(x.Item2)
                         )
-               );
+                );
+        }
+
+        public static Arrow<A, Tuple<B, C>> Fanout<A, B, C>(this Arrow<A, B> a1, Arrow<A, C> a2)
+        {
+            /*
+             * Applies the input to two arrows in parallel and gives the result as a tuple
+             */
+
+            return new Arrow<A, Tuple<B, C>>(
+                (A x) =>
+                    new Tuple<B, C>(
+                        a1.Invoke(x),
+                        a2.Invoke(x)
+                        )
+                );
+        }
+
+        public static Arrow<A, Tuple<A, A>> Split<A>()
+        {
+            return new Arrow<A, Tuple<A, A>>(
+                (A x) =>
+                    new Tuple<A, A>(x, x)
+                );
+        }
+
+        public static Arrow<Tuple<A, B>, C> Unsplit<A, B, C>(Func<A, B, C> op)
+        {
+            return new Arrow<Tuple<A, B>, C>(
+                (Tuple<A, B> x) =>
+                    op(x.Item1, x.Item2)
+                );
+        }
+
+        public static Arrow<A, D> LiftA2<A, B, C, D>(Func<B, C, D> op, Arrow<A, B> a1, Arrow<A, C> a2)
+        {
+            return Split<A>().Combine(First<A, B, A>(a1)).Combine(Second<A, C, B>(a2)).Combine(Unsplit(op));
         }
     }
 }
