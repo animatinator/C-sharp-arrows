@@ -30,7 +30,7 @@ namespace ArrowDataBinding.Arrows
 
     public class Arrow<A, B> : IArrow
     {
-        private Func<A, B> func;
+        protected Func<A, B> func;
 
         public Arrow(Func<A, B> expr)
         {
@@ -74,6 +74,22 @@ namespace ArrowDataBinding.Arrows
         }
     }
 
+    public class InvertibleArrow<A, B> : Arrow<A, B>
+    {
+        protected Func<B, A> inverseFunc;
+
+        public InvertibleArrow(Func<A, B> func, Func<B, A> inverseFunc)
+            : base(func)
+        {
+            this.inverseFunc = inverseFunc;
+        }
+
+        public InvertibleArrow<B, A> Invert()
+        {
+            return new InvertibleArrow<B, A>(inverseFunc, func);
+        }
+    }
+
 
     public static class Op
     {
@@ -82,13 +98,32 @@ namespace ArrowDataBinding.Arrows
         // should work on.
 
 
-        public static Arrow<A, B> Arr<A, B>(Func<A, B> func)
+        public static Func<A, B> ArrowFunc<A, B>(Func<A, B> f)
+        {
+            /*
+             * The extension method for creating invertible arrows is created on Funcs, so to use
+             * it the programmer must do:
+             * new Func<A, B>(lambda stuff).Arr(other lambda stuff)
+             * This is a bit messy-looking, so this function is here to allow the compiler to infer
+             * the type parameters. The syntax now looks like:
+             * ArrowFunc(lambda stuff).Arr(other lambda stuff)
+             */
+
+            return f;
+        }
+        
+        public static Arrow<A, B> Arr<A, B>(this Func<A, B> func)
         {
             /*
              * Basic arrow construction operator from a Func<A, B>
              */
 
             return new Arrow<A, B>(func);
+        }
+
+        public static InvertibleArrow<A, B> Arr<A, B>(this Func<A, B> func, Func<B, A> invFunc)
+        {
+            return new InvertibleArrow<A, B>(func, invFunc);
         }
 
         public static Arrow<A, C> Combine<A, B, C>(this Arrow<A, B> a1, Arrow<B, C> a2)
@@ -99,6 +134,16 @@ namespace ArrowDataBinding.Arrows
 
             Arrow<A, C> result = new Arrow<A, C>(
                 x => a2.Invoke(a1.Invoke(x))
+                );
+
+            return result;
+        }
+
+        public static InvertibleArrow<A, C> Combine<A, B, C>(this InvertibleArrow<A, B> a1, InvertibleArrow<B, C> a2)
+        {
+            InvertibleArrow<A, C> result = new InvertibleArrow<A, C>(
+                x => a2.Invoke(a1.Invoke(x)),
+                x => a1.Invert().Invoke(a2.Invert().Invoke(x))  // TODO: Make more efficient
                 );
 
             return result;
@@ -115,6 +160,22 @@ namespace ArrowDataBinding.Arrows
                 (Tuple<A, C> x) =>
                     new Tuple<B, C>(
                         arr.Invoke(x.Item1),
+                        x.Item2
+                        )
+                );
+        }
+
+        public static InvertibleArrow<Tuple<A, C>, Tuple<B, C>> First<A, B, C>(this InvertibleArrow<A, B> arr)
+        {
+            return new InvertibleArrow<Tuple<A, C>, Tuple<B, C>>(
+                (Tuple<A, C> x) =>
+                    new Tuple<B, C>(
+                        arr.Invoke(x.Item1),
+                        x.Item2
+                        ),
+                (Tuple<B, C> x) =>
+                    new Tuple<A, C>(
+                        arr.Invert().Invoke(x.Item1),
                         x.Item2
                         )
                 );
@@ -190,6 +251,11 @@ namespace ArrowDataBinding.Arrows
 
         public static Arrow<A, Tuple<A, A>> Split<A>()
         {
+            /*
+             * Returns an arrow which takes an input of type A and returns a Tuple<A, A> which is
+             * the input duplicated
+             */
+
             return new Arrow<A, Tuple<A, A>>(
                 (A x) =>
                     new Tuple<A, A>(x, x)
@@ -198,6 +264,12 @@ namespace ArrowDataBinding.Arrows
 
         public static Arrow<Tuple<A, B>, C> Unsplit<A, B, C>(Func<A, B, C> op)
         {
+            /*
+             * Returns an arrow which takes an input of type Tuple<A, B> and applies the provided
+             * operator, yielding an output of type C
+             * ('Lifts' a binary operator to arrow status)
+             */
+
             return new Arrow<Tuple<A, B>, C>(
                 (Tuple<A, B> x) =>
                     op(x.Item1, x.Item2)
@@ -206,7 +278,10 @@ namespace ArrowDataBinding.Arrows
 
         public static Arrow<A, D> LiftA2<A, B, C, D>(Func<B, C, D> op, Arrow<A, B> a1, Arrow<A, C> a2)
         {
-            return Split<A>().Combine(First<A, B, A>(a1)).Combine(Second<A, C, B>(a2)).Combine(Unsplit(op));
+            return Split<A>()  // A -> split -> Tuple<A, A>
+                .Combine(First<A, B, A>(a1))  // Tuple<A, A> -> a1 -> Tuple<B, A>
+                .Combine(Second<A, C, B>(a2))  // Tuple<B, A> -> a2 -> Tuple<B, C>
+                .Combine(Unsplit(op));  // Tuple<B, C> -> op(B, C) -> D
         }
     }
 }

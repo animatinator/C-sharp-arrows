@@ -1,0 +1,3 @@
+﻿The files in here are all demos of general functionality - the ones at the top level were the demos
+and tests written for the first couple of work packages, and the ones in 'project' are quick demos
+of the actual project's functionality.

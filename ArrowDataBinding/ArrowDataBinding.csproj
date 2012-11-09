@@ -47,11 +47,15 @@
   <ItemGroup>
     <Compile Include="Arrows.cs" />
     <Compile Include="demos\LambdaCombinator.cs" />
+    <Compile Include="demos\project\Arrow demos.cs" />
     <Compile Include="demos\Two-way binding.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="demos\Arrow test.cs" />
     <Compile Include="demos\Tester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="demos\Notes.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

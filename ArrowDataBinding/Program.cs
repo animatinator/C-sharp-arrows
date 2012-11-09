@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ArrowDataBinding.demos;
+using ArrowDataBinding.demos.project;
 
 namespace ArrowDataBinding
 {
@@ -10,7 +10,7 @@ namespace ArrowDataBinding
     {
         static void Main(string[] args)
         {
-            Tester t = new Tester();
+            ArrowDemos t = new ArrowDemos();
             t.Run();
         }
     }

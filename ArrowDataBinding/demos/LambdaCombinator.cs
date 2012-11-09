@@ -62,6 +62,7 @@ namespace ArrowDataBinding.demos
         }
     }
 
+
     public class LambdaCombinator
     {
         public static Func<T1, T3> CombineLambdas<T1, T2, T3>(Func<T1, T2> l1, Func<T2, T3> l2)
