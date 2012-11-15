@@ -25,5 +25,19 @@ namespace ArrowDataBinding.demos.project
             Console.WriteLine("3 into the arrow gives {0}", result);
             Console.WriteLine("{0} into the inverted arrow gives {1}", result, arrow3.Invert().Invoke(result));
         }
+
+        public static void blah()
+        {
+            Arrow<int, string> test = Op.Arr((int x) => x + 1).Combine(Op.Arr((int x) => x.ToString()));
+            Arrow<int, string> test1 = Op.Combine(Op.Arr((int x) => x + 1), Op.Arr((int x) => x.ToString()));
+        }
+
+        public static void blahblah()
+        {
+            Arrow<int, double> pythagoras = Op.LiftA2((int x, int y) => x + y,
+                    Op.Arr((int x) => x * x),
+                    Op.Arr((int y) => y * y))
+                .Combine(Op.Arr((int x) => Math.Sqrt(x)));
+        }
     }
 }

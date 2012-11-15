@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ArrowDataBinding.Utils;
 
 namespace ArrowDataBinding.Arrows
 {
@@ -27,6 +28,14 @@ namespace ArrowDataBinding.Arrows
 
         public abstract dynamic Invoke<T>(T var);
     }
+
+
+    public interface IInvertibleArrow
+    {
+        //IInvertibleArrow Invert();  // TODO: Don't know how to implement this; covariant return types aren't allowed
+        dynamic Invoke<T>(T var);
+    }
+
 
     public class Arrow<A, B> : IArrow
     {
@@ -56,25 +65,48 @@ namespace ArrowDataBinding.Arrows
                 throw new Exception("Invalid type supplied to 'Arrow.Invoke'!");
             }
         }
+    }
 
 
-        // TODO: Stop putting random test functions in the arrow class
-        public static void blah()
+    public class ArrowChoice<A, B, C, D> : Arrow<Either<A, B>, Either<C, D>>
+    {
+        /*
+         * An arrow which takes an input of either type and returns an output of the associated
+         * type.
+         * TODO: Finish ArrowChoice and get it working
+         */
+
+        public ArrowChoice(Func<A, C> func1, Func<B, D> func2) : base(default(Func<Either<A, B>, Either<C, D>>))
         {
-            Arrow<int, string> test = Op.Arr((int x) => x + 1).Combine(Op.Arr((int x) => x.ToString()));
-            Arrow<int, string> test1 = Op.Combine(Op.Arr((int x) => x + 1), Op.Arr((int x) => x.ToString()));
+            func = new Func<Either<A, B>, Either<C, D>>(x =>
+                {
+                    if (x.type == typeof(A))
+                    {
+                        return new Either<C, D>(func1(x.ItemA));
+                    }
+                    else
+                    {
+                        return new Either<C, D>(func2(x.ItemB));
+                    }
+                }
+            );
         }
 
-        public static void blahblah()
+        public C Invoke(A input)
         {
-            Arrow<int, double> pythagoras = Op.LiftA2((int x, int y) => x + y,
-                    Op.Arr((int x) => x * x),
-                    Op.Arr((int y) => y * y))
-                .Combine(Op.Arr((int x) => Math.Sqrt(x)));
+            Either<C, D> result = func(new Either<A, B>(input));
+            return default(C);
+        }
+
+        public D Invoke(B input)
+        {
+            Either<C, D> result = func(new Either<A, B>(input));
+            return default(D);
         }
     }
 
-    public class InvertibleArrow<A, B> : Arrow<A, B>
+
+    public class InvertibleArrow<A, B> : Arrow<A, B>, IInvertibleArrow
     {
         protected Func<B, A> inverseFunc;
 
@@ -143,7 +175,7 @@ namespace ArrowDataBinding.Arrows
         {
             InvertibleArrow<A, C> result = new InvertibleArrow<A, C>(
                 x => a2.Invoke(a1.Invoke(x)),
-                x => a1.Invert().Invoke(a2.Invert().Invoke(x))  // TODO: Make more efficient
+                x => a1.Invert().Invoke(a2.Invert().Invoke(x))  // TODO: Make InvertibleArrow combinator more efficient
                 );
 
             return result;
@@ -210,6 +242,7 @@ namespace ArrowDataBinding.Arrows
              * an arrow which runs the input arrow's function on the second argument of the tuple.
              */
 
+            // TODO: Make a version of first/second which only takes one type parameter
             Arrow<Tuple<A, C>, Tuple<B, C>> fstArrow = First<A, B, C>(arr);
 
             return Swap<C, A>()  // Swap the tuple
@@ -224,7 +257,7 @@ namespace ArrowDataBinding.Arrows
              * on an input Tuple.
              */
 
-            // TODO: Make this parallel?
+            // TODO: Make the parallel operator actually parallel?
             return new Arrow<Tuple<A, C>, Tuple<B, D>>(
                 (Tuple<A, C> x) =>
                     new Tuple<B, D>(
@@ -282,6 +315,28 @@ namespace ArrowDataBinding.Arrows
                 .Combine(First<A, B, A>(a1))  // Tuple<A, A> -> a1 -> Tuple<B, A>
                 .Combine(Second<A, C, B>(a2))  // Tuple<B, A> -> a2 -> Tuple<B, C>
                 .Combine(Unsplit(op));  // Tuple<B, C> -> op(B, C) -> D
+        }
+
+
+        public static ArrowChoice<A, C, B, C> LeftChoice<A, B, C>(Arrow<A, B> arr)
+        {
+            return new ArrowChoice<A, C, B, C>(x => arr.Invoke(x), (C x) => x);
+        }
+
+        public static ArrowChoice<C, A, C, B> RightChoice<A, B, C>(Arrow<A, B> arr)
+        {
+            return new ArrowChoice<C, A, C, B>((C x) => x, x => arr.Invoke(x));
+        }
+
+        public static ArrowChoice<A, B, C, D> Either<A, B, C, D>(Arrow<A, C> ar1, Arrow<B, D> ar2)
+        {
+            return new ArrowChoice<A, B, C, D>(x => ar1.Invoke(x), x => ar2.Invoke(x));
+        }
+
+        public static ArrowChoice<A, B, C, C> FanInChoice<A, B, C>(Arrow<A, C> ar1, Arrow<B, C> ar2)
+        {
+            //TODO: How to make this so it can plug arrowchoices into normal arrows?
+            return null;
         }
     }
 }
