@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ArrowDataBinding.Combinators;
 using ArrowDataBinding.Arrows;
 
 namespace ArrowDataBinding.demos.project

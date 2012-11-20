@@ -46,6 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Arrows.cs" />
+    <Compile Include="combinators\ArrowChoiceOperators.cs" />
+    <Compile Include="combinators\ArrowOperators.cs" />
+    <Compile Include="combinators\Common.cs" />
+    <Compile Include="combinators\InvertibleArrowOperators.cs" />
     <Compile Include="demos\LambdaCombinator.cs" />
     <Compile Include="demos\project\Arrow demos.cs" />
     <Compile Include="demos\Two-way binding.cs" />
