@@ -123,13 +123,7 @@ namespace ArrowDataBinding.Arrows
     }
 
 
-    /*
-     * A couple of general utility arrows
-     * 
-     *     - IDArrow<A> - an identity arrow for variables of type A
-     *     - SwapArrow<A, B> - an arrow on pairs which returns a tuple which is the input with its
-     *         components swapped
-     */
+    // A couple of general utility arrows
 
     public class IDArrow<A> : Arrow<A, A>
     {
