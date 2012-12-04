@@ -42,7 +42,6 @@ namespace ArrowDataBinding.demos.TwoWay
             // Add all properties to the locked properties list (initialised to unlocked)
             lockedProperties = new Dictionary<string, bool>();
             var properties = this.GetType().GetProperties();
-            // TODO: Make it only use the ones with the bindable attribute?
 
             foreach (var prop in properties)
             {
@@ -62,20 +61,16 @@ namespace ArrowDataBinding.demos.TwoWay
 
         public void SetVariable<T>(string varName, T val)
         {
-            // TODO: this might only work for properties just now! Needs fixing somehow
             this.GetType().GetProperty(varName).SetValue(this, val, null);
         }
 
         public void LockVariable(string varName)
         {
-            // TODO: Modify to work for both fields and properties?
-            // TODO: Check for invalid varnames
             lockedProperties[varName] = true;
         }
 
         public void UnlockVariable(string varName)
         {
-            // TODO: All the stuff in LockVariable
             lockedProperties[varName] = false;
         }
 

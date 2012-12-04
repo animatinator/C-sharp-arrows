@@ -14,11 +14,11 @@ namespace ArrowDataBinding.Bindings
          * changes - contains the name of the variable.
          */
 
-        public string varName { get; private set; }
+        public string VarName { get; private set; }
 
         public BindingEventArgs(string varName)
         {
-            this.varName = varName;
+            this.VarName = varName;
         }
     }
 
@@ -48,26 +48,19 @@ namespace ArrowDataBinding.Bindings
          * simplifies syntax
          */
 
-        public object Object { get; private set; }
+        public Bindable Object { get; private set; }
         public string Var { get; private set; }
 
-        public BindPoint(object obj, string var) : this()
+        public BindPoint(Bindable obj, string var) : this()
         {
-            if (obj is Bindable)
+            if (obj.HasVariable(var))
             {
-                if ((obj as Bindable).HasVariable(var))
-                {
-                    this.Object = obj;
-                    this.Var = var;
-                }
-                else
-                {
-                    throw new BoundVariableNotFoundException(var, obj.GetType().ToString());
-                }
+                this.Object = obj;
+                this.Var = var;
             }
             else
             {
-                throw new ObjectNotBindableException(obj.GetType().ToString());
+                throw new BoundVariableNotFoundException(var, obj.GetType().ToString());
             }
         }
     }
@@ -117,6 +110,7 @@ namespace ArrowDataBinding.Bindings
             // Add all properties to the locked properties list (initialised to unlocked)
             lockedMembers = new Dictionary<string, bool>();
             var bindableVars = GetFieldsAndProperties();
+            // TODO: Make it only use the ones with the bindable attribute?
 
             foreach (var variable in bindableVars)
             {

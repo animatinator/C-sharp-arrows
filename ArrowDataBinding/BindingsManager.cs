@@ -70,7 +70,7 @@ namespace ArrowDataBinding.Bindings
         }
 
 
-        public static BindPoint BindPoint(object obj, string varName)
+        public static BindPoint BindPoint(Bindable obj, string varName)
         {
             /*
              * Helper function for quickly creating BindPoint objects

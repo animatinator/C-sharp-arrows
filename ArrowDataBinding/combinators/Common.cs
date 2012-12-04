@@ -8,11 +8,6 @@ namespace ArrowDataBinding.Combinators
 {
     public static partial class Op
     {
-        // TODO: Identity arrow. See the note above the Swap function - basically, would be cool
-        // if one could define an identity arrow without needing to specify what concrete type it
-        // should work on.
-
-
         public static Func<A, B> ArrowFunc<A, B>(Func<A, B> f)
         {
             /*
