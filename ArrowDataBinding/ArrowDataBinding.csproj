@@ -46,6 +46,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Arrows.cs" />
+    <Compile Include="Bindable.cs" />
+    <Compile Include="Binding.cs" />
+    <Compile Include="BindingsManager.cs" />
     <Compile Include="combinators\ArrowChoiceOperators.cs" />
     <Compile Include="combinators\ArrowOperators.cs" />
     <Compile Include="combinators\Common.cs" />
