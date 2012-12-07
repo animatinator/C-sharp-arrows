@@ -38,6 +38,14 @@ namespace ArrowDataBinding.Bindings
         { }
     }
 
+    public class VariableLockedException : Exception
+    {
+        public VariableLockedException(string varName, string sourceObjName)
+            : base(String.Format("The variable '{0}' belonging to the object of type '{1}' is " +
+            "locked by another binding and cannot be set.", varName, sourceObjName))
+        { }
+    }
+
 
     public struct BindPoint
     {
@@ -128,23 +136,59 @@ namespace ArrowDataBinding.Bindings
             }
         }
 
+
+        public void LockAndSetVariable<T>(string varName, T val)
+        {
+            /*
+             * This is used to prevent recursive updating when a cycle or two-way binding exists.
+             * When a variable is locked, the SetVariable method will refuse to set it and throw
+             * an exception instead.
+             */
+
+            LockVariable(varName);
+            SetVariable<T>(varName, val);
+            UnlockVariable(varName);
+        }
+
         public void SetVariable<T>(string varName, T val)
         {
+            if (VariableLocked(varName)) throw new VariableLockedException(varName, this.GetType().ToString());
+
             if (this.HasProperty(varName)) this.SetProperty<T>(varName, val);
             else if (this.HasField(varName)) this.SetField<T>(varName, val);
             else throw new BoundVariableNotFoundException(varName, this.GetType().ToString());
         }
 
+        public T GetVariable<T>(string varName)
+        {
+            if (this.HasProperty(varName)) return this.GetProperty<T>(varName);
+            else if (this.HasField(varName)) return this.GetField<T>(varName);
+            else throw new BoundVariableNotFoundException(varName, this.GetType().ToString());
+        }
+
+        //TODO: Maybe the different setters and getters for properties and fields could use the Template pattern or similar to avoid code duplication?
         private void SetProperty<T>(string propName, T val)
         {
             Type type = this.GetType();
-            this.GetType().GetProperty(propName).SetValue(this, val, null);
+            type.GetProperty(propName).SetValue(this, val, null);
+        }
+
+        private T GetProperty<T>(string propName)
+        {
+            Type type = this.GetType();
+            return (T)type.GetProperty(propName).GetValue(this, null);
         }
 
         private void SetField<T>(string propName, T val)
         {
             Type type = this.GetType();
-            this.GetType().GetField(propName).SetValue(this, val);
+            type.GetField(propName).SetValue(this, val);
+        }
+
+        private T GetField<T>(string propName)
+        {
+            Type type = this.GetType();
+            return (T)type.GetField(propName).GetValue(this);
         }
 
 

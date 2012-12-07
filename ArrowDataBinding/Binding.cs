@@ -19,11 +19,11 @@ namespace ArrowDataBinding.Bindings
     public class Binding<T1, T2> : IBinding
     {
         protected BindPoint source;
-        protected  IArrow arrow;
+        protected  Arrow<T1, T2> arrow;
         protected BindPoint destination;
 
         //public Binding(Bindable source, string sourceVar, Bindable dest, string destVar)
-        public Binding(BindPoint source, IArrow arrow, BindPoint dest)
+        public Binding(BindPoint source, Arrow<T1, T2> arrow, BindPoint dest)
         {
             this.source = source;
             this.destination = dest;
@@ -38,28 +38,29 @@ namespace ArrowDataBinding.Bindings
 
         public void NotifyChange(object sourceObj, BindingEventArgs args)
         {
-            // TODO: Finish Binding.NotifyChange() and neaten considerably
-
-            if (sourceObj.Equals(this.source) && args.VarName == source.Var)
+            if (IsSourceVar(sourceObj, args.VarName))
             {
-                // First check whether the target variable is locked
-                if (destination.Object.VariableLocked(destination.Var)) return;
-
-                Type t1 = typeof(T1);
-                PropertyInfo info = source.GetType().GetProperty(source.Var);
-                T1 thingy = (T1)info.GetValue(destination, null);
-
-                // Lock the variable (to avoid a recursive update once it has been set) and update
-                destination.Object.LockVariable(destination.Var);
-                destination.Object.SetVariable<T2>(destination.Var, (T2)source.GetType().GetProperty(source.Var).GetValue(source, null));
-                destination.Object.UnlockVariable(destination.Var);
+                T1 sourceValue = source.Object.GetVariable<T1>(source.Var);
+                T2 newValue = arrow.Invoke(sourceValue);
+                destination.Object.LockAndSetVariable(destination.Var, newValue);
             }
+        }
+
+
+        public bool IsSourceVar(object obj, string varName)
+        {
+            return (obj.Equals(source.Object) && varName == source.Var);
+        }
+
+        public bool IsDestinationVar(object obj, string varName)
+        {
+            return (obj.Equals(destination.Object) && varName == destination.Var);
         }
     }
 
     public class TwoWayBinding<T1, T2> : Binding<T1, T2>
     {
-        public TwoWayBinding(BindPoint source, IInvertibleArrow arrow, BindPoint destination)
+        public TwoWayBinding(BindPoint source, InvertibleArrow<T1, T2> arrow, BindPoint destination)
             : base(source, arrow, destination)
         {
             // TODO: TwoWayBinding class
