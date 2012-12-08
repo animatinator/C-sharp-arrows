@@ -145,6 +145,8 @@ namespace ArrowDataBinding.Bindings
              * an exception instead.
              */
 
+            if (VariableLocked(varName)) throw new VariableLockedException(varName, this.GetType().ToString());
+
             LockVariable(varName);
             SetVariable<T>(varName, val);
             UnlockVariable(varName);
@@ -152,8 +154,6 @@ namespace ArrowDataBinding.Bindings
 
         public void SetVariable<T>(string varName, T val)
         {
-            if (VariableLocked(varName)) throw new VariableLockedException(varName, this.GetType().ToString());
-
             if (this.HasProperty(varName)) this.SetProperty<T>(varName, val);
             else if (this.HasField(varName)) this.SetField<T>(varName, val);
             else throw new BoundVariableNotFoundException(varName, this.GetType().ToString());

@@ -47,13 +47,23 @@ namespace ArrowDataBinding.Bindings
     {
         // TODO: Need some sort of hashmap from binding handles to Binding objects
 
-        public static BindingHandle CreateBinding(object source, string sourceProperty, IArrow arrow, object dest, string destProperty)
+        public static BindingHandle CreateBinding<A, B>(Bindable source, string sourceProperty, Arrow<A, B> arrow, Bindable destination, string destinationProperty)
         {
-            // TODO: BindingsManager
-            return new BindingHandle();
+            BindPoint sourcePoint = new BindPoint(source, sourceProperty);
+            BindPoint destinationPoint = new BindPoint(destination, destinationProperty);
+
+            return CreateBinding(sourcePoint, arrow, destinationPoint);
         }
 
-        public static BindingHandle CreateBinding(BindPoint[] sources, IArrow arrow, BindPoint[] destinations)
+        public static BindingHandle CreateBinding<A, B>(BindPoint source, Arrow<A, B> arrow, BindPoint destination)
+        {
+            // TODO: Check for cycles here
+            // TODO: Now check if the arrow is invertible - if so, make the binding two-way
+            Binding<A, B> result = new Binding<A, B>(source, arrow, destination);
+            return new BindingHandle(result);
+        }
+
+        public static BindingHandle CreateBinding<A, B>(BindPoint[] sources, Arrow<A, B> arrow, BindPoint[] destinations)
         {
             /*
              * Blah... (Description goes here)

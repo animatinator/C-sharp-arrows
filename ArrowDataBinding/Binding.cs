@@ -27,6 +27,7 @@ namespace ArrowDataBinding.Bindings
         {
             this.source = source;
             this.destination = dest;
+            this.arrow = arrow;
 
             SubscribeToBindable(source.Object);
         }
@@ -42,6 +43,7 @@ namespace ArrowDataBinding.Bindings
             {
                 T1 sourceValue = source.Object.GetVariable<T1>(source.Var);
                 T2 newValue = arrow.Invoke(sourceValue);
+                // TODO: This bit should catch a locked variable exception; should probably be pulled out into a separate method
                 destination.Object.LockAndSetVariable(destination.Var, newValue);
             }
         }
