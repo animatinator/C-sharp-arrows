@@ -61,6 +61,7 @@
     <Compile Include="demos\Arrow test.cs" />
     <Compile Include="demos\Tester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="tests\TestArrowLaws.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>

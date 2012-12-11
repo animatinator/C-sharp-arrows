@@ -58,8 +58,18 @@ namespace ArrowDataBinding.Bindings
         public static BindingHandle CreateBinding<A, B>(BindPoint source, Arrow<A, B> arrow, BindPoint destination)
         {
             // TODO: Check for cycles here
-            // TODO: Now check if the arrow is invertible - if so, make the binding two-way
-            Binding<A, B> result = new Binding<A, B>(source, arrow, destination);
+
+            Binding<A, B> result;
+
+            if (arrow is InvertibleArrow<A, B>)
+            {
+                result = new TwoWayBinding<A, B>(source, (InvertibleArrow<A, B>)arrow, destination);
+            }
+            else
+            {
+                result = new Binding<A, B>(source, arrow, destination);
+            }
+
             return new BindingHandle(result);
         }
 

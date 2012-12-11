@@ -30,6 +30,7 @@ namespace ArrowDataBinding.demos.project
         {
             Console.WriteLine("Running basic binding demos...");
             RunSimpleDemo();
+            RunSimpleInvertibleDemo();
         }
 
         public static void RunSimpleDemo()
@@ -51,6 +52,29 @@ namespace ArrowDataBinding.demos.project
 
             if (passed) Console.WriteLine("Works!");
             else Console.WriteLine("Doesn't work D:");
+        }
+
+        public static void RunSimpleInvertibleDemo()
+        {
+            Source source = new Source();
+            Destination dest = new Destination();
+            InvertibleArrow<int, int> arr = Op.Arr((int x) => x + 1, (int x) => x - 1);
+            BindingsManager.CreateBinding(BindingsManager.BindPoint(source, "source"), arr, BindingsManager.BindPoint(dest, "result"));
+
+            bool passed = true;
+            Random rand = new Random();
+
+            for (int i = 0; i < 100; i++)
+            {
+                int next = rand.Next();
+                source.source = next;
+                if (dest.result != next + 1) passed = false;
+                dest.result -= 1;
+                if (source.source != next - 1) passed = false;
+            }
+
+            if (passed) Console.WriteLine("Invertible works too!");
+            else Console.WriteLine("Invertible doesn't work tho D:");
         }
     }
 }

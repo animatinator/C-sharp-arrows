@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ArrowDataBinding.demos.project;
 using ArrowDataBinding.demos;
+using ArrowDataBinding.tests;
 
 namespace ArrowDataBinding
 {
@@ -11,8 +12,8 @@ namespace ArrowDataBinding
     {
         static void Main(string[] args)
         {
-            BasicBindingDemos demo = new BasicBindingDemos();
-            demo.Run();
+            TestArrowLaws tests = new TestArrowLaws();
+            tests.Run();
         }
     }
 }

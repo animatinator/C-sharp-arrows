@@ -37,14 +37,26 @@ namespace ArrowDataBinding.Bindings
             bind.valueChanged += NotifyChange;
         }
 
-        public void NotifyChange(object sourceObj, BindingEventArgs args)
+        public virtual void NotifyChange(object sourceObj, BindingEventArgs args)
         {
             if (IsSourceVar(sourceObj, args.VarName))
             {
                 T1 sourceValue = source.Object.GetVariable<T1>(source.Var);
                 T2 newValue = arrow.Invoke(sourceValue);
-                // TODO: This bit should catch a locked variable exception; should probably be pulled out into a separate method
-                destination.Object.LockAndSetVariable(destination.Var, newValue);
+                TrySetVariable(destination, newValue);
+            }
+        }
+
+
+        public void TrySetVariable<T>(BindPoint bindPoint, T newValue)
+        {
+            try
+            {
+                bindPoint.Object.LockAndSetVariable(bindPoint.Var, newValue);
+            }
+            catch (VariableLockedException)
+            {
+                // Nothing to do here
             }
         }
 
@@ -62,10 +74,28 @@ namespace ArrowDataBinding.Bindings
 
     public class TwoWayBinding<T1, T2> : Binding<T1, T2>
     {
+        protected Arrow<T2, T1> reverseArrow;
+
         public TwoWayBinding(BindPoint source, InvertibleArrow<T1, T2> arrow, BindPoint destination)
             : base(source, arrow, destination)
         {
-            // TODO: TwoWayBinding class
+            this.reverseArrow = arrow.Invert();
+
+            SubscribeToBindable(destination.Object);
+        }
+
+        public override void NotifyChange(object sourceObj, BindingEventArgs args)
+        {
+            base.NotifyChange(sourceObj, args);  // Will do the forward change if the changed
+                                                // object is the binding source
+            // Otherwise we check if it's the destination variable, and if so run the arrow in
+            // reverse
+            if (IsDestinationVar(sourceObj, args.VarName))
+            {
+                T2 sourceValue = destination.Object.GetVariable<T2>(destination.Var);
+                T1 newValue = reverseArrow.Invoke(sourceValue);
+                TrySetVariable(source, newValue);
+            }
         }
     }
 }

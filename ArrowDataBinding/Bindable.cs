@@ -22,6 +22,7 @@ namespace ArrowDataBinding.Bindings
         }
     }
 
+    [Serializable]
     public class BoundVariableNotFoundException : Exception
     {
         public BoundVariableNotFoundException(string varName, string sourceObjName)
@@ -30,6 +31,7 @@ namespace ArrowDataBinding.Bindings
         { }
     }
 
+    [Serializable]
     public class ObjectNotBindableException : Exception
     {
         public ObjectNotBindableException(string sourceObjName)
@@ -38,6 +40,7 @@ namespace ArrowDataBinding.Bindings
         { }
     }
 
+    [Serializable]
     public class VariableLockedException : Exception
     {
         public VariableLockedException(string varName, string sourceObjName)
