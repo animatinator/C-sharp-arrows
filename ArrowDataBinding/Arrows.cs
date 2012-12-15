@@ -123,7 +123,7 @@ namespace ArrowDataBinding.Arrows
     }
 
 
-    // A couple of general utility arrows
+    // A few general utility arrows
 
     public class IDArrow<A> : Arrow<A, A>
     {
@@ -146,5 +146,31 @@ namespace ArrowDataBinding.Arrows
                         x.Item1
                     )
                 ) { }
+    }
+
+    public class AssocArrow<A, B, C> : Arrow<Tuple<Tuple<A, B>, C>, Tuple<A, Tuple<B, C>>>
+    {
+        /*
+         * An arrow form of the Assoc function in Utils - saves the faff of creating one whenever
+         * it's used
+         */
+        public AssocArrow()
+            : base(
+            (Tuple<Tuple<A, B>, C> x) =>
+                TupleOp.Assoc(x)
+            ) { }
+    }
+
+    public class CossaArrow<A, B, C> : Arrow<Tuple<A, Tuple<B, C>>, Tuple<Tuple<A, B>, C>>
+    {
+        /*
+         * An arrow form of the Cossa function in Utils - saves the faff of creating one whenever
+         * it's used
+         */
+        public CossaArrow()
+            : base(
+            (Tuple<A, Tuple<B, C>> x) =>
+                TupleOp.Cossa(x)
+            ) { }
     }
 }

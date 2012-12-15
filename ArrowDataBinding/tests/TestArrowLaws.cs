@@ -2,29 +2,65 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
+using System.Reflection;
 using ArrowDataBinding.Arrows;
 using ArrowDataBinding.Combinators;
-using System.Diagnostics;
+using ArrowDataBinding.Utils;
 
 namespace ArrowDataBinding.tests
 {
     public class TestArrowLaws
     {
-        public const int testIterations = 1000;
+        private const int testIterations = 1000;
+
+        private delegate bool Test();
+        private static List<Test> tests = new List<Test>
+        {
+            TestIdentity, TestDistributivity, TestArrFirstOrderingIrrelevance,
+            TestPipingCommutativity, TestFirstPipingSimplification, TestPipingReassociation
+        };
 
 
         public void Run()
         {
-            if (TestIdentity() && TestDistributivity() && TestArrFirstOrderingIrrelevance()
-                && TestPipingCommutativity() && TestFirstPipingSimplification()
-                && TestPipingReassociation())
+            int passCount = 0;
+            int total = tests.Count;
+            List<string> failedTestNames = new List<string>();
+            string currentTestName;
+
+            foreach (Test testRun in tests)
             {
-                Console.WriteLine("Success!");
+                currentTestName = testRun.Method.ToString();
+                Console.WriteLine("Running test: {0}", currentTestName);
+
+                if (testRun())
+                {
+                    Console.WriteLine("Test passed.");
+                    passCount++;
+                }
+                else
+                {
+                    Console.WriteLine("Test failed.");
+                    failedTestNames.Add(currentTestName);
+                }
             }
-            else
+
+            Console.WriteLine();
+            Console.WriteLine("Test summary:");
+            Console.WriteLine("Ran {0} tests, {1} passed and {2} failed.", total, passCount, total - passCount);
+
+            if (passCount < total)
             {
-                Console.WriteLine("Tests failed.");
+                Console.WriteLine("Failed tests:");
+
+                foreach (string failedTest in failedTestNames)
+                {
+                    Console.WriteLine("\t-{0}", failedTest);
+                }
             }
+
+            Console.WriteLine();
         }
 
 
@@ -81,10 +117,26 @@ namespace ArrowDataBinding.tests
              * Tests that the IDArrow<T> class preserves identity for any type
              */
 
-            // TODO: TestIdentity
-            // Maybe test with loads of types, randomly selected? Tricky.
+            // TODO: Make TestIdentity cleaner
 
-            return false;
+            IEnumerable<Type> types = GetBuiltInTypes();
+
+            bool passed = true;
+
+            foreach (Type type in types)
+            {
+                Type typeIdentity = typeof(IDArrow<>).MakeGenericType(type);
+                object identityArrow = Activator.CreateInstance(typeIdentity);
+                MethodInfo invokeMethod = typeIdentity.GetMethod("Invoke", new Type[] {type});
+
+                object parameter = Activator.CreateInstance(type);
+
+                object result = invokeMethod.Invoke(identityArrow, new object[]{parameter});
+
+                if (!result.Equals(parameter)) passed = false;
+            }
+
+            return passed;
         }
 
         public static bool TestDistributivity()
@@ -154,8 +206,20 @@ namespace ArrowDataBinding.tests
 
         public static bool TestPipingCommutativity()
         {
-            //TODO: TestPipingCommutativity
-            return false;
+            /*
+             * If an identity is merged with a second function to form an arrow, attaching it to a
+             * piped function must be commutative. In code:
+             * arr (id *** g) >>> first f = first f >>> arr (id *** g)
+             * This is tested by constructing the two arrows and checking their outputs match.
+             */
+
+            Arrow<int, int> f = Op.Arr(GenerateFunc());
+            Arrow<int, int> g = Op.Arr(GenerateFunc());
+
+            Arrow<Tuple<int, int>, Tuple<int, int>> mergeFirst = new IDArrow<int>().And(g).Combine(f.First<int, int, int>());
+            Arrow<Tuple<int, int>, Tuple<int, int>> firstMerge = f.First<int, int, int>().Combine(new IDArrow<int>().And(g));
+
+            return AssertPairArrowsGiveSameOutput(mergeFirst, firstMerge);
         }
 
         public static bool TestFirstPipingSimplification()
@@ -170,12 +234,23 @@ namespace ArrowDataBinding.tests
             Arrow<Tuple<int, int>, int> firstFArr = Op.First<int, int, int>(f).Combine(Op.Arr((Tuple<int, int> x) => x.Item1));
             Arrow<Tuple<int, int>, int> arrF = Op.Arr((Tuple<int, int> x) => x.Item1).Combine(f);
 
-            return false;
+            return AssertPairToSingleArrowsGiveSameOutput(firstFArr, arrF);
         }
 
         public static bool TestPipingReassociation()
         {
-            // TODO: TestPipingReassociation
+            // TODO: Finish TestPipingReassociation
+            // TODO: Make the code in TestPipingReassociation less awful
+
+            Arrow<int, int> f = Op.Arr(GenerateFunc());
+            AssocArrow<int, int, int> assoc = new AssocArrow<int, int, int>();
+
+            Arrow<Tuple<Tuple<int, int>, int>, Tuple<int, Tuple<int, int>>> firstFirstArr =
+                f.First<int, int, int>().First<Tuple<int, int>, Tuple<int, int>, int>()
+                .Combine(assoc);
+            Arrow<Tuple<Tuple<int, int>, int>, Tuple<int, Tuple<int, int>>> arrFirst =
+                assoc.Combine(f.First<int, int, Tuple<int, int>>());
+
             return false;
         }
 
@@ -206,6 +281,17 @@ namespace ArrowDataBinding.tests
             Random rand = new Random();
 
             return functions[rand.Next(functions.Count)];
+        }
+
+        public static IEnumerable<Type> GetBuiltInTypes()
+        {
+            /*
+             * Returns a list of types to iterate through
+             */
+
+            return typeof(int).Assembly
+                              .GetTypes()
+                              .Where(t => t.IsPrimitive);  // Possibly not
         }
 
 
@@ -267,6 +353,32 @@ namespace ArrowDataBinding.tests
                 Tuple<int, int> pairResult2 = arr2.Invoke(Tuple.Create(inputA, inputB));
 
                 if (!pairResult1.Equals(pairResult2))
+                {
+                    passed = false;
+                }
+            }
+
+            return passed;
+        }
+
+        public static bool AssertPairToSingleArrowsGiveSameOutput(Arrow<Tuple<int, int>, int> arr1,
+            Arrow<Tuple<int, int>, int> arr2)
+        {
+            Debug.Assert(arr1 != null);
+            Debug.Assert(arr2 != null);
+
+            Random rand = new Random();
+            bool passed = true;
+
+            for (int i = 0; i < testIterations; i++)
+            {
+                int inputA = rand.Next();
+                int inputB = rand.Next();
+
+                int result1 = arr1.Invoke(Tuple.Create(inputA, inputB));
+                int result2 = arr2.Invoke(Tuple.Create(inputA, inputB));
+
+                if (result1 != result2)
                 {
                     passed = false;
                 }
