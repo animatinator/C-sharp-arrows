@@ -15,34 +15,52 @@ namespace ArrowDataBinding.tests
         private const int testIterations = 1000;
 
         private delegate bool Test();
-        private static List<Test> tests = new List<Test>
+
+        private static List<Test> standardLawTests = new List<Test>
         {
             TestIdentity, TestDistributivity, TestArrFirstOrderingIrrelevance,
             TestPipingCommutativity, TestFirstPipingSimplification, TestPipingReassociation
+        };
+
+        private static List<Test> extraLawTests = new List<Test>
+        {
+            TestLaw1, TestLaw2, TestLaw3, TestLaw4, TestLaw5, TestLaw6, TestLaw7, TestLaw8,
+            TestLaw9
+        };
+
+        private static List<List<Test>> tests = new List<List<Test>>
+        {
+            standardLawTests, extraLawTests
         };
 
 
         public void Run()
         {
             int passCount = 0;
-            int total = tests.Count;
+            int total = 0;
+
             List<string> failedTestNames = new List<string>();
             string currentTestName;
 
-            foreach (Test testRun in tests)
+            foreach (List<Test> testSet in tests)
             {
-                currentTestName = testRun.Method.ToString();
-                Console.WriteLine("Running test: {0}", currentTestName);
+                foreach (Test testRun in testSet)
+                {
+                    currentTestName = testRun.Method.ToString();
+                    Console.WriteLine("Running test: {0}", currentTestName);
 
-                if (testRun())
-                {
-                    Console.WriteLine("Test passed.");
-                    passCount++;
-                }
-                else
-                {
-                    Console.WriteLine("Test failed.");
-                    failedTestNames.Add(currentTestName);
+                    if (testRun())
+                    {
+                        Console.WriteLine("Test passed.");
+                        passCount++;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Test failed.");
+                        failedTestNames.Add(currentTestName);
+                    }
+
+                    total++;
                 }
             }
 
@@ -109,7 +127,90 @@ namespace ArrowDataBinding.tests
             return AssertArrowsGiveSameOutput(fgH, fGH);
         }
 
-        // TODO: The rest of the laws from the 'Arrow Calculus: Functional Pearl' paper
+        public static bool TestLaw4()
+        {
+            /*
+             * Tests that the arrow of a composed pair of functions is equal to the composition of
+             * arrows made from the individual functions, ie:
+             * arr (g · f) = arr f >>> arr g
+             */
+
+            Func<int, int> f = GenerateFunc();
+            Func<int, int> g = GenerateFunc();
+
+            Arrow<int, int> arrowCompose = Op.Arr((int x) => g(f(x)));
+            Arrow<int, int> composeArrows = Op.Arr(f).Combine(Op.Arr(g));
+
+            return AssertArrowsGiveSameOutput(arrowCompose, composeArrows);
+        }
+
+        public static bool TestLaw5()
+        {
+            /*
+             * first (arr f) = arr (f x id)
+             */
+
+            Func<int, int> f = GenerateFunc();
+            Arrow<Tuple<int, int>, Tuple<int, int>> firstArr = Op.Arr(f).First<int, int, int>();
+            Arrow<Tuple<int, int>, Tuple<int, int>> arrFId = Op.Arr(
+                (Tuple<int, int> x) => Tuple.Create(f(x.Item1), x.Item2));
+
+            return AssertPairArrowsGiveSameOutput(firstArr, arrFId);
+        }
+
+        public static bool TestLaw6()
+        {
+            /*
+             * Tests that the First operator distributes over arrow composition
+             * first (f >>> g) = first f >>> first g
+             */
+
+            Arrow<int, int> f = Op.Arr(GenerateFunc());
+            Arrow<int, int> g = Op.Arr(GenerateFunc());
+
+            Arrow<Tuple<int, int>, Tuple<int, int>> firstOutside = f.Combine(g).First<int, int, int>();
+            Arrow<Tuple<int, int>, Tuple<int, int>> firstDistributed = f.First<int, int, int>()
+                .Combine(g.First<int, int, int>());
+
+            return AssertPairArrowsGiveSameOutput(firstOutside, firstDistributed);
+        }
+
+        public static bool TestLaw7()
+        {
+            /*
+             * Equivalent to TestPipingCommutativity:
+             * first f >>> arr (id × g) = arr (id × g) >>> first f
+             */
+
+            return TestPipingCommutativity();
+        }
+
+        public static bool TestLaw8()
+        {
+            /*
+             * Tests that a split arrow commutes with the 'fst' function (which returns the first
+             * element of a tuple), that is:
+             * first f >>> arr fst = arr fst >>> f
+             */
+
+            Arrow<int, int> f = Op.Arr(GenerateFunc());
+            Arrow<Tuple<int, int>, int> fstArrow = Op.Arr((Tuple<int, int> x) => x.Item1);
+            Arrow<Tuple<int, int>, int> firstFArrFst = f.First<int, int, int>().Combine(fstArrow);
+            Arrow<Tuple<int, int>, int> arrFstF = fstArrow.Combine(f);
+
+            return AssertPairToSingleArrowsGiveSameOutput(firstFArrFst, arrFstF);
+        }
+
+        public static bool TestLaw9()
+        {
+            /*
+             * Equivalent to TestPipingReassociation:
+             * first (first f) >>> arr assoc = arr assoc >>> first f
+             */
+
+            return TestPipingReassociation();
+        }
+
 
         public static bool TestIdentity()
         {
@@ -251,7 +352,7 @@ namespace ArrowDataBinding.tests
             Arrow<Tuple<Tuple<int, int>, int>, Tuple<int, Tuple<int, int>>> arrFirst =
                 assoc.Combine(f.First<int, int, Tuple<int, int>>());
 
-            return false;
+            return AssertReassociationArrowsGiveSameOutput(firstFirstArr, arrFirst);
         }
 
 
@@ -291,7 +392,7 @@ namespace ArrowDataBinding.tests
 
             return typeof(int).Assembly
                               .GetTypes()
-                              .Where(t => t.IsPrimitive);  // Possibly not
+                              .Where(t => t.IsPrimitive);
         }
 
 
@@ -379,6 +480,35 @@ namespace ArrowDataBinding.tests
                 int result2 = arr2.Invoke(Tuple.Create(inputA, inputB));
 
                 if (result1 != result2)
+                {
+                    passed = false;
+                }
+            }
+
+            return passed;
+        }
+
+        public static bool AssertReassociationArrowsGiveSameOutput(
+            Arrow<Tuple<Tuple<int, int>, int>, Tuple<int, Tuple<int, int>>> arr1,
+            Arrow<Tuple<Tuple<int, int>, int>, Tuple<int, Tuple<int, int>>> arr2)
+        {
+            Debug.Assert(arr1 != null);
+            Debug.Assert(arr2 != null);
+
+            Random rand = new Random();
+            bool passed = true;
+
+            for (int i = 0; i < testIterations; i++)
+            {
+                int inputA = rand.Next();
+                int inputB = rand.Next();
+                Tuple<int, int> inputTuple = Tuple.Create(inputA, inputB);
+                int inputInt = rand.Next();
+
+                Tuple<int, Tuple<int, int>> result1 = arr1.Invoke(Tuple.Create(inputTuple, inputInt));
+                Tuple<int, Tuple<int, int>> result2 = arr2.Invoke(Tuple.Create(inputTuple, inputInt));
+
+                if (!result1.Equals(result2))
                 {
                     passed = false;
                 }
