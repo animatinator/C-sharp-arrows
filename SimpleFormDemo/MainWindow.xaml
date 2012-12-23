@@ -1,8 +1,18 @@
 ﻿<Window x:Class="SimpleFormDemo.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Arrow Data Binding Demo" Height="352.474" Width="476.767">
     <Grid>
-        
+        <Canvas x:Name="canvas" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch" Background="Black">
+            <Rectangle Width="50" Height="50" StrokeThickness="5" Stroke="White" Canvas.Left="197" Canvas.Top="114" ToolTip="Nifty!"  >
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
+                        <GradientStop Color="#FF47E618" Offset="0"/>
+                        <GradientStop Color="#FF4297EC" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+        </Canvas>
+
     </Grid>
 </Window>
