@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using PostSharp.Aspects;
 using System.Reflection;
+using System.ComponentModel;
 
 namespace ArrowDataBinding.Bindings
 {
@@ -93,7 +94,7 @@ namespace ArrowDataBinding.Bindings
         }
     }
 
-    public abstract class Bindable
+    public abstract class Bindable : INotifyPropertyChanged
     {
         /*
          * Provides the set of utility functions which an object being bound to will need. Most
@@ -105,6 +106,7 @@ namespace ArrowDataBinding.Bindings
 
         public delegate void BindingUpdateHandler(object sender, BindingEventArgs args);
         public event BindingUpdateHandler valueChanged;
+        public event PropertyChangedEventHandler PropertyChanged;  // Needed for INotifyPropertyChanged
 
         // Used to mark variables as 'locked' so that assigning to them will not update the binding
         // This prevents infinite loops in two-way bindings
@@ -131,11 +133,27 @@ namespace ArrowDataBinding.Bindings
 
         public void SendUpdate(string varName)
         {
+            NotifyPropertyChanged(varName);
             BindingEventArgs args = new BindingEventArgs(varName);
 
             if (valueChanged != null)
             {
                 valueChanged(this, args);
+            }
+        }
+
+        public void NotifyPropertyChanged(string varName)
+        {
+            /*
+             * Part of the INotifyPropertyChanged interface - this will call the
+             * PropertyChangedEventHandler with the name of the var which has changed, thus
+             * updating any WPF-style bindings.
+             */
+
+            if (PropertyChanged != null)
+            {
+                // TODO: Maybe check if the varname exists and is a property?
+                PropertyChanged(this, new PropertyChangedEventArgs(varName));
             }
         }
 
