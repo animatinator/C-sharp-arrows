@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 using ArrowDataBinding.Arrows;
 
 namespace ArrowDataBinding.Combinators
@@ -38,6 +39,35 @@ namespace ArrowDataBinding.Combinators
              */
 
             return And(arr, new IDArrow<C>());
+        }
+
+        public static IArrow First<C>(this IArrow arr)
+        {
+            /*
+             * A slightly messy way of simplifying First using the IArrow interface and determining
+             * the types of the input arrow at runtime, so that it doesn't take three type
+             * parameters.
+             * Horrific code btw.
+             */
+
+            Type a = arr.a;
+            Type b = arr.b;
+            Type c = typeof(C);
+
+            Type inputTupleType = typeof(Tuple<,>).MakeGenericType(a, c);
+            Type outputTupleType = typeof(Tuple<,>).MakeGenericType(b, c);
+            Type resultType = typeof(Arrow<,>).MakeGenericType(inputTupleType, outputTupleType);
+
+            Type funcType = typeof(Func<,>).MakeGenericType(inputTupleType, outputTupleType);
+
+            Type[] constructorTypes = new Type[1];
+            constructorTypes[0] = funcType;
+            ConstructorInfo constructor = resultType.GetConstructor(constructorTypes);
+
+            dynamic[] parameters = new dynamic[1];
+            parameters[0] = new Func<Tuple<dynamic, dynamic>, Tuple<dynamic, dynamic>>((Tuple<dynamic, dynamic> x) => new Tuple<dynamic, dynamic>(arr.Invoke(x.Item1), x.Item2));
+
+            return (IArrow)constructor.Invoke(parameters);
         }
 
         public static Arrow<Tuple<C, A>, Tuple<C, B>> Second<A, B, C>(this Arrow<A, B> arr)
