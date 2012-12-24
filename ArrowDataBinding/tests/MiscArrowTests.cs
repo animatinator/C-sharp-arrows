@@ -7,7 +7,6 @@ namespace ArrowDataBinding.tests
 {
     public class MiscArrowTests
     {
-        // TODO: Test the new First<C> operator, and also move the useful things like
-        // AssertArrowsEqual (or whatevs) into some common ArrowTestUtils class.
+        // TODO: Test the new First<C> operator
     }
 }

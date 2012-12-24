@@ -149,7 +149,7 @@ namespace ArrowDataBinding.tests
              */
 
             Func<int, int> f = ArrowTestUtils.GenerateFunc();
-            Arrow<Tuple<int, int>, Tuple<int, int>> firstArr = Op.Arr(f).First<int, int, int>();
+            Arrow<Tuple<int, int>, Tuple<int, int>> firstArr = Op.Arr(f).First(default(int));
             Arrow<Tuple<int, int>, Tuple<int, int>> arrFId = Op.Arr(
                 (Tuple<int, int> x) => Tuple.Create(f(x.Item1), x.Item2));
 
@@ -166,9 +166,9 @@ namespace ArrowDataBinding.tests
             Arrow<int, int> f = Op.Arr(ArrowTestUtils.GenerateFunc());
             Arrow<int, int> g = Op.Arr(ArrowTestUtils.GenerateFunc());
 
-            Arrow<Tuple<int, int>, Tuple<int, int>> firstOutside = f.Combine(g).First<int, int, int>();
-            Arrow<Tuple<int, int>, Tuple<int, int>> firstDistributed = f.First<int, int, int>()
-                .Combine(g.First<int, int, int>());
+            Arrow<Tuple<int, int>, Tuple<int, int>> firstOutside = f.Combine(g).First(default(int));
+            Arrow<Tuple<int, int>, Tuple<int, int>> firstDistributed = f.First(default(int))
+                .Combine(g.First(default(int)));
 
             return ArrowTestUtils.AssertPairArrowsGiveSameOutput(firstOutside, firstDistributed);
         }
@@ -193,7 +193,7 @@ namespace ArrowDataBinding.tests
 
             Arrow<int, int> f = Op.Arr(ArrowTestUtils.GenerateFunc());
             Arrow<Tuple<int, int>, int> fstArrow = Op.Arr((Tuple<int, int> x) => x.Item1);
-            Arrow<Tuple<int, int>, int> firstFArrFst = f.First<int, int, int>().Combine(fstArrow);
+            Arrow<Tuple<int, int>, int> firstFArrFst = f.First(default(int)).Combine(fstArrow);
             Arrow<Tuple<int, int>, int> arrFstF = fstArrow.Combine(f);
 
             return ArrowTestUtils.AssertPairToSingleArrowsGiveSameOutput(firstFArrFst, arrFstF);
@@ -277,10 +277,10 @@ namespace ArrowDataBinding.tests
             Arrow<int, int> g = Op.Arr(ArrowTestUtils.GenerateFunc());
 
             Arrow<Tuple<int, int>, Tuple<int, int>> firstFG =
-                Op.First<int, int, int>(f.Combine(g));
+                Op.First(f.Combine(g), default(int));
 
             Arrow<Tuple<int, int>, Tuple<int, int>> firstFfirstG =
-                Op.First<int, int, int>(f).Combine(Op.First<int, int, int>(g));
+                Op.First(f, default(int)).Combine(Op.First(g, default(int)));
 
             return ArrowTestUtils.AssertPairArrowsGiveSameOutput(firstFG, firstFfirstG);
         }
@@ -298,7 +298,7 @@ namespace ArrowDataBinding.tests
                 (Tuple<int, int> x) =>
                     Tuple.Create(f(x.Item1), x.Item2)
                 );
-            Arrow<Tuple<int, int>, Tuple<int, int>> firstArr = Op.First<int, int, int>(Op.Arr(f));
+            Arrow<Tuple<int, int>, Tuple<int, int>> firstArr = Op.First(Op.Arr(f), default(int));
 
             return ArrowTestUtils.AssertPairArrowsGiveSameOutput(arrFirst, firstArr);
         }
@@ -315,8 +315,8 @@ namespace ArrowDataBinding.tests
             Arrow<int, int> f = Op.Arr(ArrowTestUtils.GenerateFunc());
             Arrow<int, int> g = Op.Arr(ArrowTestUtils.GenerateFunc());
 
-            Arrow<Tuple<int, int>, Tuple<int, int>> mergeFirst = new IDArrow<int>().And(g).Combine(f.First<int, int, int>());
-            Arrow<Tuple<int, int>, Tuple<int, int>> firstMerge = f.First<int, int, int>().Combine(new IDArrow<int>().And(g));
+            Arrow<Tuple<int, int>, Tuple<int, int>> mergeFirst = new IDArrow<int>().And(g).Combine(f.First(default(int)));
+            Arrow<Tuple<int, int>, Tuple<int, int>> firstMerge = f.First(default(int)).Combine(new IDArrow<int>().And(g));
 
             return ArrowTestUtils.AssertPairArrowsGiveSameOutput(mergeFirst, firstMerge);
         }
@@ -345,10 +345,10 @@ namespace ArrowDataBinding.tests
             AssocArrow<int, int, int> assoc = new AssocArrow<int, int, int>();
 
             Arrow<Tuple<Tuple<int, int>, int>, Tuple<int, Tuple<int, int>>> firstFirstArr =
-                f.First<int, int, int>().First<Tuple<int, int>, Tuple<int, int>, int>()
+                f.First(default(int)).First(default(int))
                 .Combine(assoc);
             Arrow<Tuple<Tuple<int, int>, int>, Tuple<int, Tuple<int, int>>> arrFirst =
-                assoc.Combine(f.First<int, int, Tuple<int, int>>());
+                assoc.Combine(f.First(default(Tuple<int, int>)));
 
             return ArrowTestUtils.AssertReassociationArrowsGiveSameOutput(firstFirstArr, arrFirst);
         }

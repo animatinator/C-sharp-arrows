@@ -21,7 +21,7 @@ namespace ArrowDataBinding.Combinators
         public static Arrow<A, C> Combine<A, B, C>(this Arrow<A, B> a1, Arrow<B, C> a2)
         {
             /*
-             * Combine arrows end-to-end (defined in the Arrow class itself for now)
+             * Combine arrows end-to-end.
              */
 
             Arrow<A, C> result = new Arrow<A, C>(
@@ -39,6 +39,17 @@ namespace ArrowDataBinding.Combinators
              */
 
             return And(arr, new IDArrow<C>());
+        }
+
+        public static Arrow<Tuple<A, C>, Tuple<B, C>> First<A, B, C>(this Arrow<A, B> arr, C nullArgument)
+        {
+            /*
+             * Defers to the standard First<A, B, C> implementation but takes an unused argument
+             * of type C so that all three type parameters can be inferred and needn't be written
+             * out in full by the programmer.
+             */
+
+            return First<A, B, C>(arr);
         }
 
         public static IArrow First<C>(this IArrow arr)
@@ -77,12 +88,22 @@ namespace ArrowDataBinding.Combinators
              * an arrow which runs the input arrow's function on the second argument of the tuple.
              */
 
-            // TODO: Make a version of first/second which only takes one type parameter
-            Arrow<Tuple<A, C>, Tuple<B, C>> fstArrow = First<A, B, C>(arr);
+            Arrow<Tuple<A, C>, Tuple<B, C>> fstArrow = First(arr, default(C));
 
             return new SwapArrow<C, A>()  // Swap the tuple
                 .Combine(fstArrow)  // Run the function on the first element
                 .Combine(new SwapArrow<B, C>());  // Swap the tuple back
+        }
+
+        public static Arrow<Tuple<C, A>, Tuple<C, B>> Second<A, B, C>(this Arrow<A, B> arr, C nullArgument)
+        {
+            /*
+             * Similar to First<A, B, C>(arr, nullArgument) in that the nullArgument is used only
+             * to determine the third type required so that the programmer needn't write out the
+             * type parameters. Simply defers to the usual implementation of Second.
+             */
+
+            return Second<A, B, C>(arr);
         }
 
         public static Arrow<Tuple<A, C>, Tuple<B, D>> And<A, B, C, D>(this Arrow<A, B> a1, Arrow<C, D> a2)
@@ -147,8 +168,8 @@ namespace ArrowDataBinding.Combinators
         public static Arrow<A, D> LiftA2<A, B, C, D>(Func<B, C, D> op, Arrow<A, B> a1, Arrow<A, C> a2)
         {
             return Split<A>()  // A -> split -> Tuple<A, A>
-                .Combine(First<A, B, A>(a1))  // Tuple<A, A> -> a1 -> Tuple<B, A>
-                .Combine(Second<A, C, B>(a2))  // Tuple<B, A> -> a2 -> Tuple<B, C>
+                .Combine(First(a1, default(A)))  // Tuple<A, A> -> a1 -> Tuple<B, A>
+                .Combine(Second(a2, default(B)))  // Tuple<B, A> -> a2 -> Tuple<B, C>
                 .Combine(Unsplit(op));  // Tuple<B, C> -> op(B, C) -> D
         }
     }
