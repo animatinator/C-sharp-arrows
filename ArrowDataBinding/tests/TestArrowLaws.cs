@@ -12,8 +12,6 @@ namespace ArrowDataBinding.tests
 {
     public class TestArrowLaws
     {
-        private const int testIterations = 1000;
-
         private delegate bool Test();
 
         private static List<Test> standardLawTests = new List<Test>
@@ -94,7 +92,7 @@ namespace ArrowDataBinding.tests
             Arrow<int, int> id = new IDArrow<int>();
             Arrow<int, int> combined = id.Combine(arrF);
 
-            return AssertArrowsGiveSameOutput(arrF, combined);
+            return ArrowTestUtils.AssertArrowsGiveSameOutput(arrF, combined);
         }
 
         public static bool TestLaw2()
@@ -107,7 +105,7 @@ namespace ArrowDataBinding.tests
             Arrow<int, int> id = new IDArrow<int>();
             Arrow<int, int> combined = arrF.Combine(id);
 
-            return AssertArrowsGiveSameOutput(arrF, combined);
+            return ArrowTestUtils.AssertArrowsGiveSameOutput(arrF, combined);
         }
 
         public static bool TestLaw3()
@@ -124,7 +122,7 @@ namespace ArrowDataBinding.tests
             Arrow<int, int> fgH = (arrF.Combine(arrG)).Combine(arrH);
             Arrow<int, int> fGH = arrF.Combine(arrG.Combine(arrH));
 
-            return AssertArrowsGiveSameOutput(fgH, fGH);
+            return ArrowTestUtils.AssertArrowsGiveSameOutput(fgH, fGH);
         }
 
         public static bool TestLaw4()
@@ -135,13 +133,13 @@ namespace ArrowDataBinding.tests
              * arr (g · f) = arr f >>> arr g
              */
 
-            Func<int, int> f = GenerateFunc();
-            Func<int, int> g = GenerateFunc();
+            Func<int, int> f = ArrowTestUtils.GenerateFunc();
+            Func<int, int> g = ArrowTestUtils.GenerateFunc();
 
             Arrow<int, int> arrowCompose = Op.Arr((int x) => g(f(x)));
             Arrow<int, int> composeArrows = Op.Arr(f).Combine(Op.Arr(g));
 
-            return AssertArrowsGiveSameOutput(arrowCompose, composeArrows);
+            return ArrowTestUtils.AssertArrowsGiveSameOutput(arrowCompose, composeArrows);
         }
 
         public static bool TestLaw5()
@@ -150,12 +148,12 @@ namespace ArrowDataBinding.tests
              * first (arr f) = arr (f x id)
              */
 
-            Func<int, int> f = GenerateFunc();
+            Func<int, int> f = ArrowTestUtils.GenerateFunc();
             Arrow<Tuple<int, int>, Tuple<int, int>> firstArr = Op.Arr(f).First<int, int, int>();
             Arrow<Tuple<int, int>, Tuple<int, int>> arrFId = Op.Arr(
                 (Tuple<int, int> x) => Tuple.Create(f(x.Item1), x.Item2));
 
-            return AssertPairArrowsGiveSameOutput(firstArr, arrFId);
+            return ArrowTestUtils.AssertPairArrowsGiveSameOutput(firstArr, arrFId);
         }
 
         public static bool TestLaw6()
@@ -165,14 +163,14 @@ namespace ArrowDataBinding.tests
              * first (f >>> g) = first f >>> first g
              */
 
-            Arrow<int, int> f = Op.Arr(GenerateFunc());
-            Arrow<int, int> g = Op.Arr(GenerateFunc());
+            Arrow<int, int> f = Op.Arr(ArrowTestUtils.GenerateFunc());
+            Arrow<int, int> g = Op.Arr(ArrowTestUtils.GenerateFunc());
 
             Arrow<Tuple<int, int>, Tuple<int, int>> firstOutside = f.Combine(g).First<int, int, int>();
             Arrow<Tuple<int, int>, Tuple<int, int>> firstDistributed = f.First<int, int, int>()
                 .Combine(g.First<int, int, int>());
 
-            return AssertPairArrowsGiveSameOutput(firstOutside, firstDistributed);
+            return ArrowTestUtils.AssertPairArrowsGiveSameOutput(firstOutside, firstDistributed);
         }
 
         public static bool TestLaw7()
@@ -193,12 +191,12 @@ namespace ArrowDataBinding.tests
              * first f >>> arr fst = arr fst >>> f
              */
 
-            Arrow<int, int> f = Op.Arr(GenerateFunc());
+            Arrow<int, int> f = Op.Arr(ArrowTestUtils.GenerateFunc());
             Arrow<Tuple<int, int>, int> fstArrow = Op.Arr((Tuple<int, int> x) => x.Item1);
             Arrow<Tuple<int, int>, int> firstFArrFst = f.First<int, int, int>().Combine(fstArrow);
             Arrow<Tuple<int, int>, int> arrFstF = fstArrow.Combine(f);
 
-            return AssertPairToSingleArrowsGiveSameOutput(firstFArrFst, arrFstF);
+            return ArrowTestUtils.AssertPairToSingleArrowsGiveSameOutput(firstFArrFst, arrFstF);
         }
 
         public static bool TestLaw9()
@@ -220,7 +218,7 @@ namespace ArrowDataBinding.tests
 
             // TODO: Make TestIdentity cleaner
 
-            IEnumerable<Type> types = GetBuiltInTypes();
+            IEnumerable<Type> types = ArrowTestUtils.GetBuiltInTypes();
 
             bool passed = true;
 
@@ -259,12 +257,12 @@ namespace ArrowDataBinding.tests
              * combination.
              */
 
-            Func<int, int> f = GenerateFunc();
-            Func<int, int> g = GenerateFunc();
+            Func<int, int> f = ArrowTestUtils.GenerateFunc();
+            Func<int, int> g = ArrowTestUtils.GenerateFunc();
             Func<int, int> fg = (x => g(f(x)));
             Arrow<int, int> arr = Op.Arr(f).Combine(Op.Arr(g));
 
-            return AssertArrowEqualsFunc(arr, fg);
+            return ArrowTestUtils.AssertArrowEqualsFunc(arr, fg);
         }
 
         public static bool TestFirstOperatorDistributivity()
@@ -275,8 +273,8 @@ namespace ArrowDataBinding.tests
              * This test is done using two arrows on pairs, f and g
              */
 
-            Arrow<int, int> f = Op.Arr(GenerateFunc());
-            Arrow<int, int> g = Op.Arr(GenerateFunc());
+            Arrow<int, int> f = Op.Arr(ArrowTestUtils.GenerateFunc());
+            Arrow<int, int> g = Op.Arr(ArrowTestUtils.GenerateFunc());
 
             Arrow<Tuple<int, int>, Tuple<int, int>> firstFG =
                 Op.First<int, int, int>(f.Combine(g));
@@ -284,7 +282,7 @@ namespace ArrowDataBinding.tests
             Arrow<Tuple<int, int>, Tuple<int, int>> firstFfirstG =
                 Op.First<int, int, int>(f).Combine(Op.First<int, int, int>(g));
 
-            return AssertPairArrowsGiveSameOutput(firstFG, firstFfirstG);
+            return ArrowTestUtils.AssertPairArrowsGiveSameOutput(firstFG, firstFfirstG);
         }
 
         public static bool TestArrFirstOrderingIrrelevance()
@@ -295,14 +293,14 @@ namespace ArrowDataBinding.tests
              * arr (first f) = first (arr f)
              */
 
-            Func<int, int> f = GenerateFunc();
+            Func<int, int> f = ArrowTestUtils.GenerateFunc();
             Arrow<Tuple<int, int>, Tuple<int, int>> arrFirst = Op.Arr(
                 (Tuple<int, int> x) =>
                     Tuple.Create(f(x.Item1), x.Item2)
                 );
             Arrow<Tuple<int, int>, Tuple<int, int>> firstArr = Op.First<int, int, int>(Op.Arr(f));
 
-            return AssertPairArrowsGiveSameOutput(arrFirst, firstArr);
+            return ArrowTestUtils.AssertPairArrowsGiveSameOutput(arrFirst, firstArr);
         }
 
         public static bool TestPipingCommutativity()
@@ -314,13 +312,13 @@ namespace ArrowDataBinding.tests
              * This is tested by constructing the two arrows and checking their outputs match.
              */
 
-            Arrow<int, int> f = Op.Arr(GenerateFunc());
-            Arrow<int, int> g = Op.Arr(GenerateFunc());
+            Arrow<int, int> f = Op.Arr(ArrowTestUtils.GenerateFunc());
+            Arrow<int, int> g = Op.Arr(ArrowTestUtils.GenerateFunc());
 
             Arrow<Tuple<int, int>, Tuple<int, int>> mergeFirst = new IDArrow<int>().And(g).Combine(f.First<int, int, int>());
             Arrow<Tuple<int, int>, Tuple<int, int>> firstMerge = f.First<int, int, int>().Combine(new IDArrow<int>().And(g));
 
-            return AssertPairArrowsGiveSameOutput(mergeFirst, firstMerge);
+            return ArrowTestUtils.AssertPairArrowsGiveSameOutput(mergeFirst, firstMerge);
         }
 
         public static bool TestFirstPipingSimplification()
@@ -331,11 +329,11 @@ namespace ArrowDataBinding.tests
              * That is, first f >>> arr ((s,t) -> s) = arr ((s,t) -> s) >>> f
              */
 
-            Arrow<int, int> f = Op.Arr(GenerateFunc());
+            Arrow<int, int> f = Op.Arr(ArrowTestUtils.GenerateFunc());
             Arrow<Tuple<int, int>, int> firstFArr = Op.First<int, int, int>(f).Combine(Op.Arr((Tuple<int, int> x) => x.Item1));
             Arrow<Tuple<int, int>, int> arrF = Op.Arr((Tuple<int, int> x) => x.Item1).Combine(f);
 
-            return AssertPairToSingleArrowsGiveSameOutput(firstFArr, arrF);
+            return ArrowTestUtils.AssertPairToSingleArrowsGiveSameOutput(firstFArr, arrF);
         }
 
         public static bool TestPipingReassociation()
@@ -343,7 +341,7 @@ namespace ArrowDataBinding.tests
             // TODO: Finish TestPipingReassociation
             // TODO: Make the code in TestPipingReassociation less awful
 
-            Arrow<int, int> f = Op.Arr(GenerateFunc());
+            Arrow<int, int> f = Op.Arr(ArrowTestUtils.GenerateFunc());
             AssocArrow<int, int, int> assoc = new AssocArrow<int, int, int>();
 
             Arrow<Tuple<Tuple<int, int>, int>, Tuple<int, Tuple<int, int>>> firstFirstArr =
@@ -352,169 +350,7 @@ namespace ArrowDataBinding.tests
             Arrow<Tuple<Tuple<int, int>, int>, Tuple<int, Tuple<int, int>>> arrFirst =
                 assoc.Combine(f.First<int, int, Tuple<int, int>>());
 
-            return AssertReassociationArrowsGiveSameOutput(firstFirstArr, arrFirst);
-        }
-
-
-        public static Func<int, int> GenerateFunc()
-        {
-            List<Func<int, int>> functions = new List<Func<int, int>> {
-                (x => (x * 5) - 4),
-                (x => (x + 3) * 9),
-                (x => (x - 78) * x),
-                (x => (x - 1) * x)
-            };
-
-            Random rand = new Random();
-
-            return functions[rand.Next(functions.Count)];
-        }
-
-        public static Func<Tuple<int, int>, Tuple<int, int>> GenerateTupleFunc()
-        {
-            List<Func<Tuple<int, int>, Tuple<int, int>>> functions = new List<Func<Tuple<int, int>, Tuple<int, int>>> {
-                (x => Tuple.Create(x.Item1 - 3, x.Item2 * 4)),
-                (x => Tuple.Create(x.Item1 + x.Item2, x.Item2 * 4 - 3*x.Item1)),
-                (x => Tuple.Create(x.Item1 * x.Item2, x.Item2 - 79)),
-                (x => Tuple.Create(x.Item1 - 3 * x.Item2, x.Item1 * 3)),
-            };
-
-            Random rand = new Random();
-
-            return functions[rand.Next(functions.Count)];
-        }
-
-        public static IEnumerable<Type> GetBuiltInTypes()
-        {
-            /*
-             * Returns a list of types to iterate through
-             */
-
-            return typeof(int).Assembly
-                              .GetTypes()
-                              .Where(t => t.IsPrimitive);
-        }
-
-
-        public static bool AssertArrowsGiveSameOutput<A, B>(Arrow<A, B> arr1, Arrow<A, B> arr2)
-        {
-            Debug.Assert(arr1 != null);
-            Debug.Assert(arr2 != null);
-
-            Random rand = new Random();
-            bool passed = true;
-
-            for (int i = 0; i < testIterations; i++)
-            {
-                int input = rand.Next();
-                if (arr1.Invoke(input) != arr2.Invoke(input))
-                {
-                    passed = false;
-                }
-            }
-
-            return passed;
-        }
-
-        public static bool AssertArrowEqualsFunc(Arrow<int, int> arrow, Func<int, int> func)
-        {
-            Debug.Assert(arrow != null);
-            Debug.Assert(func != null);
-
-            Random rand = new Random();
-            bool passed = true;
-
-            for (int i = 0; i < testIterations; i++)
-            {
-                int input = rand.Next();
-                if (arrow.Invoke(input) != func.Invoke(input))
-                {
-                    passed = false;
-                }
-            }
-
-            return passed;
-        }
-
-        public static bool AssertPairArrowsGiveSameOutput(Arrow<Tuple<int, int>, Tuple<int, int>> arr1,
-            Arrow<Tuple<int, int>, Tuple<int, int>> arr2)
-        {
-            Debug.Assert(arr1 != null);
-            Debug.Assert(arr2 != null);
-
-            Random rand = new Random();
-            bool passed = true;
-
-            for (int i = 0; i < testIterations; i++)
-            {
-                int inputA = rand.Next();
-                int inputB = rand.Next();
-
-                Tuple<int, int> pairResult1 = arr1.Invoke(Tuple.Create(inputA, inputB));
-                Tuple<int, int> pairResult2 = arr2.Invoke(Tuple.Create(inputA, inputB));
-
-                if (!pairResult1.Equals(pairResult2))
-                {
-                    passed = false;
-                }
-            }
-
-            return passed;
-        }
-
-        public static bool AssertPairToSingleArrowsGiveSameOutput(Arrow<Tuple<int, int>, int> arr1,
-            Arrow<Tuple<int, int>, int> arr2)
-        {
-            Debug.Assert(arr1 != null);
-            Debug.Assert(arr2 != null);
-
-            Random rand = new Random();
-            bool passed = true;
-
-            for (int i = 0; i < testIterations; i++)
-            {
-                int inputA = rand.Next();
-                int inputB = rand.Next();
-
-                int result1 = arr1.Invoke(Tuple.Create(inputA, inputB));
-                int result2 = arr2.Invoke(Tuple.Create(inputA, inputB));
-
-                if (result1 != result2)
-                {
-                    passed = false;
-                }
-            }
-
-            return passed;
-        }
-
-        public static bool AssertReassociationArrowsGiveSameOutput(
-            Arrow<Tuple<Tuple<int, int>, int>, Tuple<int, Tuple<int, int>>> arr1,
-            Arrow<Tuple<Tuple<int, int>, int>, Tuple<int, Tuple<int, int>>> arr2)
-        {
-            Debug.Assert(arr1 != null);
-            Debug.Assert(arr2 != null);
-
-            Random rand = new Random();
-            bool passed = true;
-
-            for (int i = 0; i < testIterations; i++)
-            {
-                int inputA = rand.Next();
-                int inputB = rand.Next();
-                Tuple<int, int> inputTuple = Tuple.Create(inputA, inputB);
-                int inputInt = rand.Next();
-
-                Tuple<int, Tuple<int, int>> result1 = arr1.Invoke(Tuple.Create(inputTuple, inputInt));
-                Tuple<int, Tuple<int, int>> result2 = arr2.Invoke(Tuple.Create(inputTuple, inputInt));
-
-                if (!result1.Equals(result2))
-                {
-                    passed = false;
-                }
-            }
-
-            return passed;
+            return ArrowTestUtils.AssertReassociationArrowsGiveSameOutput(firstFirstArr, arrFirst);
         }
     }
 }
