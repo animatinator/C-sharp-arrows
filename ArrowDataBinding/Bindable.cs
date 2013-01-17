@@ -75,6 +75,26 @@ namespace ArrowDataBinding.Bindings
                 throw new BoundVariableNotFoundException(var, obj.GetType().ToString());
             }
         }
+
+
+        public override bool Equals(object obj)
+        {
+            if (obj is BindPoint)
+            {
+                BindPoint otherBindPoint = (BindPoint)obj;
+                return (ReferenceEquals(this.Object, otherBindPoint.Object)
+                    && this.Var == otherBindPoint.Var);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return Object.GetHashCode() + Var.GetHashCode();
+        }
     }
 
 
@@ -152,8 +172,10 @@ namespace ArrowDataBinding.Bindings
 
             if (PropertyChanged != null)
             {
-                // TODO: Maybe check if the varname exists and is a property?
-                PropertyChanged(this, new PropertyChangedEventArgs(varName));
+                if (HasProperty(varName))
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(varName));
+                }
             }
         }
 
@@ -187,7 +209,6 @@ namespace ArrowDataBinding.Bindings
             else throw new BoundVariableNotFoundException(varName, this.GetType().ToString());
         }
 
-        //TODO: Maybe the different setters and getters for properties and fields could use the Template pattern or similar to avoid code duplication?
         private void SetProperty<T>(string propName, T val)
         {
             Type type = this.GetType();

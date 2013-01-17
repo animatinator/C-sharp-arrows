@@ -338,8 +338,12 @@ namespace ArrowDataBinding.tests
 
         public static bool TestPipingReassociation()
         {
-            // TODO: Finish TestPipingReassociation
-            // TODO: Make the code in TestPipingReassociation less awful
+            /*
+             * Tests the following thing:
+             * first (first f) >>> arr assoc = arr assoc >>> first f
+             * The code itself is probably more expressive than any explanation I could come up
+             * with.
+             */
 
             Arrow<int, int> f = Op.Arr(ArrowTestUtils.GenerateFunc());
             AssocArrow<int, int, int> assoc = new AssocArrow<int, int, int>();

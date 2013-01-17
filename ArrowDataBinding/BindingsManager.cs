@@ -2,10 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections;
 using ArrowDataBinding.Arrows;
 
 namespace ArrowDataBinding.Bindings
 {
+    [Serializable]
+    public class BindingCycleException : Exception
+    {
+        public BindingCycleException()
+            : base("The binding you have attempted to add would lead to a binding cycle which would " +
+            "cause unpredictable behaviour.")
+        { }
+    }
+
     public struct BindingHandle
     {
         private Guid id;
@@ -45,7 +55,7 @@ namespace ArrowDataBinding.Bindings
 
     public class BindingsManager
     {
-        // TODO: Need some sort of hashmap from binding handles to Binding objects
+        private static Dictionary<BindingHandle, IBinding> bindings = new Dictionary<BindingHandle,IBinding>();
 
         public static BindingHandle CreateBinding<A, B>(Bindable source, string sourceProperty, Arrow<A, B> arrow, Bindable destination, string destinationProperty)
         {
@@ -57,7 +67,7 @@ namespace ArrowDataBinding.Bindings
 
         public static BindingHandle CreateBinding<A, B>(BindPoint source, Arrow<A, B> arrow, BindPoint destination)
         {
-            // TODO: Check for cycles here
+            if (LinkWouldCauseCycle(source, destination)) throw new BindingCycleException();
 
             Binding<A, B> result;
 
@@ -70,7 +80,10 @@ namespace ArrowDataBinding.Bindings
                 result = new Binding<A, B>(source, arrow, destination);
             }
 
-            return new BindingHandle(result);
+            BindingHandle handle = new BindingHandle(result);
+            bindings.Add(handle, result);
+
+            return handle;
         }
 
         public static BindingHandle CreateBinding<A, B>(BindPoint[] sources, Arrow<A, B> arrow, BindPoint[] destinations)
@@ -85,8 +98,14 @@ namespace ArrowDataBinding.Bindings
              *         Destinations(BindPoint(obj'', var'')))
              */
 
-            // ...
+            // TODO: multibinding constructor
             return new BindingHandle();
+        }
+
+        public static bool LinkWouldCauseCycle(BindPoint a, BindPoint b)
+        {
+            // TODO: Cycle checking code
+            return false;
         }
 
 
