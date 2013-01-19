@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ArrowDataBinding.Bindings.BindingGraph
+namespace ArrowDataBinding.Bindings.Graph
 {
     public class BindingNode
     {
@@ -33,7 +33,15 @@ namespace ArrowDataBinding.Bindings.BindingGraph
 
         public void Add(BindPoint point)
         {
-            nodes.Add(new BindingNode(point));
+            if (NotAlreadyInGraph(point))
+            {
+                nodes.Add(new BindingNode(point));
+            }
+        }
+
+        public bool NotAlreadyInGraph(BindPoint point)
+        {
+            return nodes.Where(x => x.Vertex.Equals(point)).FirstOrDefault() == null;
         }
 
         public void Bind(BindPoint first, BindPoint second)
@@ -53,6 +61,57 @@ namespace ArrowDataBinding.Bindings.BindingGraph
         private BindingNode FindNodeForPoint(BindPoint point)
         {
             return nodes.First(x => x.Vertex.Equals(point));
+        }
+
+
+        public bool HasCycle()
+        {
+            HashSet<BindingNode> unvisited = new HashSet<BindingNode>();
+            foreach (BindingNode node in nodes)
+            {
+                unvisited.Add(node);
+            }
+
+            bool cycle = false;
+            BindingNode currentNode;
+            while (unvisited.Count > 0)
+            {
+                currentNode = unvisited.First(x => true);
+                cycle = cycle || CycleFromCurrentNode(currentNode, unvisited, new HashSet<BindingNode>());
+            }
+
+            return cycle;
+        }
+
+        private bool CycleFromCurrentNode(BindingNode node, HashSet<BindingNode> unvisited, HashSet<BindingNode> seen)
+        {
+            if (seen.Contains(node)) return true;
+            else
+            {
+                unvisited.Remove(node);
+                seen.Add(node);
+
+                bool cycle = false;
+
+                foreach (BindingNode child in node.AdjacentNodes)
+                {
+                    cycle = cycle || CycleFromCurrentNode(child, unvisited, seen);
+                }
+
+                return cycle;
+            }
+        }
+
+        public BindingGraph Copy()
+        {
+            BindingGraph newGraph = new BindingGraph();
+
+            foreach (BindingNode node in nodes)
+            {
+                newGraph.nodes.Add(node);
+            }
+
+            return newGraph;
         }
     }
 }

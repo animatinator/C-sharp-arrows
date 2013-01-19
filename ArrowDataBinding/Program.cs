@@ -12,7 +12,7 @@ namespace ArrowDataBinding
     {
         static void Main(string[] args)
         {
-            TestArrowLaws tests = new TestArrowLaws();
+            CycleDetectionTests tests = new CycleDetectionTests();
             tests.Run();
         }
     }

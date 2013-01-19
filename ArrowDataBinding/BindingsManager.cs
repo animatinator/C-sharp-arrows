@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 using ArrowDataBinding.Arrows;
+using ArrowDataBinding.Bindings.Graph;
+using ArrowDataBinding.Utils;
 
 namespace ArrowDataBinding.Bindings
 {
@@ -56,6 +58,7 @@ namespace ArrowDataBinding.Bindings
     public class BindingsManager
     {
         private static Dictionary<BindingHandle, IBinding> bindings = new Dictionary<BindingHandle,IBinding>();
+        private static BindingGraph bindGraph = new BindingGraph();
 
         public static BindingHandle CreateBinding<A, B>(Bindable source, string sourceProperty, Arrow<A, B> arrow, Bindable destination, string destinationProperty)
         {
@@ -74,10 +77,12 @@ namespace ArrowDataBinding.Bindings
             if (arrow is InvertibleArrow<A, B>)
             {
                 result = new TwoWayBinding<A, B>(source, (InvertibleArrow<A, B>)arrow, destination);
+                UpdateBindingGraphBothWays(source, destination);
             }
             else
             {
                 result = new Binding<A, B>(source, arrow, destination);
+                UpdateBindingGraph(source, destination);
             }
 
             BindingHandle handle = new BindingHandle(result);
@@ -102,20 +107,26 @@ namespace ArrowDataBinding.Bindings
             return new BindingHandle();
         }
 
-        public static bool LinkWouldCauseCycle(BindPoint a, BindPoint b)
+        public static void UpdateBindingGraph(BindPoint source, BindPoint destination)
         {
-            // TODO: Cycle checking code
-            return false;
+            bindGraph.Add(source);
+            bindGraph.Add(destination);
+            bindGraph.Bind(source, destination);
         }
 
-
-        public static BindPoint BindPoint(Bindable obj, string varName)
+        public static void UpdateBindingGraphBothWays(BindPoint a, BindPoint b)
         {
-            /*
-             * Helper function for quickly creating BindPoint objects
-             */
+            UpdateBindingGraph(a, b);
+            UpdateBindingGraph(b, a);
+        }
 
-            return new BindPoint(obj, varName);
+        public static bool LinkWouldCauseCycle(BindPoint a, BindPoint b)
+        {
+            BindingGraph tempGraph = bindGraph.Copy();
+            tempGraph.Add(a);
+            tempGraph.Add(b);
+            tempGraph.Bind(a, b);
+            return tempGraph.HasCycle();
         }
 
         public static BindPoint[] BindPoints(params BindPoint[] parameters)
@@ -143,6 +154,19 @@ namespace ArrowDataBinding.Bindings
              */
 
             return BindPoints(dests);
+        }
+    }
+
+
+    public static class BindingsManagerExtensionMethods
+    {
+        public static BindPoint GetBindPoint(this Bindable obj, string varName)
+        {
+            /*
+             * Helper function for quickly creating BindPoint objects
+             */
+
+            return new BindPoint(obj, varName);
         }
     }
 }

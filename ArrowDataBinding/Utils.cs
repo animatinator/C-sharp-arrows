@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace ArrowDataBinding.Utils
 {
@@ -50,7 +52,7 @@ namespace ArrowDataBinding.Utils
         }
     }
 
-    static class TupleOp
+    public static class TupleOp
     {
         public static Tuple<A, Tuple<B, C>> Assoc<A, B, C>(Tuple<Tuple<A, B>, C> input)
         {
@@ -60,6 +62,21 @@ namespace ArrowDataBinding.Utils
         public static Tuple<Tuple<A, B>, C> Cossa<A, B, C>(Tuple<A, Tuple<B, C>> input)
         {
             return Tuple.Create(Tuple.Create(input.Item1, input.Item2.Item1), input.Item2.Item2);
+        }
+    }
+
+    public static class ExtensionMethods
+    {
+        // Deep clone
+        public static T DeepClone<T>(this T a)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, a);
+                stream.Position = 0;
+                return (T)formatter.Deserialize(stream);
+            }
         }
     }
 }

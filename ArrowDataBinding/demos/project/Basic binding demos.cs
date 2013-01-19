@@ -38,7 +38,7 @@ namespace ArrowDataBinding.demos.project
             Source source = new Source();
             Destination dest = new Destination();
             Arrow<int, int> arr = new IDArrow<int>();
-            BindingsManager.CreateBinding(BindingsManager.BindPoint(source, "source"), arr, BindingsManager.BindPoint(dest, "result"));
+            BindingsManager.CreateBinding(source.GetBindPoint("source"), arr, dest.GetBindPoint("result"));
 
             bool passed = true;
             Random rand = new Random();
@@ -59,7 +59,7 @@ namespace ArrowDataBinding.demos.project
             Source source = new Source();
             Destination dest = new Destination();
             InvertibleArrow<int, int> arr = Op.Arr((int x) => x + 1, (int x) => x - 1);
-            BindingsManager.CreateBinding(BindingsManager.BindPoint(source, "source"), arr, BindingsManager.BindPoint(dest, "result"));
+            BindingsManager.CreateBinding(source.GetBindPoint("source"), arr, dest.GetBindPoint("result"));
 
             bool passed = true;
             Random rand = new Random();
