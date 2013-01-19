@@ -74,16 +74,17 @@ namespace ArrowDataBinding.Bindings.Graph
 
             bool cycle = false;
             BindingNode currentNode;
+
             while (unvisited.Count > 0)
             {
                 currentNode = unvisited.First(x => true);
-                cycle = cycle || CycleFromCurrentNode(currentNode, unvisited, new HashSet<BindingNode>());
+                cycle = cycle || CycleFromCurrentNode(currentNode, null, unvisited, new HashSet<BindingNode>());
             }
 
             return cycle;
         }
 
-        private bool CycleFromCurrentNode(BindingNode node, HashSet<BindingNode> unvisited, HashSet<BindingNode> seen)
+        private bool CycleFromCurrentNode(BindingNode node, BindingNode previousNode, HashSet<BindingNode> unvisited, HashSet<BindingNode> seen)
         {
             if (seen.Contains(node)) return true;
             else
@@ -93,9 +94,10 @@ namespace ArrowDataBinding.Bindings.Graph
 
                 bool cycle = false;
 
-                foreach (BindingNode child in node.AdjacentNodes)
+                foreach (BindingNode child in node.AdjacentNodes
+                    .Where(child => !child.Equals(previousNode)))  // Prevent the traversal from looping back over two-way bindings
                 {
-                    cycle = cycle || CycleFromCurrentNode(child, unvisited, seen);
+                    cycle = cycle || CycleFromCurrentNode(child, node, unvisited, seen);
                 }
 
                 return cycle;

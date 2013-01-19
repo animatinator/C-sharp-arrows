@@ -16,15 +16,40 @@ namespace ArrowDataBinding.tests
             B b = new B();
             C c = new C();
 
-            BindingHandle bind = BindingsManager.CreateBinding(
+            BindingHandle aToB = BindingsManager.CreateBinding(
                 a.GetBindPoint("Value"),
                 id,
                 b.GetBindPoint("Value"));
 
-            BindingHandle bind1 = BindingsManager.CreateBinding(
+            BindingHandle bToA = BindingsManager.CreateBinding(
                 b.GetBindPoint("Value"),
                 id,
                 a.GetBindPoint("Value"));
+
+            BindingHandle bToC = BindingsManager.CreateBinding(
+                b.GetBindPoint("Value"),
+                id,
+                c.GetBindPoint("Value")
+                );
+
+            BindingHandle cToB = BindingsManager.CreateBinding(
+                c.GetBindPoint("Value"),
+                id,
+                b.GetBindPoint("Value")
+                );
+
+            try
+            {
+                BindingHandle cToA = BindingsManager.CreateBinding(
+                    c.GetBindPoint("Value"),
+                    id,
+                    a.GetBindPoint("Value")
+                    );
+            }
+            catch (BindingCycleException)
+            {
+                Console.WriteLine("Cycle exception was thrown successfully!");
+            }
         }
     }
 
