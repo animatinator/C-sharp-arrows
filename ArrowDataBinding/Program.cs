@@ -12,8 +12,8 @@ namespace ArrowDataBinding
     {
         static void Main(string[] args)
         {
-            CycleDetectionTests tests = new CycleDetectionTests();
-            tests.Run();
+            ArrowDemos demos = new ArrowDemos();
+            demos.Run();
         }
     }
 }

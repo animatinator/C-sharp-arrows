@@ -173,4 +173,101 @@ namespace ArrowDataBinding.Arrows
                 TupleOp.Cossa(x)
             ) { }
     }
+
+
+    // List processing arrows
+    public class ListArrow<A, B> : Arrow<IEnumerable<A>, IEnumerable<B>>
+    {
+        /*
+         * A base class for list arrows to allow them to be referred to and combined under a common
+         * type (rather than having to either give combinations of list arrows a dynamic type or
+         * type Arrow<IEnumerable<A>, IEnumerable<B>> - the list arrow programmer shouldn't need
+         * to care about that).
+         */
+        public ListArrow(Func<IEnumerable<A>, IEnumerable<B>> listFunc)
+            : base(listFunc)
+        { }
+    }
+
+    public static class ListArrow
+    {
+        /*
+         * Holds handy functions for creating list arrows without specifying type parameters.
+         */
+        public static FilterArrow<A> Filter<A>(Func<A, bool> predicate)
+        {
+            return new FilterArrow<A>(predicate);
+        }
+
+        public static MapArrow<A, B> Map<A, B>(Func<A, B> transformation)
+        {
+            return new MapArrow<A, B>(transformation);
+        }
+
+        // TODO: Can't do this for OrderByArrow as the below doesn't work - apparently lambdas
+        // can't be dynamic or something?
+        public static OrderByArrow<A> OrderBy<A>(dynamic comparison)
+        {
+            // Have to use a dynamic argument because it is a delegate type which depends on the
+            // type parameter passed in - not possible as far as I know.
+            return new OrderByArrow<A>(comparison);
+        }
+    }
+
+    public class FilterArrow<A> : ListArrow<A, A>
+    {
+        /*
+         * A utility arrow for quickly filtering an IEnumerable based on a predicate
+         */
+        public FilterArrow(Func<A, bool> predicate)
+            : base((IEnumerable<A> list) => list.Where(predicate))
+        { }
+    }
+
+    public class MapArrow<A, B> : ListArrow<A, B>
+    {
+        /*
+         * Allows one IEnumerable<A> to be mapped to another with type B by way of a user-supplied
+         * transformation func
+         */
+        public MapArrow(Func<A, B> transformation)
+            : base((IEnumerable<A> list) => list.Select(transformation))
+        { }
+    }
+
+    public class OrderByArrow<A> : ListArrow<A, A>
+    {
+        /*
+         * Utility arrow for ordering an IEnumerable using a function passed in by the user.
+         * Makes use of the FuncComparer class below.
+         */
+        public delegate int comparer(A a, A b);
+
+        public OrderByArrow(comparer comparerFunc)
+            : base((IEnumerable<A> list) =>
+                list.OrderBy(
+                    (x => x),
+                    new FuncComparer<A>((Tuple<A, A> pair) =>
+                        comparerFunc(pair.Item1, pair.Item2))).ToList())
+        { }
+    }
+
+    public class FuncComparer<A> : IComparer<A>
+    {
+        /*
+         * A utility comparer which allows an IComparer to be set up using a Func from a tuple to
+         * an int. Originally written for the OrderByArrow.
+         */
+        private Func<Tuple<A, A>, int> comparerFunc;
+
+        public FuncComparer(Func<Tuple<A, A>, int> comparerFunc)
+        {
+            this.comparerFunc = comparerFunc;
+        }
+
+        public int Compare(A x, A y)
+        {
+            return comparerFunc(Tuple.Create(x, y));
+        }
+    }
 }
