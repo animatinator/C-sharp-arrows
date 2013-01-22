@@ -39,17 +39,27 @@ namespace ArrowDataBinding.demos.project
                 "Cambridge"
             };
 
-            var sorter = ListArrow.Map((String x) => Tuple.Create(x, x.Length))
+            ListArrow<String, String> sorter = ListArrow.Map((String x) => Tuple.Create(x, x.Length))
                 .Combine(new OrderByArrow<Tuple<String, int>>((s1, s2) => s1.Item2 - s2.Item2)
                 .Combine(ListArrow.Map((Tuple<String, int> x) => x.Item1)))
                 .Combine(ListArrow.Filter((String x) => x.IndexOf('E') != 0));
-            // TODO: Having to use vars here rather than ListArrows because the Combine method is
-            // getting all pedantic about types so the result of Combine is an Arrow rather than
-            // a ListArrow. This therefore prevents the result being a ListArrow because an
-            // implicit downcast does not (and, by C#'s rules, cannot) exist. Maybe need a new
-            // Combine extension method written for ListArrows?
 
             var result = sorter.Invoke(cities);
+            foreach (var s in result)
+            {
+                Console.WriteLine(s);
+            }
+
+            Console.WriteLine();
+
+            ListArrow<String, String> cityArrow =
+                ListArrow.Map((String city) => Tuple.Create(city, city.Length))
+                .Filter((Tuple<String, int> cityTuple) => cityTuple.Item2 > 7)
+                .Map((Tuple<String, int> cityTuple) => cityTuple.Item1)
+                .Filter((String city) => city != "Newcastle")
+                .Filter((String city) => city != "Manchester");
+
+            result = cityArrow.Invoke(cities);
             foreach (var s in result)
             {
                 Console.WriteLine(s);
