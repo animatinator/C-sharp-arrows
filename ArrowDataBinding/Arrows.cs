@@ -204,12 +204,8 @@ namespace ArrowDataBinding.Arrows
             return new MapArrow<A, B>(transformation);
         }
 
-        // TODO: Can't do this for OrderByArrow as the below doesn't work - apparently lambdas
-        // can't be dynamic or something?
-        public static OrderByArrow<A> OrderBy<A>(dynamic comparison)
+        public static OrderByArrow<A> OrderBy<A>(Func<A, A, int> comparison)
         {
-            // Have to use a dynamic argument because it is a delegate type which depends on the
-            // type parameter passed in - not possible as far as I know.
             return new OrderByArrow<A>(comparison);
         }
     }
@@ -243,7 +239,7 @@ namespace ArrowDataBinding.Arrows
          */
         public delegate int comparer(A a, A b);
 
-        public OrderByArrow(comparer comparerFunc)
+        public OrderByArrow(Func<A, A, int> comparerFunc)
             : base((IEnumerable<A> list) =>
                 list.OrderBy(
                     (x => x),

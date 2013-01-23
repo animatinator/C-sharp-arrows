@@ -40,7 +40,7 @@ namespace ArrowDataBinding.demos.project
             };
 
             ListArrow<String, String> sorter = ListArrow.Map((String x) => Tuple.Create(x, x.Length))
-                .Combine(new OrderByArrow<Tuple<String, int>>((s1, s2) => s1.Item2 - s2.Item2)
+                .Combine(ListArrow.OrderBy<Tuple<String, int>>((s1, s2) => s1.Item2 - s2.Item2)
                 .Combine(ListArrow.Map((Tuple<String, int> x) => x.Item1)))
                 .Combine(ListArrow.Filter((String x) => x.IndexOf('E') != 0));
 
@@ -56,8 +56,8 @@ namespace ArrowDataBinding.demos.project
                 ListArrow.Map((String city) => Tuple.Create(city, city.Length))
                 .Filter((Tuple<String, int> cityTuple) => cityTuple.Item2 > 7)
                 .Map((Tuple<String, int> cityTuple) => cityTuple.Item1)
-                .Filter((String city) => city != "Newcastle")
-                .Filter((String city) => city != "Manchester");
+                .Filter((String city) => city != "Manchester")
+                .OrderBy((String c1, String c2) => c1.CompareTo(c2));
 
             result = cityArrow.Invoke(cities);
             foreach (var s in result)

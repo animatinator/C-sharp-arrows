@@ -46,5 +46,12 @@ namespace ArrowDataBinding.Combinators
 
             return listArrow.Combine(mapArrow);
         }
+
+        public static ListArrow<A, B> OrderBy<A, B>(this ListArrow<A, B> listArrow, Func<B, B, int> comparer)
+        {
+            OrderByArrow<B> orderByArrow = ListArrow.OrderBy(comparer);
+
+            return listArrow.Combine(orderByArrow);
+        }
     }
 }
