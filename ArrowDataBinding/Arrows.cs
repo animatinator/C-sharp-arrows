@@ -237,8 +237,6 @@ namespace ArrowDataBinding.Arrows
          * Utility arrow for ordering an IEnumerable using a function passed in by the user.
          * Makes use of the FuncComparer class below.
          */
-        public delegate int comparer(A a, A b);
-
         public OrderByArrow(Func<A, A, int> comparerFunc)
             : base((IEnumerable<A> list) =>
                 list.OrderBy(
