@@ -227,7 +227,7 @@ namespace ArrowDataBinding.Arrows
          * transformation func
          */
         public MapArrow(Func<A, B> transformation)
-            : base((IEnumerable<A> list) => list.Select(transformation))
+            : base((IEnumerable<A> list) => list.Select(transformation).ToList())
         { }
     }
 

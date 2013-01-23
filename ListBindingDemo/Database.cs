@@ -76,7 +76,9 @@ namespace ListBindingDemo
                 new Order("VS2012", ms, 57, jack),
                 new Order("Happy meal", mcDonalds, 1, morag),
                 new Order("Google car", google, 3, james),
-                new Order("MS Word", ms, 1, david)
+                new Order("MS Word", ms, 1, david),
+                new Order("Nexus 7", google, 1, brenda),
+                new Order("Haggis", mcDonalds, 50, will)
             };
         }
     }
