@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArrowDataBinding", "ArrowDa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFormDemo", "SimpleFormDemo\SimpleFormDemo.csproj", "{4BAA0301-4A92-4D09-8E50-4D35C3500650}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListBindingDemo", "ListBindingDemo\ListBindingDemo.csproj", "{335CE176-F03B-429E-824F-DF6EC9349679}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,16 @@ Global
 		{4BAA0301-4A92-4D09-8E50-4D35C3500650}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{4BAA0301-4A92-4D09-8E50-4D35C3500650}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{4BAA0301-4A92-4D09-8E50-4D35C3500650}.Release|x86.ActiveCfg = Release|Any CPU
+		{335CE176-F03B-429E-824F-DF6EC9349679}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{335CE176-F03B-429E-824F-DF6EC9349679}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{335CE176-F03B-429E-824F-DF6EC9349679}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{335CE176-F03B-429E-824F-DF6EC9349679}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{335CE176-F03B-429E-824F-DF6EC9349679}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{335CE176-F03B-429E-824F-DF6EC9349679}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{335CE176-F03B-429E-824F-DF6EC9349679}.Release|Any CPU.Build.0 = Release|Any CPU
+		{335CE176-F03B-429E-824F-DF6EC9349679}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{335CE176-F03B-429E-824F-DF6EC9349679}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{335CE176-F03B-429E-824F-DF6EC9349679}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

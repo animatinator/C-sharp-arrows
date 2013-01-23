@@ -57,7 +57,7 @@
     <Compile Include="combinators\ArrowOperators.cs" />
     <Compile Include="combinators\Common.cs" />
     <Compile Include="combinators\InvertibleArrowOperators.cs" />
-    <Compile Include="combinators\ListArrowCombinators.cs" />
+    <Compile Include="combinators\ListArrowOperators.cs" />
     <Compile Include="demos\LambdaCombinator.cs" />
     <Compile Include="demos\project\Arrow demos.cs" />
     <Compile Include="demos\project\Basic binding demos.cs" />

@@ -216,7 +216,7 @@ namespace ArrowDataBinding.Arrows
          * A utility arrow for quickly filtering an IEnumerable based on a predicate
          */
         public FilterArrow(Func<A, bool> predicate)
-            : base((IEnumerable<A> list) => list.Where(predicate))
+            : base((IEnumerable<A> list) => list.Where(predicate).ToList())
         { }
     }
 
