@@ -53,5 +53,15 @@ namespace ArrowDataBinding.Combinators
 
             return listArrow.Combine(orderByArrow);
         }
+
+
+        // Fold operations
+
+        public static Arrow<IEnumerable<A>, B> Foldl<A, B>(this ListArrow<A, B> listArrow, Func<B, B, B> fold, B zero)
+        {
+            Arrow<IEnumerable<B>, B> foldArrow = ListArrow.Foldl(fold, zero);
+
+            return listArrow.Combine(foldArrow);
+        }
     }
 }

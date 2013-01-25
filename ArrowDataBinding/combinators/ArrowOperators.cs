@@ -165,6 +165,17 @@ namespace ArrowDataBinding.Combinators
                 );
         }
 
+        public static Arrow<A, D> Unsplit<A, B, C, D>(this Arrow<A, Tuple<B, C>> arr, Func<B, C, D> op)
+        {
+            /*
+             * Extension method version of Unsplit
+             */
+
+            Arrow<Tuple<B, C>, D> unsplitArrow = Unsplit(op);
+
+            return arr.Combine(unsplitArrow);
+        }
+
         public static Arrow<A, D> LiftA2<A, B, C, D>(Func<B, C, D> op, Arrow<A, B> a1, Arrow<A, C> a2)
         {
             return Split<A>()  // A -> split -> Tuple<A, A>

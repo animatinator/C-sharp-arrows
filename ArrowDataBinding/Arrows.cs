@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ArrowDataBinding.Utils;
+using ArrowDataBinding.Combinators;
 
 namespace ArrowDataBinding.Arrows
 {
@@ -208,6 +209,11 @@ namespace ArrowDataBinding.Arrows
         {
             return new OrderByArrow<A>(comparison);
         }
+
+        public static Arrow<IEnumerable<A>, A> Foldl<A>(Func<A, A, A> fold, A zero)
+        {
+            return new FoldlArrow<A>(fold, zero);
+        }
     }
 
     public class FilterArrow<A> : ListArrow<A, A>
@@ -263,5 +269,24 @@ namespace ArrowDataBinding.Arrows
         {
             return comparerFunc(Tuple.Create(x, y));
         }
+    }
+
+    public class FoldlArrow<A> : Arrow<IEnumerable<A>, A>
+    {
+        public FoldlArrow(Func<A, A, A> fold, A zero)
+            : base(
+                (IEnumerable<A> list) =>
+                {
+                    A lastElement = zero;
+
+                    foreach (A element in list)
+                    {
+                        lastElement = fold(lastElement, element);
+                    }
+
+                    return lastElement;
+                }
+            )
+        { }
     }
 }
