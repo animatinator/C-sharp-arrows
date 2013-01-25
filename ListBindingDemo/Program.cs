@@ -45,8 +45,8 @@ namespace ListBindingDemo
             var averagingArrow = Op.Split<IEnumerable<int>>()
                 .Combine(Op.And(
                         ListArrow.Foldl((int x, int y) => x + y, 0),
-                        ListArrow.Foldl((int x, int y) => x + 1, 0))
-                    .Unsplit((int total, int count) => total / count));
+                        ListArrow.Foldl((int x, int y) => x + 1, 0)))
+                    .Unsplit((int total, int count) => total / count);
 
             BindingsManager.CreateBinding(
                 data.GetBindPoint("orders"),

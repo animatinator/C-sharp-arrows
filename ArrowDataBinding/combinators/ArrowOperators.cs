@@ -151,6 +151,13 @@ namespace ArrowDataBinding.Combinators
                 );
         }
 
+        public static Arrow<A, Tuple<B, B>> Split<A, B>(this Arrow<A, B> arr)
+        {
+            Arrow<B, Tuple<B, B>> splitArrow = Split<B>();
+
+            return arr.Combine(splitArrow);
+        }
+
         public static Arrow<Tuple<A, B>, C> Unsplit<A, B, C>(Func<A, B, C> op)
         {
             /*
