@@ -214,6 +214,11 @@ namespace ArrowDataBinding.Arrows
         {
             return new FoldlArrow<A>(fold, zero);
         }
+
+        public static Arrow<IEnumerable<A>, A> Foldr<A>(Func<A, A, A> fold, A zero)
+        {
+            return new FoldrArrow<A>(fold, zero);
+        }
     }
 
     public class FilterArrow<A> : ListArrow<A, A>
@@ -277,6 +282,27 @@ namespace ArrowDataBinding.Arrows
             : base(
                 (IEnumerable<A> list) =>
                 {
+                    A lastElement = zero;
+
+                    foreach (A element in list)
+                    {
+                        lastElement = fold(lastElement, element);
+                    }
+
+                    return lastElement;
+                }
+            )
+        { }
+    }
+
+    public class FoldrArrow<A> : Arrow<IEnumerable<A>, A>
+    {
+        public FoldrArrow(Func<A, A, A> fold, A zero)
+            : base(
+                //TODO: Implement in terms of foldl?
+                (IEnumerable<A> list) =>
+                {
+                    list = list.Reverse();
                     A lastElement = zero;
 
                     foreach (A element in list)
