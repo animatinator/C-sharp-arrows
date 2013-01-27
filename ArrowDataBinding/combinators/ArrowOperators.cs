@@ -103,7 +103,7 @@ namespace ArrowDataBinding.Combinators
              * type parameters. Simply defers to the usual implementation of Second.
              */
 
-            return Second<A, B, C>(arr);
+            return arr.Second<A, B, C>();
         }
 
         public static Arrow<Tuple<A, C>, Tuple<B, D>> And<A, B, C, D>(this Arrow<A, B> a1, Arrow<C, D> a2)
@@ -123,36 +123,32 @@ namespace ArrowDataBinding.Combinators
                 );
         }
 
-        public static Arrow<A, Tuple<B, C>> Fanout<A, B, C>(this Arrow<A, B> a1, Arrow<A, C> a2)
+        public static Arrow<A, Tuple<C, D>> Fanout<A, B, C, D>(this Arrow<A, B> input, Arrow<B, C> a1, Arrow<B, D> a2)
         {
             /*
              * Applies the input to two arrows in parallel and gives the result as a tuple
              */
 
-            return new Arrow<A, Tuple<B, C>>(
-                (A x) =>
-                    new Tuple<B, C>(
-                        a1.Invoke(x),
-                        a2.Invoke(x)
-                        )
-                );
+            // TODOL Check Fanout works for invertible arrows
+            return input.Split().Combine(a1.And(a2));
         }
 
         public static Arrow<A, Tuple<A, A>> Split<A>()
         {
             /*
              * Returns an arrow which takes an input of type A and returns a Tuple<A, A> which is
-             * the input duplicated
+             * the input duplicated.
              */
 
-            return new Arrow<A, Tuple<A, A>>(
-                (A x) =>
-                    new Tuple<A, A>(x, x)
-                );
+            return Op.Arr((A x) => Tuple.Create(x, x));
         }
 
         public static Arrow<A, Tuple<B, B>> Split<A, B>(this Arrow<A, B> arr)
         {
+            /*
+             * Takes an arrow from A to B and returns one with its output duplicated into a tuple
+             */
+
             Arrow<B, Tuple<B, B>> splitArrow = Split<B>();
 
             return arr.Combine(splitArrow);
@@ -164,6 +160,8 @@ namespace ArrowDataBinding.Combinators
              * Returns an arrow which takes an input of type Tuple<A, B> and applies the provided
              * operator, yielding an output of type C
              * ('Lifts' a binary operator to arrow status)
+             * Can't be written for invertible arrows as the operation will naturally lose
+             * information which can't be recovered in the other direction.
              */
 
             return new Arrow<Tuple<A, B>, C>(
@@ -185,10 +183,12 @@ namespace ArrowDataBinding.Combinators
 
         public static Arrow<A, D> LiftA2<A, B, C, D>(Func<B, C, D> op, Arrow<A, B> a1, Arrow<A, C> a2)
         {
-            return Split<A>()  // A -> split -> Tuple<A, A>
-                .Combine(First(a1, default(A)))  // Tuple<A, A> -> a1 -> Tuple<B, A>
-                .Combine(Second(a2, default(B)))  // Tuple<B, A> -> a2 -> Tuple<B, C>
-                .Combine(Unsplit(op));  // Tuple<B, C> -> op(B, C) -> D
+            /*
+             * Applies two arrows in parallel on the same input and then uses the supplied binary
+             * operator to give a single output from the two results.
+             */
+
+            return Split<A>().Combine(a1.And(a2)).Combine(Unsplit(op));
         }
     }
 }

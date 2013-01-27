@@ -7,6 +7,16 @@ using ArrowDataBinding.Arrows;
 
 namespace ArrowDataBinding.Bindings
 {
+    [Serializable]
+    public class BindingTypeError : Exception
+    {
+        public BindingTypeError(Type t1, Type t2, Type arrowType)
+            : base(String.Format("Type error: trying to create a binding from type {0} to type {1}"
+                                +" with an arrow of type {2}", t1, t2, arrowType))
+        { }
+    }
+
+
     public interface IBinding
     {
         // Just being used to refer to bindings in a typeless way for now
@@ -29,7 +39,24 @@ namespace ArrowDataBinding.Bindings
             this.destination = dest;
             this.arrow = arrow;
 
+            TypeCheck();
             SubscribeToBindable(source.Object);
+        }
+
+        public void TypeCheck()
+        {
+            Type t1 = source.Object.GetVariable<T1>(source.Var).GetType();
+            Type t2 = destination.Object.GetVariable<T2>(destination.Var).GetType();
+
+            if (typeof(T1).IsAssignableFrom(t1) && t2.IsAssignableFrom(typeof(T2)))
+            {
+                // All's good
+            }
+            else
+            {
+                //TODO: T2 comparison doesn't work
+                //throw new BindingTypeError(typeof(T1), typeof(T1), arrow.GetType());
+            }
         }
 
         public void SubscribeToBindable(Bindable bind)

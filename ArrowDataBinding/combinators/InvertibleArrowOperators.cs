@@ -41,7 +41,7 @@ namespace ArrowDataBinding.Combinators
         {
             /*
              * Similar to the First function for normal arrows, but obviously performing it on
-             * InvertibleArrows instead
+             * InvertibleArrows instead.
              */
 
             InvertibleArrow<B, A> reversed = arr.Invert();
@@ -58,6 +58,17 @@ namespace ArrowDataBinding.Combinators
                         x.Item2
                         )
                 );
+        }
+
+        public static InvertibleArrow<Tuple<A, C>, Tuple<B, C>>
+            First<A, B, C>(this InvertibleArrow<A, B> arr, C nullArgument)
+        {
+            /*
+             * Version of First which has an unused parameter passed in to allow it to infer the
+             * unknown third type.
+             */
+
+            return arr.First<A, B, C>();
         }
 
         public static InvertibleArrow<Tuple<A, C>, Tuple<B, D>>
@@ -84,6 +95,29 @@ namespace ArrowDataBinding.Combinators
                         a2.Invert().Invoke(x.Item2)
                         )
                 );
+        }
+
+        public static InvertibleArrow<A, Tuple<A, A>> InvertibleSplit<A>()
+        {
+            /*
+             * Returns an invertible arrow which takes an input of type A and returns a Tuple<A, A>
+             * which is the input duplicated.
+             */
+
+            return Op.Arr((A x) => Tuple.Create(x, x), (Tuple<A, A> t) => t.Item1);
+        }
+
+        public static Arrow<A, Tuple<B, B>> Split<A, B>(this InvertibleArrow<A, B> arr)
+        {
+            /*
+             * Takes an invertible arrow from A to B and returns one with its output duplicated
+             * into a tuple (overrides the usual version of this for normal Arrows so that Fanout
+             * will work for invertible arrows without modification).
+             */
+
+            InvertibleArrow<B, Tuple<B, B>> splitArrow = InvertibleSplit<B>();
+
+            return arr.Combine(splitArrow);
         }
     }
 }
