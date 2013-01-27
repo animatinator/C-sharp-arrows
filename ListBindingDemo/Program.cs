@@ -51,8 +51,8 @@ namespace ListBindingDemo
             BindingsManager.CreateBinding(
                 data.GetBindPoint("orders"),
                 ListArrow.Filter((Order x) => x.Customer.Location == "Glasgow" || x.Customer.Location == "Aberdeen")
-                    .Map((Order x) => x.Volume),
-                    //.Combine(averagingArrow),
+                    .Map((Order x) => x.Volume)
+                    .Combine(averagingArrow),
                 averageOrdersToScotland.GetBindPoint("Result"));
 
             data.Initialise();
