@@ -73,6 +73,7 @@
     <Compile Include="tests\TestArrowLaws.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="WPF\ArrowValueConverter.cs" />
+    <Compile Include="WPF\ExtensionMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="demos\Notes.txt" />

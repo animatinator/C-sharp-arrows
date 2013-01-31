@@ -8,14 +8,15 @@ namespace ArrowDataBinding.Bindings
 {
     public static class ExtensionMethods
     {
-        public static ArrowValueConverter<A, B> GetValueConverter<A, B>(Arrow<A, B> arrow)
+        public static ArrowValueConverter GetValueConverter(IArrow arrow)
         {
-            return new ArrowValueConverter<A, B>(arrow);
+            return new ArrowValueConverter(arrow);
         }
 
-        public static InvertibleArrowValueConverter<A, B> GetValueConverter<A, B>(InvertibleArrow<A, B> arrow)
-        {
-            return new InvertibleArrowValueConverter<A, B>(arrow);
-        }
+        // TODO: Need InvertibleArrowValueConverter implemented
+        //public static InvertibleArrowValueConverter GetValueConverter(IInvertibleArrow arrow)
+        //{
+        //    return new InvertibleArrowValueConverter(arrow);
+        //}
     }
 }

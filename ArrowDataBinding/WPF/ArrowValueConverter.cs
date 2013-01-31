@@ -8,20 +8,22 @@ using ArrowDataBinding.Arrows;
 
 namespace ArrowDataBinding.Bindings
 {
-    public class ArrowValueConverter<A, B> : IValueConverter
+    public class ArrowValueConverter : IValueConverter
     {
-        private Arrow<A, B> arrow;
+        // TODO: When creating, this arrow will need to be assigned to in the XAML
+        public IArrow arrow { get; set; }
 
-        public ArrowValueConverter(Arrow<A, B> arrow)
+        public ArrowValueConverter(IArrow arrow)
         {
             this.arrow = arrow;
         }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is A)
+            // TODO: Type checking for ArrowValueConverter
+            if (true)//(value is targetType?)
             {
-                return arrow.Invoke((A)value);
+                return arrow.Invoke(value);
             }
 
             throw new Exception("Wrong type");  // TODO: Proper exceptions for ArrowValueConverter
@@ -33,24 +35,25 @@ namespace ArrowDataBinding.Bindings
         }
     }
 
-    public class InvertibleArrowValueConverter<A, B> : ArrowValueConverter<A, B>
-    {
-        private InvertibleArrow<A, B> arrow;
+    // TODO: Can't do converters for invertible arrows yet; need an invertible arrow interface
+    //public class InvertibleArrowValueConverter<A, B> : ArrowValueConverter<A, B>
+    //{
+    //    private InvertibleArrow<A, B> arrow;
 
-        public InvertibleArrowValueConverter(InvertibleArrow<A, B> arrow)
-            : base(arrow)
-        {
-            this.arrow = arrow;
-        }
+    //    public InvertibleArrowValueConverter(InvertibleArrow<A, B> arrow)
+    //        : base(arrow)
+    //    {
+    //        this.arrow = arrow;
+    //    }
 
-        public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is B)
-            {
-                return arrow.Invert().Invoke((B)value);
-            }
+    //    public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        if (value is B)
+    //        {
+    //            return arrow.Invert().Invoke((B)value);
+    //        }
 
-            else throw new Exception("Wrong type");  // TODO: Proper exceptions for InvertibleArrowValueConverter
-        }
-    }
+    //        else throw new Exception("Wrong type");  // TODO: Proper exceptions for InvertibleArrowValueConverter
+    //    }
+    //}
 }
