@@ -124,7 +124,7 @@ namespace ArrowDataBinding.Bindings
          * of variables which prevents infinite loops in two-way bindings.
          */
 
-        public delegate void BindingUpdateHandler(object sender, BindingEventArgs args);
+        public delegate void BindingUpdateHandler(Bindable sender, BindingEventArgs args);
         public event BindingUpdateHandler valueChanged;
         public event PropertyChangedEventHandler PropertyChanged;  // Needed for INotifyPropertyChanged
 

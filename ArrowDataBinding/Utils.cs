@@ -54,12 +54,12 @@ namespace ArrowDataBinding.Utils
 
     public static class TupleOp
     {
-        public static Tuple<A, Tuple<B, C>> Assoc<A, B, C>(Tuple<Tuple<A, B>, C> input)
+        public static Tuple<A, Tuple<B, C>> Assoc<A, B, C>(this Tuple<Tuple<A, B>, C> input)
         {
             return Tuple.Create(input.Item1.Item1, Tuple.Create(input.Item1.Item2, input.Item2));
         }
 
-        public static Tuple<Tuple<A, B>, C> Cossa<A, B, C>(Tuple<A, Tuple<B, C>> input)
+        public static Tuple<Tuple<A, B>, C> Cossa<A, B, C>(this Tuple<A, Tuple<B, C>> input)
         {
             return Tuple.Create(Tuple.Create(input.Item1, input.Item2.Item1), input.Item2.Item2);
         }

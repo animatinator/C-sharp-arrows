@@ -50,10 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Arrows.cs" />
-    <Compile Include="Bindable.cs" />
-    <Compile Include="Binding.cs" />
-    <Compile Include="BindingGraph.cs" />
-    <Compile Include="BindingsManager.cs" />
+    <Compile Include="binding\Bindable.cs" />
+    <Compile Include="binding\Binding.cs" />
+    <Compile Include="binding\BindingArgumentMarshaller.cs" />
+    <Compile Include="binding\BindingGraph.cs" />
+    <Compile Include="binding\BindingsManager.cs" />
     <Compile Include="combinators\ArrowChoiceOperators.cs" />
     <Compile Include="combinators\ArrowOperators.cs" />
     <Compile Include="combinators\Common.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="demos\Tester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="tests\ArrowTestUtils.cs" />
+    <Compile Include="tests\BindingArgumentMarshallerTests.cs" />
     <Compile Include="tests\CycleDetectionTests.cs" />
     <Compile Include="tests\MiscArrowTests.cs" />
     <Compile Include="tests\TestArrowLaws.cs" />
@@ -78,6 +80,7 @@
   <ItemGroup>
     <Content Include="demos\Notes.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
