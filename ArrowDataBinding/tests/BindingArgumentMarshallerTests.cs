@@ -12,11 +12,18 @@ namespace ArrowDataBinding.tests
         {
             TestClass testObj = new TestClass(4);
             TestClass2 testObj2 = new TestClass2();
-            BindingArgumentMarshaller.MarshalArguments(new List<BindPoint>
+
+            var tup = BindingArgumentMarshaller.MarshalArguments(new List<BindPoint>
             {
                 new BindPoint(testObj, "Test"),
+                new BindPoint(testObj2, "Test"),
                 new BindPoint(testObj2, "Test")
-            });
+            }, Tuple.Create(Tuple.Create(3, 4), 5));
+
+            Console.WriteLine(tup);
+
+            List<dynamic> list = BindingArgumentMarshaller.UnmarshalArguments(Tuple.Create(Tuple.Create(4, Tuple.Create("cheese", "peas")), Tuple.Create("Hi", 5)));
+            Console.WriteLine(list);
         }
     }
 

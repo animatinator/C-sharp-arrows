@@ -9,7 +9,8 @@ namespace ArrowDataBinding.Bindings
     class BindingArgumentMarshaller
     {
         static Type[] tupleTypes = new Type[] {
-            typeof(Tuple<>),
+            typeof(Tuple<>),  // This will be indexed with the number of arguments the tuple should have
+                              // Zero is therefore unused and can be left as this
             typeof(Tuple<>),
             typeof(Tuple<,>),
             typeof(Tuple<,,>),
@@ -20,32 +21,50 @@ namespace ArrowDataBinding.Bindings
             typeof(Tuple<,,,,,,,>),
         };
 
-        public static void DFS<T1, T2>(Tuple<T1, T2> input)
+        public static List<dynamic> UnmarshalArguments<T1, T2>(Tuple<T1, T2> input)
         {
-            dynamic left = input.Item1;
-            dynamic right = input.Item2;
+            /*
+             * Converts a tree-structured tuple into a list of the values it contains
+             */
 
-            if (left.GetType().Name == typeof(Tuple<,>).Name)
-            {
-                DFS(left);
-            }
-            else
-            {
-                Console.WriteLine(left);
-            }
+            List<dynamic> results = new List<dynamic>();
 
-            if (right.GetType().Name == typeof(Tuple<,>).Name)
-            {
-                DFS(right);
-            }
-            else
-            {
-                Console.WriteLine(right);
-            }
+            results.AddRange(ProcessNodeUnmarshalling(input.Item1));
+            results.AddRange(ProcessNodeUnmarshalling(input.Item2));
+
+            return results;
         }
 
-        public static dynamic MarshalArguments(List<BindPoint> elements)
+        public static List<dynamic> ProcessNodeUnmarshalling(dynamic node)
         {
+            /*
+             * Takes a node and returns a list of elements contained beneath it
+             * (Those belonging to child elements if the node is a tuple, and the node itself if
+             * it is a leaf)
+             */
+
+            List<dynamic> results = new List<dynamic>();
+
+            if (node.GetType().Name == typeof(Tuple<,>).Name)
+            {
+                results.AddRange(UnmarshalArguments(node));
+            }
+            else
+            {
+                results.Add(node);
+            }
+
+            return results;
+        }
+
+        public static dynamic FlatMarshalArguments(List<BindPoint> elements)
+        {
+            /*
+             * A precursor to MarshalElements, kept in case flat marshalling is needed.
+             * This marshals a list into a tuple of the same size (and is therefore limited to
+             * seven elements at most)
+             */
+
             int count = elements.Count;
             Type rawTupleType = tupleTypes[count];
             Type[] types = GetTypes(elements);
@@ -63,19 +82,42 @@ namespace ArrowDataBinding.Bindings
             //BEGIN SILLY TEST CODE WHICH MIGHT BE HANDY IN A BIT
             Type testType = tupleTypes[count].MakeGenericType(types);
             dynamic thingy = Convert.ChangeType(result, testType);
-            Test(thingy);
+            var test = UnmarshalArguments(thingy);
             //END TEST CODE
 
             return result;
         }
 
-        private static void Test<T1, T2>(Tuple<T1, T2> input)
+        public static dynamic MarshalArguments(List<BindPoint> elements, dynamic tupleSample)
         {
-            Console.WriteLine(typeof(T1));
+            /*
+             * Takes a list of BindPoint objects and returns a tree-structured tuple containing
+             * their values. The 'tupleSample' argument is used to supply a tuple with the desired
+             * structure so the function knows what shape of tuple to create.
+             */
+
+            //TODO: MarshalArguments needs a way of ensuring the tuple is correctly sized for the number of elements
+
+            // If the tupleSample is a tuple and not a leaf, recurse into its children
+            if (tupleSample.GetType().Name == typeof(Tuple<,>).Name)
+            {
+                return Tuple.Create(MarshalArguments(elements, tupleSample.Item1),
+                    MarshalArguments(elements, tupleSample.Item2));
+            }
+            else  // If the tupleSample is a leaf, return one of the elements and remove it from the list
+            {
+                dynamic nextValue = GetValue(elements[0]);
+                elements.RemoveAt(0);
+                return nextValue;
+            }
         }
 
         private static Type[] GetTypes(List<BindPoint> elements)
         {
+            /*
+             * Gets a list of the types represented by a list of BindPoint objects
+             */
+
             int count = elements.Count;
             Type[] types = new Type[count];
 
@@ -89,6 +131,11 @@ namespace ArrowDataBinding.Bindings
 
         private static dynamic GetValue(BindPoint point)
         {
+            /*
+             * Gets the value associated with a BindPoint
+             * (This greatly simplifies the mess of calling Object.GetVariable<dynamic> everywhere)
+             */
+
             return point.Object.GetVariable<dynamic>(point.Var);
         }
     }
