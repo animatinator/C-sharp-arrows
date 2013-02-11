@@ -131,7 +131,6 @@ namespace ArrowDataBinding.Bindings
         protected Arrow<T1, T2> arrow;
         protected List<BindPoint> destinations;
 
-        //public Binding(Bindable source, string sourceVar, Bindable dest, string destVar)
         public MultiBinding(List<BindPoint> sources, Arrow<T1, T2> arrow, List<BindPoint> dests)
         {
             this.sources = sources;
@@ -175,11 +174,19 @@ namespace ArrowDataBinding.Bindings
         {
             if (IsSourceVar(sourceObj, args.VarName))
             {
-                // TODO: Need to marshall source values into a tuple and pass them in
-                //T1 sourceValue = source.Object.GetVariable<T1>(source.Var);
-                //T2 newValue = arrow.Invoke(sourceValue);
-                // TODO: Now need to unmarshall them and put them in the destinations
-                //TrySetVariable(destination, newValue);
+                var arguments = new List<BindPoint>(sources);
+                var sourcesTuple = BindingArgumentMarshaller.MarshalArguments(arguments, arrow.a);
+                dynamic rawResults = arrow.Invoke(sourcesTuple);
+                List<dynamic> results = BindingArgumentMarshaller.UnmarshalArguments(rawResults);
+                UpdateDestinations(results);
+            }
+        }
+
+        public void UpdateDestinations(List<dynamic> values)
+        {
+            for (int i = 0; i < destinations.Count; i++)
+            {
+                TrySetVariable(destinations[i], values[i]);
             }
         }
 
@@ -224,12 +231,12 @@ namespace ArrowDataBinding.Bindings
     {
         protected Arrow<T2, T1> reverseArrow;
 
-        public TwoWayMultiBinding(BindPoint source, InvertibleArrow<T1, T2> arrow, BindPoint destination)
-            : base(new List<BindPoint> {source}, arrow, new List<BindPoint> {destination})
+        public TwoWayMultiBinding(List<BindPoint> sources, InvertibleArrow<T1, T2> arrow, List<BindPoint> destinations)
+            : base(sources, arrow, destinations)
         {
             this.reverseArrow = arrow.Invert();
 
-            SubscribeToBindable(destination.Object);
+            SubscribeToSources();
         }
 
         public override void NotifyChange(Bindable sourceObj, BindingEventArgs args)

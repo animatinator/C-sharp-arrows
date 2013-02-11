@@ -1,6 +1,81 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Symbols xmlns="http://schemas.postsharp.org/2.0/symbols">
-  <Class Class="#1=T:[ArrowDataBinding]ArrowDataBinding.Bindings.BindableAttribute" LimitedLicense="true" />
-  <Class Class="#2=T:[ArrowDataBinding]ArrowDataBinding.demos.TwoWay.BindableAttribute" LimitedLicense="true" />
-  <Class Class="#3=T:[ArrowDataBinding]ArrowDataBinding.demos.ArrowTestThing.BindableAttribute" LimitedLicense="true" />
+  <Class Class="#1=T:[ArrowDataBinding]ArrowDataBinding.Bindings.BindableAttribute">
+    <Instance Declaration="#2=P:[ArrowDataBinding]ArrowDataBinding.demos.project.Source::source()" Id="cc77cc4a7f9671e1">
+      <Target>
+        <JoinPoint Advised="#3=M:[ArrowDataBinding]ArrowDataBinding.demos.project.Source::set_source(System.Int32)" Description="#4=Intercepted by advice OnSetValue" Semantic="Setter" />
+        <JoinPoint Advised="#5=M:[ArrowDataBinding]ArrowDataBinding.demos.project.Source::get_source()" Description="#6=Intercepted by advice OnGetValue" Semantic="Getter" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#7=P:[ArrowDataBinding]ArrowDataBinding.demos.project.Source::multiplies()" Id="cc77cc4af66f3e84">
+      <Target>
+        <JoinPoint Advised="#8=M:[ArrowDataBinding]ArrowDataBinding.demos.project.Source::set_multiplies(System.Int32)" Description="#4" Semantic="Setter" />
+        <JoinPoint Advised="#9=M:[ArrowDataBinding]ArrowDataBinding.demos.project.Source::get_multiplies()" Description="#6" Semantic="Getter" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#10=P:[ArrowDataBinding]ArrowDataBinding.demos.project.Destination::result()" Id="cc77cc4a9f10d8ba">
+      <Target>
+        <JoinPoint Advised="#11=M:[ArrowDataBinding]ArrowDataBinding.demos.project.Destination::set_result(System.Int32)" Description="#4" Semantic="Setter" />
+        <JoinPoint Advised="#12=M:[ArrowDataBinding]ArrowDataBinding.demos.project.Destination::get_result()" Description="#6" Semantic="Getter" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#13=P:[ArrowDataBinding]ArrowDataBinding.tests.TestClass::Test()" Id="cc77cc4a5ee06d3b">
+      <Target>
+        <JoinPoint Advised="#14=M:[ArrowDataBinding]ArrowDataBinding.tests.TestClass::get_Test()" Description="#6" Semantic="Getter" />
+        <JoinPoint Advised="#15=M:[ArrowDataBinding]ArrowDataBinding.tests.TestClass::set_Test(System.Int32)" Description="#4" Semantic="Setter" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#16=P:[ArrowDataBinding]ArrowDataBinding.tests.TestClass2::Test()" Id="cc77cc4aa8cdbae7">
+      <Target>
+        <JoinPoint Advised="#17=M:[ArrowDataBinding]ArrowDataBinding.tests.TestClass2::get_Test()" Description="#6" Semantic="Getter" />
+        <JoinPoint Advised="#18=M:[ArrowDataBinding]ArrowDataBinding.tests.TestClass2::set_Test(System.String)" Description="#4" Semantic="Setter" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#19=P:[ArrowDataBinding]ArrowDataBinding.tests.A::Value()" Id="cc77cc4ad246f008">
+      <Target>
+        <JoinPoint Advised="#20=M:[ArrowDataBinding]ArrowDataBinding.tests.A::set_Value(System.Int32)" Description="#4" Semantic="Setter" />
+        <JoinPoint Advised="#21=M:[ArrowDataBinding]ArrowDataBinding.tests.A::get_Value()" Description="#6" Semantic="Getter" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#22=P:[ArrowDataBinding]ArrowDataBinding.tests.B::Value()" Id="cc77cc4a2b8e70ed">
+      <Target>
+        <JoinPoint Advised="#23=M:[ArrowDataBinding]ArrowDataBinding.tests.B::get_Value()" Description="#6" Semantic="Getter" />
+        <JoinPoint Advised="#24=M:[ArrowDataBinding]ArrowDataBinding.tests.B::set_Value(System.Int32)" Description="#4" Semantic="Setter" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#25=P:[ArrowDataBinding]ArrowDataBinding.tests.C::Value()" Id="cc77cc4aff2c63e9">
+      <Target>
+        <JoinPoint Advised="#26=M:[ArrowDataBinding]ArrowDataBinding.tests.C::set_Value(System.Int32)" Description="#4" Semantic="Setter" />
+        <JoinPoint Advised="#27=M:[ArrowDataBinding]ArrowDataBinding.tests.C::get_Value()" Description="#6" Semantic="Getter" />
+      </Target>
+    </Instance>
+  </Class>
+  <Class Class="#28=T:[ArrowDataBinding]ArrowDataBinding.demos.TwoWay.BindableAttribute">
+    <Instance Declaration="#29=P:[ArrowDataBinding]ArrowDataBinding.demos.TwoWay.IntegerLeft::magic()" Id="cc77cc4a5c085ace">
+      <Target>
+        <JoinPoint Advised="#30=M:[ArrowDataBinding]ArrowDataBinding.demos.TwoWay.IntegerLeft::get_magic()" Description="#6" Semantic="Getter" />
+        <JoinPoint Advised="#31=M:[ArrowDataBinding]ArrowDataBinding.demos.TwoWay.IntegerLeft::set_magic(System.Int32)" Description="#4" Semantic="Setter" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#32=P:[ArrowDataBinding]ArrowDataBinding.demos.TwoWay.IntegerRight::spiffy()" Id="cc77cc4ada3e4892">
+      <Target>
+        <JoinPoint Advised="#33=M:[ArrowDataBinding]ArrowDataBinding.demos.TwoWay.IntegerRight::get_spiffy()" Description="#6" Semantic="Getter" />
+        <JoinPoint Advised="#34=M:[ArrowDataBinding]ArrowDataBinding.demos.TwoWay.IntegerRight::set_spiffy(System.Int32)" Description="#4" Semantic="Setter" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#35=P:[ArrowDataBinding]ArrowDataBinding.demos.TwoWay.Third::third()" Id="cc77cc4af729111f">
+      <Target>
+        <JoinPoint Advised="#36=M:[ArrowDataBinding]ArrowDataBinding.demos.TwoWay.Third::set_third(System.Int32)" Description="#4" Semantic="Setter" />
+        <JoinPoint Advised="#37=M:[ArrowDataBinding]ArrowDataBinding.demos.TwoWay.Third::get_third()" Description="#6" Semantic="Getter" />
+      </Target>
+    </Instance>
+  </Class>
+  <Class Class="#38=T:[ArrowDataBinding]ArrowDataBinding.demos.ArrowTestThing.BindableAttribute">
+    <Instance Declaration="#39=P:[ArrowDataBinding]ArrowDataBinding.demos.ArrowTestThing.TestSourceObject::value()" Id="cc77cc4a70012a52">
+      <Target>
+        <JoinPoint Advised="#40=M:[ArrowDataBinding]ArrowDataBinding.demos.ArrowTestThing.TestSourceObject::set_value(System.Int32)" Description="#4" Semantic="Setter" />
+        <JoinPoint Advised="#41=M:[ArrowDataBinding]ArrowDataBinding.demos.ArrowTestThing.TestSourceObject::get_value()" Description="#6" Semantic="Getter" />
+      </Target>
+    </Instance>
+  </Class>
 </Symbols>

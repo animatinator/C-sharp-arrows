@@ -12,8 +12,7 @@ namespace ArrowDataBinding
     {
         static void Main(string[] args)
         {
-            BindingArgumentMarshallerTests tests = new BindingArgumentMarshallerTests();
-            tests.Run();
+            (new BasicBindingDemos()).Run();
         }
     }
 }

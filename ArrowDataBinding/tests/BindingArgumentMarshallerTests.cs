@@ -18,7 +18,7 @@ namespace ArrowDataBinding.tests
                 new BindPoint(testObj, "Test"),
                 new BindPoint(testObj2, "Test"),
                 new BindPoint(testObj2, "Test")
-            }, Tuple.Create(Tuple.Create(3, 4), 5));
+            }, Tuple.Create(Tuple.Create(3, 4), 5).GetType());
 
             Console.WriteLine(tup);
 

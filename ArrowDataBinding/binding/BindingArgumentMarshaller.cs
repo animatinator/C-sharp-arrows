@@ -6,8 +6,16 @@ using System.Reflection;
 
 namespace ArrowDataBinding.Bindings
 {
-    class BindingArgumentMarshaller
+    public class BindingArgumentMarshaller
     {
+        /*
+         * Utility class which provides functions for marshalling and unmarshalling values going
+         * into and coming out of arrows.
+         * This is used by the BindingsManager class which has a list of BindPoint objects and
+         * needs to pass them into arrows which take tree-structured tuples and then turn the tuple
+         * result back into a list of values.
+         */
+
         static Type[] tupleTypes = new Type[] {
             typeof(Tuple<>),  // This will be indexed with the number of arguments the tuple should have
                               // Zero is therefore unused and can be left as this
@@ -33,6 +41,11 @@ namespace ArrowDataBinding.Bindings
             results.AddRange(ProcessNodeUnmarshalling(input.Item2));
 
             return results;
+        }
+
+        public static List<dynamic> UnmarshalArguments<T>(T input)
+        {
+            return new List<dynamic> { input };
         }
 
         public static List<dynamic> ProcessNodeUnmarshalling(dynamic node)
@@ -88,7 +101,7 @@ namespace ArrowDataBinding.Bindings
             return result;
         }
 
-        public static dynamic MarshalArguments(List<BindPoint> elements, dynamic tupleSample)
+        public static dynamic MarshalArguments(List<BindPoint> elements, Type tupleType)
         {
             /*
              * Takes a list of BindPoint objects and returns a tree-structured tuple containing
@@ -99,10 +112,10 @@ namespace ArrowDataBinding.Bindings
             //TODO: MarshalArguments needs a way of ensuring the tuple is correctly sized for the number of elements
 
             // If the tupleSample is a tuple and not a leaf, recurse into its children
-            if (tupleSample.GetType().Name == typeof(Tuple<,>).Name)
+            if (tupleType.Name == typeof(Tuple<,>).Name)
             {
-                return Tuple.Create(MarshalArguments(elements, tupleSample.Item1),
-                    MarshalArguments(elements, tupleSample.Item2));
+                return Tuple.Create(MarshalArguments(elements, tupleType.GetGenericArguments()[0]),
+                    MarshalArguments(elements, tupleType.GetGenericArguments()[1]));
             }
             else  // If the tupleSample is a leaf, return one of the elements and remove it from the list
             {

@@ -31,6 +31,7 @@ namespace ArrowDataBinding.demos.project
             Console.WriteLine("Running basic binding demos...");
             RunSimpleDemo();
             RunSimpleInvertibleDemo();
+            RunSimpleMultiDemo();
         }
 
         public static void RunSimpleDemo()
@@ -75,6 +76,28 @@ namespace ArrowDataBinding.demos.project
 
             if (passed) Console.WriteLine("Invertible works too!");
             else Console.WriteLine("Invertible doesn't work tho D:");
+        }
+
+        public static void RunSimpleMultiDemo()
+        {
+            Source source = new Source();
+            Destination dest = new Destination();
+
+            Arrow<Tuple<int, int>, int> multiplier = Op.Arr((Tuple<int, int> x) => x.Item1 * x.Item2);
+
+            Arrow<int, int> square = Op.Arr((int x) => x * x);
+            Func<int, int, int> add = (int x, int y) => x + y;
+
+            Arrow<Tuple<int, int>, int> pythagoras = Op.And(square, square)
+                .Unsplit(add)
+                .Combine(Op.Arr((int x) => (int)Math.Sqrt(x)));
+
+            BindingsManager.CreateBinding(BindingsManager.BindPoints(new BindPoint(source, "source"), new BindPoint(source, "multiplies")),
+                pythagoras,
+                BindingsManager.BindPoints(new BindPoint(dest, "result")));
+            source.multiplies = 2;
+            source.source = 3;
+            Console.WriteLine(dest.result);
         }
     }
 }

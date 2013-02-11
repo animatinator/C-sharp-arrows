@@ -71,6 +71,7 @@ namespace ArrowDataBinding.Bindings
         public static BindingHandle CreateBinding<A, B>(BindPoint source, Arrow<A, B> arrow, BindPoint destination)
         {
             if (LinkWouldCauseCycle(source, destination)) throw new BindingCycleException();
+            // TODO: Check is a binding should overwrite an existing one
 
             Binding<A, B> result;
 
@@ -103,8 +104,25 @@ namespace ArrowDataBinding.Bindings
              *         Destinations(BindPoint(obj'', var'')))
              */
 
-            // TODO: multibinding constructor
-            return new BindingHandle();
+            // TODO: Cycle checking for multibinding
+
+            MultiBinding<A, B> result;
+
+            if (arrow is InvertibleArrow<A, B>)
+            {
+                result = new TwoWayMultiBinding<A, B>(sources.ToList(), (InvertibleArrow<A, B>)arrow, destinations.ToList());
+                // TODO: Update binding graph for multibindings
+            }
+            else
+            {
+                result = new MultiBinding<A,B>(sources.ToList(), arrow, destinations.ToList());
+                // As above
+            }
+
+            BindingHandle handle = new BindingHandle(result);
+            bindings.Add(handle, result);
+
+            return handle;
         }
 
         public static void UpdateBindingGraph(BindPoint source, BindPoint destination)
