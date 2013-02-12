@@ -23,6 +23,15 @@ namespace ArrowDataBinding.demos.project
         public int result { get; set; }
     }
 
+    public class MultiDestination : Bindable
+    {
+        [Bindable]
+        public int leftResult { get; set; }
+
+        [Bindable]
+        public int rightResult { get; set; }
+    }
+
 
     public class BasicBindingDemos
     {
@@ -32,6 +41,7 @@ namespace ArrowDataBinding.demos.project
             RunSimpleDemo();
             RunSimpleInvertibleDemo();
             RunSimpleMultiDemo();
+            RunInvertibleMultiDemo();
         }
 
         public static void RunSimpleDemo()
@@ -97,7 +107,39 @@ namespace ArrowDataBinding.demos.project
                 BindingsManager.BindPoints(new BindPoint(dest, "result")));
             source.multiplies = 2;
             source.source = 3;
-            Console.WriteLine(dest.result);
+
+            if (dest.result == pythagoras.Invoke(Tuple.Create(source.source, source.multiplies)))
+            {
+                Console.WriteLine("Multibindings in one direction work :)");
+            }
+            else
+            {
+                Console.WriteLine("Ohnoes multibindings in one direction don't work");
+            }
+        }
+
+        public static void RunInvertibleMultiDemo()
+        {
+            Source source = new Source();
+            MultiDestination dest = new MultiDestination();
+
+            var swapper = new SwapArrow<int, int>();
+
+            BindingsManager.CreateBinding(BindingsManager.Sources(source.GetBindPoint("source"), source.GetBindPoint("multiplies")),
+                swapper,
+                BindingsManager.Destinations(dest.GetBindPoint("leftResult"), dest.GetBindPoint("rightResult")));
+
+            source.source = 3;
+            source.multiplies = 4;
+
+            if (dest.leftResult == source.multiplies && dest.rightResult == source.source)
+            {
+                Console.WriteLine("Invertible multibindings work!");
+            }
+            else
+            {
+                Console.WriteLine("Invertible multibindings do not work D:");
+            }
         }
     }
 }

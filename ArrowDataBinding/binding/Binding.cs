@@ -140,24 +140,7 @@ namespace ArrowDataBinding.Bindings
             SubscribeToSources();
         }
 
-        // TODO: Typecheck bindings
-        //public void TypeCheck()
-        //{
-        //    Type t1 = source.Object.GetVariable<T1>(source.Var).GetType();
-        //    Type t2 = destination.Object.GetVariable<T2>(destination.Var).GetType();
-
-        //    if (typeof(T1).IsAssignableFrom(t1) && t2.IsAssignableFrom(typeof(T2)))
-        //    {
-        //        // All's good
-        //    }
-        //    else
-        //    {
-        //        //TODO: T2 comparison doesn't work
-        //        //throw new BindingTypeError(typeof(T1), typeof(T1), arrow.GetType());
-        //    }
-        //}
-
-        public void SubscribeToSources()
+        protected void SubscribeToSources()
         {
             foreach (BindPoint source in sources)
             {
@@ -165,7 +148,7 @@ namespace ArrowDataBinding.Bindings
             }
         }
 
-        public void SubscribeToBindable(Bindable bind)
+        protected void SubscribeToBindable(Bindable bind)
         {
             bind.valueChanged += NotifyChange;
         }
@@ -176,13 +159,15 @@ namespace ArrowDataBinding.Bindings
             {
                 var arguments = new List<BindPoint>(sources);
                 var sourcesTuple = BindingArgumentMarshaller.MarshalArguments(arguments, arrow.a);
+
                 dynamic rawResults = arrow.Invoke(sourcesTuple);
                 List<dynamic> results = BindingArgumentMarshaller.UnmarshalArguments(rawResults);
+
                 UpdateDestinations(results);
             }
         }
 
-        public void UpdateDestinations(List<dynamic> values)
+        private void UpdateDestinations(List<dynamic> values)
         {
             for (int i = 0; i < destinations.Count; i++)
             {
@@ -237,6 +222,15 @@ namespace ArrowDataBinding.Bindings
             this.reverseArrow = arrow.Invert();
 
             SubscribeToSources();
+            SubscribeToDestinations();
+        }
+
+        private void SubscribeToDestinations()
+        {
+            foreach (BindPoint dest in destinations)
+            {
+                SubscribeToBindable(dest.Object);
+            }
         }
 
         public override void NotifyChange(Bindable sourceObj, BindingEventArgs args)
@@ -247,9 +241,21 @@ namespace ArrowDataBinding.Bindings
             // reverse
             if (IsDestinationVar(sourceObj, args.VarName))
             {
-                //T2 sourceValue = destination.Object.GetVariable<T2>(destination.Var);
-                //T1 newValue = reverseArrow.Invoke(sourceValue);
-                //TrySetVariable(source, newValue);
+                var arguments = new List<BindPoint>(destinations);
+                var destinationsTuple = BindingArgumentMarshaller.MarshalArguments(arguments, arrow.b);
+
+                dynamic rawResults = reverseArrow.Invoke(destinationsTuple);
+                List<dynamic> results = BindingArgumentMarshaller.UnmarshalArguments(rawResults);
+
+                UpdateSources(results);
+            }
+        }
+
+        private void UpdateSources(List<dynamic> values)
+        {
+            for (int i = 0; i < sources.Count; i++)
+            {
+                TrySetVariable(sources[i], values[i]);
             }
         }
     }
