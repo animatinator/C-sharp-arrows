@@ -39,6 +39,14 @@ namespace ArrowDataBinding.Bindings.Graph
             }
         }
 
+        public void AddMany(params BindPoint[] points)
+        {
+            foreach (BindPoint point in points)
+            {
+                Add(point);
+            }
+        }
+
         public bool NotAlreadyInGraph(BindPoint point)
         {
             return nodes.Where(x => x.Vertex.Equals(point)).FirstOrDefault() == null;
@@ -46,6 +54,10 @@ namespace ArrowDataBinding.Bindings.Graph
 
         public void Bind(BindPoint first, BindPoint second)
         {
+            /*
+             * Link the two nodes in one direction
+             */
+
             BindingNode firstNode = FindNodeForPoint(first);
             BindingNode secondNode = FindNodeForPoint(second);
 
@@ -54,18 +66,57 @@ namespace ArrowDataBinding.Bindings.Graph
 
         public void TwoWayBind(BindPoint first, BindPoint second)
         {
+            /*
+             * Link the two nodes in both directions
+             */
+
             Bind(first, second);
             Bind(second, first);
         }
 
+        public void MultiBind(BindPoint[] sources, BindPoint[] destinations)
+        {
+            /*
+             * Link all sources to all destinations (possibly an over-estimate but ensures safety
+             * in checking for conflicts)
+             */
+
+            foreach (BindPoint source in sources)
+            {
+                foreach (BindPoint dest in destinations)
+                {
+                    Bind(source, dest);
+                }
+            }
+        }
+
+        public void TwoWayMultiBind(BindPoint[] firsts, BindPoint[] seconds)
+        {
+            /*
+             * Link all sources to all destinations in both directions
+             */
+
+            MultiBind(firsts, seconds);
+            MultiBind(seconds, firsts);
+        }
+
         private BindingNode FindNodeForPoint(BindPoint point)
         {
+            /*
+             * Find the BindingNode associated with a particular BindPoint
+             */
+
             return nodes.First(x => x.Vertex.Equals(point));
         }
 
-
-        public bool HasCycle()
+        
+        public bool HasConflict()
         {
+            /*
+             * Checks for the situation where a destination node is reachable from a source by more
+             * than one path, which would lead to a potential conflict.
+             */
+
             HashSet<BindingNode> unvisited = new HashSet<BindingNode>();
             foreach (BindingNode node in nodes)
             {
@@ -78,7 +129,7 @@ namespace ArrowDataBinding.Bindings.Graph
             while (unvisited.Count > 0)
             {
                 currentNode = unvisited.First(x => true);
-                cycle = cycle || CycleFromCurrentNode(currentNode, null, unvisited, new HashSet<BindingNode>());
+                cycle = CycleFromCurrentNode(currentNode, null, unvisited, new HashSet<BindingNode>()) || cycle;
             }
 
             return cycle;
@@ -86,6 +137,10 @@ namespace ArrowDataBinding.Bindings.Graph
 
         private bool CycleFromCurrentNode(BindingNode node, BindingNode previousNode, HashSet<BindingNode> unvisited, HashSet<BindingNode> seen)
         {
+            /*
+             * Recursively checks whether the current node will lead to a cycle
+             */
+
             if (seen.Contains(node)) return true;
             else
             {
@@ -106,6 +161,10 @@ namespace ArrowDataBinding.Bindings.Graph
 
         public BindingGraph Copy()
         {
+            /*
+             * Used to make alterations and checks on a temporary copy of the binding graph
+             */
+
             BindingGraph newGraph = new BindingGraph();
 
             foreach (BindingNode node in nodes)

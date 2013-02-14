@@ -63,6 +63,24 @@ namespace ArrowDataBinding.Utils
         {
             return Tuple.Create(Tuple.Create(input.Item1, input.Item2.Item1), input.Item2.Item2);
         }
+
+        public static int CountLeaves(Type tupleType)
+        {
+            /*
+             * Treating the tuple as a binary tree structure, return the number of leaves it
+             * contains
+             */
+
+            if (tupleType.Name == typeof(Tuple<,>).Name)
+            {
+                return CountLeaves(tupleType.GetGenericArguments()[0])
+                    + CountLeaves(tupleType.GetGenericArguments()[1]);
+            }
+            else
+            {
+                return 1;
+            }
+        }
     }
 
     public static class ExtensionMethods

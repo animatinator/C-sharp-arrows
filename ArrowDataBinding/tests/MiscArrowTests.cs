@@ -7,6 +7,6 @@ namespace ArrowDataBinding.tests
 {
     public class MiscArrowTests
     {
-        // TODO: Test the new First<C> operator
+        // ...
     }
 }

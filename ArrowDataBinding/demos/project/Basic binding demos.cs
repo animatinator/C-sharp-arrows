@@ -63,6 +63,8 @@ namespace ArrowDataBinding.demos.project
 
             if (passed) Console.WriteLine("Works!");
             else Console.WriteLine("Doesn't work D:");
+
+            //BindingsManager.CreateBinding(source.GetBindPoint("source"), Op.Arr((int x) => x - 1), dest.GetBindPoint("result"));
         }
 
         public static void RunSimpleInvertibleDemo()

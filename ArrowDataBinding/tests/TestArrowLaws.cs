@@ -216,8 +216,6 @@ namespace ArrowDataBinding.tests
              * Tests that the IDArrow<T> class preserves identity for any type
              */
 
-            // TODO: Make TestIdentity cleaner
-
             IEnumerable<Type> types = ArrowTestUtils.GetBuiltInTypes();
 
             bool passed = true;

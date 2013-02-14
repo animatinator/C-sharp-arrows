@@ -23,6 +23,8 @@ namespace ArrowDataBinding.Bindings
         // For instance, the binding handle struct uses this as it needs to take a parameter
         // but doesn't actually care what that parameter is, so it might as well be an untyped
         // binding.
+
+        void Unbind();
     }
 
     public class Binding<T1, T2> : IBinding
@@ -40,6 +42,11 @@ namespace ArrowDataBinding.Bindings
 
             TypeCheck();
             SubscribeToBindable(source.Object);
+        }
+
+        public virtual void Unbind()
+        {
+            UnsubscribeFromBindable(source.Object);
         }
 
         public void TypeCheck()
@@ -61,6 +68,11 @@ namespace ArrowDataBinding.Bindings
         public void SubscribeToBindable(Bindable bind)
         {
             bind.valueChanged += NotifyChange;
+        }
+
+        public void UnsubscribeFromBindable(Bindable bind)
+        {
+            bind.valueChanged -= NotifyChange;
         }
 
         public virtual void NotifyChange(object sourceObj, BindingEventArgs args)
@@ -110,6 +122,13 @@ namespace ArrowDataBinding.Bindings
             SubscribeToBindable(destination.Object);
         }
 
+        public override void Unbind()
+        {
+            base.Unbind();
+
+            UnsubscribeFromBindable(destination.Object);
+        }
+
         public override void NotifyChange(object sourceObj, BindingEventArgs args)
         {
             base.NotifyChange(sourceObj, args);  // Will do the forward change if the changed
@@ -140,6 +159,11 @@ namespace ArrowDataBinding.Bindings
             SubscribeToSources();
         }
 
+        public virtual void Unbind()
+        {
+            UnsubscribeFromSources();
+        }
+
         protected void SubscribeToSources()
         {
             foreach (BindPoint source in sources)
@@ -148,9 +172,22 @@ namespace ArrowDataBinding.Bindings
             }
         }
 
+        protected void UnsubscribeFromSources()
+        {
+            foreach (BindPoint source in sources)
+            {
+                UnsubscribeFromBindable(source.Object);
+            }
+        }
+
         protected void SubscribeToBindable(Bindable bind)
         {
             bind.valueChanged += NotifyChange;
+        }
+
+        protected void UnsubscribeFromBindable(Bindable bind)
+        {
+            bind.valueChanged -= NotifyChange;
         }
 
         public virtual void NotifyChange(Bindable sourceObj, BindingEventArgs args)
@@ -225,11 +262,26 @@ namespace ArrowDataBinding.Bindings
             SubscribeToDestinations();
         }
 
+        public override void Unbind()
+        {
+            base.Unbind();
+
+            UnsubscribeFromDestinations();
+        }
+
         private void SubscribeToDestinations()
         {
             foreach (BindPoint dest in destinations)
             {
                 SubscribeToBindable(dest.Object);
+            }
+        }
+
+        private void UnsubscribeFromDestinations()
+        {
+            foreach (BindPoint dest in destinations)
+            {
+                UnsubscribeFromBindable(dest.Object);
             }
         }
 

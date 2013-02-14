@@ -107,9 +107,8 @@ namespace ArrowDataBinding.Bindings
              * Takes a list of BindPoint objects and returns a tree-structured tuple containing
              * their values. The 'tupleSample' argument is used to supply a tuple with the desired
              * structure so the function knows what shape of tuple to create.
+             * NOTE: Assumes that the tupleType is correctly sized for the number of inputs.
              */
-
-            //TODO: MarshalArguments needs a way of ensuring the tuple is correctly sized for the number of elements
 
             // If the tupleSample is a tuple and not a leaf, recurse into its children
             if (tupleType.Name == typeof(Tuple<,>).Name)

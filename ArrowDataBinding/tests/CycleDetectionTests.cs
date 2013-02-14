@@ -46,7 +46,7 @@ namespace ArrowDataBinding.tests
                     a.GetBindPoint("Value")
                     );
             }
-            catch (BindingCycleException)
+            catch (BindingConflictException)
             {
                 Console.WriteLine("Cycle exception was thrown successfully!");
             }

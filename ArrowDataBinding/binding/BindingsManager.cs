@@ -10,11 +10,21 @@ using ArrowDataBinding.Utils;
 namespace ArrowDataBinding.Bindings
 {
     [Serializable]
-    public class BindingCycleException : Exception
+    public class BindingConflictException : Exception
     {
-        public BindingCycleException()
-            : base("The binding you have attempted to add would lead to a binding cycle which would " +
-            "cause unpredictable behaviour.")
+        public BindingConflictException()
+            : base("The binding you have attempted to add would cause a destination to be " +
+                "reachable from a source by two paths, potentially leading to a conflict and " +
+                "unpredictable behaviour.")
+        { }
+    }
+
+    [Serializable]
+    public class BindingEndpointCountException : Exception
+    {
+        public BindingEndpointCountException()
+            : base("The number of sources or destinations is incorrect for the arrow you are " +
+                "trying to bind with.")
         { }
     }
 
@@ -57,6 +67,7 @@ namespace ArrowDataBinding.Bindings
 
     public class BindingsManager
     {
+        // TODO: Sodding unbind function ya nyaff
         private static Dictionary<BindingHandle, IBinding> bindings = new Dictionary<BindingHandle,IBinding>();
         private static BindingGraph bindGraph = new BindingGraph();
 
@@ -70,8 +81,12 @@ namespace ArrowDataBinding.Bindings
 
         public static BindingHandle CreateBinding<A, B>(BindPoint source, Arrow<A, B> arrow, BindPoint destination)
         {
-            if (LinkWouldCauseCycle(source, destination)) throw new BindingCycleException();
-            // TODO: Check is a binding should overwrite an existing one
+            /*
+             * Creates a one-to-one binding from a source, an arrow and a destination. Infers
+             * whether it should be bidirectional from the type of the supplied arrow.
+             */
+
+            if (LinkWouldCauseConflict(source, destination)) throw new BindingConflictException();
 
             Binding<A, B> result;
 
@@ -95,7 +110,9 @@ namespace ArrowDataBinding.Bindings
         public static BindingHandle CreateBinding<A, B>(BindPoint[] sources, Arrow<A, B> arrow, BindPoint[] destinations)
         {
             /*
-             * Blah... (Description goes here)
+             * Creates a many-to-many binding from a list of sources, an arrow (on tuples) and a
+             * list of destinations. Infers whether it should be bidirectional from the type of the
+             * supplied arrow.
              * 
              * NOTE: Syntax for this constructor is simplified by the helper functions below,
              * leading to:
@@ -104,19 +121,20 @@ namespace ArrowDataBinding.Bindings
              *         Destinations(BindPoint(obj'', var'')))
              */
 
-            // TODO: Cycle checking for multibinding
+            if (MultiLinkWouldCauseConflict(sources, destinations)) throw new BindingConflictException();
+            if (!ArgumentCountsCorrectForArrow(sources.Count(), destinations.Count(), arrow)) throw new BindingEndpointCountException();
 
             MultiBinding<A, B> result;
 
             if (arrow is InvertibleArrow<A, B>)
             {
                 result = new TwoWayMultiBinding<A, B>(sources.ToList(), (InvertibleArrow<A, B>)arrow, destinations.ToList());
-                // TODO: Update binding graph for multibindings
+                UpdateBindingGraphBothWays(sources, destinations);
             }
             else
             {
                 result = new MultiBinding<A,B>(sources.ToList(), arrow, destinations.ToList());
-                // As above
+                UpdateBindingGraph(sources, destinations);
             }
 
             BindingHandle handle = new BindingHandle(result);
@@ -125,11 +143,25 @@ namespace ArrowDataBinding.Bindings
             return handle;
         }
 
+        public static void Unbind(BindingHandle handle)
+        {
+            IBinding binding = bindings[handle];
+            binding.Unbind();
+            bindings.Remove(handle);
+            // TODO: Remove from graph
+        }
+
         public static void UpdateBindingGraph(BindPoint source, BindPoint destination)
         {
-            bindGraph.Add(source);
-            bindGraph.Add(destination);
+            bindGraph.AddMany(source, destination);
             bindGraph.Bind(source, destination);
+        }
+
+        public static void UpdateBindingGraph(BindPoint[] sources, BindPoint[] destinations)
+        {
+            bindGraph.AddMany(sources);
+            bindGraph.AddMany(destinations);
+            bindGraph.MultiBind(sources, destinations);
         }
 
         public static void UpdateBindingGraphBothWays(BindPoint a, BindPoint b)
@@ -138,13 +170,41 @@ namespace ArrowDataBinding.Bindings
             UpdateBindingGraph(b, a);
         }
 
-        public static bool LinkWouldCauseCycle(BindPoint a, BindPoint b)
+        public static void UpdateBindingGraphBothWays(BindPoint[] sources, BindPoint[] destinations)
+        {
+            UpdateBindingGraph(sources, destinations);
+            UpdateBindingGraph(destinations, sources);
+        }
+
+        public static bool LinkWouldCauseConflict(BindPoint a, BindPoint b)
         {
             BindingGraph tempGraph = bindGraph.Copy();
             tempGraph.Add(a);
             tempGraph.Add(b);
             tempGraph.Bind(a, b);
-            return tempGraph.HasCycle();
+            return tempGraph.HasConflict();
+        }
+
+        public static bool MultiLinkWouldCauseConflict(BindPoint[] sources, BindPoint[] destinations)
+        {
+            BindingGraph tempGraph = bindGraph.Copy();
+            tempGraph.AddMany(sources);
+            tempGraph.AddMany(destinations);
+            tempGraph.MultiBind(sources, destinations);
+            return tempGraph.HasConflict();
+        }
+
+        public static bool ArgumentCountsCorrectForArrow(int sourceCount, int destinationCount, IArrow arrow)
+        {
+            /*
+             * Checks the numbers of arguments being provided for the given arrow match the tuple
+             * sizes expected
+             */
+
+            Type inputTupleType = arrow.a;
+            Type outputTupleType = arrow.b;
+            return (TupleOp.CountLeaves(inputTupleType) == sourceCount
+                && TupleOp.CountLeaves(outputTupleType) == destinationCount);
         }
 
         public static BindPoint[] BindPoints(params BindPoint[] parameters)
