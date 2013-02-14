@@ -143,7 +143,6 @@ namespace ArrowDataBinding.Bindings
             // Add all properties to the locked properties list (initialised to unlocked)
             lockedMembers = new Dictionary<string, bool>();
             var bindableVars = GetFieldsAndProperties();
-            // TODO: Make it only use the ones with the bindable attribute?
 
             foreach (var variable in bindableVars)
             {

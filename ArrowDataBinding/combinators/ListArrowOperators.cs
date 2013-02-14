@@ -54,6 +54,13 @@ namespace ArrowDataBinding.Combinators
             return listArrow.Combine(orderByArrow);
         }
 
+        public static ListArrow<A, B> Reverse<A, B>(this ListArrow<A, B> listArrow)
+        {
+            ReverseArrow<B> reverseArrow = ListArrow.Reverse<B>();
+
+            return listArrow.Combine(reverseArrow);
+        }
+
 
         // Fold operations
 

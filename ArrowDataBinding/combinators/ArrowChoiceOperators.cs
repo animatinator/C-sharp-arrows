@@ -9,7 +9,6 @@ namespace ArrowDataBinding.Combinators
 {
     public static partial class Op
     {
-        // TODO: Test ArrowChoice?
         public static ArrowChoice<A, C, B, C> LeftChoice<A, B, C>(Arrow<A, B> arr)
         {
             return new ArrowChoice<A, C, B, C>(x => arr.Invoke(x), (C x) => x);

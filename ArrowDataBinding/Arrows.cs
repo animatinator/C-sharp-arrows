@@ -74,7 +74,6 @@ namespace ArrowDataBinding.Arrows
         /*
          * An arrow which takes an input of either type and returns an output of the associated
          * type.
-         * TODO: Finish ArrowChoice and get it working
          */
 
         public ArrowChoice(Func<A, C> func1, Func<B, D> func2) : base(default(Func<Either<A, B>, Either<C, D>>))
@@ -210,6 +209,11 @@ namespace ArrowDataBinding.Arrows
             return new OrderByArrow<A>(comparison);
         }
 
+        public static ReverseArrow<A> Reverse<A>()
+        {
+            return new ReverseArrow<A>();
+        }
+
         public static Arrow<IEnumerable<A>, A> Foldl<A>(Func<A, A, A> fold, A zero)
         {
             return new FoldlArrow<A>(fold, zero);
@@ -257,6 +261,17 @@ namespace ArrowDataBinding.Arrows
         { }
     }
 
+    public class ReverseArrow<A> : ListArrow<A, A>
+    {
+        /*
+         * Utility arrow for reversing an IEnumerable.
+         */
+        public ReverseArrow()
+            : base((IEnumerable<A> list) =>
+                list.Reverse().ToList())
+        { }
+    }
+
     public class FuncComparer<A> : IComparer<A>
     {
         /*
@@ -299,7 +314,6 @@ namespace ArrowDataBinding.Arrows
     {
         public FoldrArrow(Func<A, A, A> fold, A zero)
             : base(
-                //TODO: Implement in terms of foldl?
                 (IEnumerable<A> list) =>
                 {
                     list = list.Reverse();
