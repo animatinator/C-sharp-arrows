@@ -25,6 +25,8 @@ namespace ArrowDataBinding.Bindings
         // binding.
 
         void Unbind();
+        List<BindPoint> GetSources();
+        List<BindPoint> GetDestinations();
     }
 
     public class Binding<T1, T2> : IBinding
@@ -47,6 +49,16 @@ namespace ArrowDataBinding.Bindings
         public virtual void Unbind()
         {
             UnsubscribeFromBindable(source.Object);
+        }
+
+        public virtual List<BindPoint> GetSources()
+        {
+            return new List<BindPoint> { source };
+        }
+
+        public virtual List<BindPoint> GetDestinations()
+        {
+            return new List<BindPoint> { destination };
         }
 
         public void TypeCheck()
@@ -129,6 +141,16 @@ namespace ArrowDataBinding.Bindings
             UnsubscribeFromBindable(destination.Object);
         }
 
+        public override List<BindPoint> GetSources()
+        {
+            return base.GetSources().Concat(new List<BindPoint> {destination}).ToList();
+        }
+
+        public override List<BindPoint> GetDestinations()
+        {
+            return base.GetDestinations().Concat(new List<BindPoint> {source}).ToList();
+        }
+
         public override void NotifyChange(object sourceObj, BindingEventArgs args)
         {
             base.NotifyChange(sourceObj, args);  // Will do the forward change if the changed
@@ -162,6 +184,16 @@ namespace ArrowDataBinding.Bindings
         public virtual void Unbind()
         {
             UnsubscribeFromSources();
+        }
+
+        public virtual List<BindPoint> GetSources()
+        {
+            return sources;
+        }
+
+        public virtual List<BindPoint> GetDestinations()
+        {
+            return destinations;
         }
 
         protected void SubscribeToSources()
@@ -267,6 +299,16 @@ namespace ArrowDataBinding.Bindings
             base.Unbind();
 
             UnsubscribeFromDestinations();
+        }
+
+        public override List<BindPoint> GetSources()
+        {
+            return base.GetSources().Concat(destinations).ToList();
+        }
+
+        public override List<BindPoint> GetDestinations()
+        {
+            return base.GetDestinations().Concat(sources).ToList();
         }
 
         private void SubscribeToDestinations()

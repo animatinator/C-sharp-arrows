@@ -100,6 +100,19 @@ namespace ArrowDataBinding.Bindings.Graph
             MultiBind(seconds, firsts);
         }
 
+        public void RemoveBindings(BindPoint[] sources, BindPoint[] destinations)
+        {
+            /*
+             * Remove all bindings between the sources and the destinations
+             */
+
+            foreach (BindPoint source in sources)
+            {
+                BindingNode node = FindNodeForPoint(source);
+                node.AdjacentNodes.RemoveAll((BindingNode n) => destinations.Contains(n.Vertex));
+            }
+        }
+
         private BindingNode FindNodeForPoint(BindPoint point)
         {
             /*

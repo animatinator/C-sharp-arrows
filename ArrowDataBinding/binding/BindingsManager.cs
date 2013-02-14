@@ -67,7 +67,6 @@ namespace ArrowDataBinding.Bindings
 
     public class BindingsManager
     {
-        // TODO: Sodding unbind function ya nyaff
         private static Dictionary<BindingHandle, IBinding> bindings = new Dictionary<BindingHandle,IBinding>();
         private static BindingGraph bindGraph = new BindingGraph();
 
@@ -145,10 +144,16 @@ namespace ArrowDataBinding.Bindings
 
         public static void Unbind(BindingHandle handle)
         {
+            /*
+             * Removes the binding associated with the given handle by calling its Unbind method
+             * to unsubscribe it from events, removing it from the bindings dictionary and removing
+             * it from the binding graph.
+             */
+
             IBinding binding = bindings[handle];
             binding.Unbind();
             bindings.Remove(handle);
-            // TODO: Remove from graph
+            bindGraph.RemoveBindings(binding.GetSources().ToArray(), binding.GetDestinations().ToArray());
         }
 
         public static void UpdateBindingGraph(BindPoint source, BindPoint destination)
