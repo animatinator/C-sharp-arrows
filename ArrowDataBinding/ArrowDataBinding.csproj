@@ -73,6 +73,8 @@
     <Compile Include="tests\CycleDetectionTests.cs" />
     <Compile Include="tests\MiscArrowTests.cs" />
     <Compile Include="tests\TestArrowLaws.cs" />
+    <Compile Include="tests\TestInvertibleArrowLaws.cs" />
+    <Compile Include="tests\TestSuite.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="WPF\ArrowValueConverter.cs" />
     <Compile Include="WPF\ExtensionMethods.cs" />

@@ -96,5 +96,10 @@ namespace ArrowDataBinding.Utils
                 return (T)formatter.Deserialize(stream);
             }
         }
+
+        public static Func<Tuple<A, C>, Tuple<B, D>> Mult<A, B, C, D>(this Func<A, B> f, Func<C, D> g)
+        {
+            return new Func<Tuple<A, C>, Tuple<B, D>>(x => Tuple.Create(f(x.Item1), g(x.Item2)));
+        }
     }
 }

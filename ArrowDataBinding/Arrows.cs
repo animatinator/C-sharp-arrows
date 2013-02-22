@@ -133,6 +133,14 @@ namespace ArrowDataBinding.Arrows
         public IDArrow() : base(x => x) { }
     }
 
+    public class InvertibleIDArrow<A> : InvertibleArrow<A, A>
+    {
+        /*
+         * An invertible identity arrow
+         */
+        public InvertibleIDArrow() : base(x => x, x => x) { }
+    }
+
     public class SwapArrow<A, B> : Arrow<Tuple<A, B>, Tuple<B, A>>
     {
         /*
@@ -194,6 +202,7 @@ namespace ArrowDataBinding.Arrows
         /*
          * Holds handy functions for creating list arrows without specifying type parameters.
          */
+        // TODO: List arrows for binding are iffy 'cos lists don't throw events when they change; how 2 fix? (Not actually in this bit of code)
         public static FilterArrow<A> Filter<A>(Func<A, bool> predicate)
         {
             return new FilterArrow<A>(predicate);

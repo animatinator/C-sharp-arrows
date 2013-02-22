@@ -12,7 +12,8 @@ namespace ArrowDataBinding
     {
         static void Main(string[] args)
         {
-            (new BasicBindingDemos()).Run();
+            TestInvertibleArrowLaws test = new TestInvertibleArrowLaws();
+            test.Run();
         }
     }
 }

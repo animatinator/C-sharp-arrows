@@ -10,10 +10,8 @@ using ArrowDataBinding.Utils;
 
 namespace ArrowDataBinding.tests
 {
-    public class TestArrowLaws
+    public class TestArrowLaws : TestSuite
     {
-        private delegate bool Test();
-
         private static List<Test> standardLawTests = new List<Test>
         {
             TestIdentity, TestDistributivity, TestArrFirstOrderingIrrelevance,
@@ -26,59 +24,14 @@ namespace ArrowDataBinding.tests
             TestLaw9
         };
 
-        private static List<List<Test>> tests = new List<List<Test>>
+
+        public TestArrowLaws()
         {
-            standardLawTests, extraLawTests
-        };
-
-
-        public void Run()
-        {
-            int passCount = 0;
-            int total = 0;
-
-            List<string> failedTestNames = new List<string>();
-            string currentTestName;
-
-            foreach (List<Test> testSet in tests)
+            tests = new List<List<Test>>
             {
-                foreach (Test testRun in testSet)
-                {
-                    currentTestName = testRun.Method.ToString();
-                    Console.WriteLine("Running test: {0}", currentTestName);
-
-                    if (testRun())
-                    {
-                        Console.WriteLine("Test passed.");
-                        passCount++;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Test failed.");
-                        failedTestNames.Add(currentTestName);
-                    }
-
-                    total++;
-                }
-            }
-
-            Console.WriteLine();
-            Console.WriteLine("Test summary:");
-            Console.WriteLine("Ran {0} tests, {1} passed and {2} failed.", total, passCount, total - passCount);
-
-            if (passCount < total)
-            {
-                Console.WriteLine("Failed tests:");
-
-                foreach (string failedTest in failedTestNames)
-                {
-                    Console.WriteLine("\t-{0}", failedTest);
-                }
-            }
-
-            Console.WriteLine();
+                standardLawTests, extraLawTests
+            };
         }
-
 
         public static bool TestLaw1()
         {

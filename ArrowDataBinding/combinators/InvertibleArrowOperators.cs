@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using ArrowDataBinding.Arrows;
 
 namespace ArrowDataBinding.Combinators
@@ -82,18 +83,29 @@ namespace ArrowDataBinding.Combinators
             InvertibleArrow<B, A> a1Inverted = a1.Invert();
             InvertibleArrow<D, C> a2Inverted = a2.Invert();
 
-            // TODO: Make the parallel operator actually parallel for invertible arrows too?
             return new InvertibleArrow<Tuple<A, C>, Tuple<B, D>>(
                 (Tuple<A, C> x) =>
-                    new Tuple<B, D>(
-                        a1.Invoke(x.Item1),
-                        a2.Invoke(x.Item2)
-                        ),
+                    {
+                        B leftResult = default(B);
+                        D rightResult = default(D);
+
+                        Parallel.Invoke(
+                            () => leftResult = a1.Invoke(x.Item1),
+                            () => rightResult = a2.Invoke(x.Item2));
+
+                        return new Tuple<B, D>(leftResult, rightResult);
+                    },
                 (Tuple<B, D> x) =>
-                    new Tuple<A, C>(
-                        a1.Invert().Invoke(x.Item1),
-                        a2.Invert().Invoke(x.Item2)
-                        )
+                    {
+                        A leftResult = default(A);
+                        C rightResult = default(C);
+
+                        Parallel.Invoke(
+                            () => leftResult = a1.Invert().Invoke(x.Item1),
+                            () => rightResult = a2.Invert().Invoke(x.Item2));
+
+                        return new Tuple<A, C>(leftResult, rightResult);
+                    }
                 );
         }
 

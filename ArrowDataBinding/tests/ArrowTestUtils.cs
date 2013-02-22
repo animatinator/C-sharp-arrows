@@ -72,6 +72,11 @@ namespace ArrowDataBinding.tests
             return passed;
         }
 
+        public static bool AssertInvertibleArrowsGiveSameOutput<A, B>(InvertibleArrow<A, B> arr1, InvertibleArrow<A, B> arr2)
+        {
+            return AssertArrowsGiveSameOutput(arr1, arr2) && AssertArrowsGiveSameOutput(arr1.Invert(), arr2.Invert());
+        }
+
         public static bool AssertArrowEqualsFunc(Arrow<int, int> arrow, Func<int, int> func)
         {
             Debug.Assert(arrow != null);
@@ -116,6 +121,14 @@ namespace ArrowDataBinding.tests
             }
 
             return passed;
+        }
+
+        public static bool AssertPairInvertibleArrowsGiveSameOutput(
+                            InvertibleArrow<Tuple<int, int>, Tuple<int, int>> ar1,
+                            InvertibleArrow<Tuple<int, int>, Tuple<int, int>> ar2)
+        {
+            return AssertPairArrowsGiveSameOutput(ar1, ar2)
+                && AssertPairArrowsGiveSameOutput(ar1.Invert(), ar2.Invert());
         }
 
         public static bool AssertPairToSingleArrowsGiveSameOutput(Arrow<Tuple<int, int>, int> arr1,

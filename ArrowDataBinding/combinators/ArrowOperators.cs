@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using System.Threading.Tasks;
 using ArrowDataBinding.Arrows;
 
 namespace ArrowDataBinding.Combinators
@@ -113,13 +114,18 @@ namespace ArrowDataBinding.Combinators
              * on an input Tuple.
              */
 
-            // TODO: Make the parallel operator actually parallel?
             return new Arrow<Tuple<A, C>, Tuple<B, D>>(
                 (Tuple<A, C> x) =>
-                    new Tuple<B, D>(
-                        a1.Invoke(x.Item1),
-                        a2.Invoke(x.Item2)
-                        )
+                    {
+                        B leftResult = default(B);
+                        D rightResult = default(D);
+
+                        Parallel.Invoke(
+                            () => leftResult = a1.Invoke(x.Item1),
+                            () => rightResult = a2.Invoke(x.Item2));
+
+                        return new Tuple<B, D>(leftResult, rightResult);
+                    }
                 );
         }
 
