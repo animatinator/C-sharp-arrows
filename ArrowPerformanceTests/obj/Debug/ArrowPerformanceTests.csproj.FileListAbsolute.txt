@@ -1,0 +1,14 @@
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowPerformanceTests\bin\Debug\ArrowPerformanceTests.exe.config
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowPerformanceTests\obj\Debug\ArrowPerformanceTests.csprojResolveAssemblyReference.cache
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowPerformanceTests\bin\Debug\ArrowPerformanceTests.exe
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowPerformanceTests\bin\Debug\ArrowPerformanceTests.pdb
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowPerformanceTests\bin\Debug\ArrowDataBinding.exe
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowPerformanceTests\bin\Debug\PostSharp.dll
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowPerformanceTests\bin\Debug\nunit.framework.dll
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowPerformanceTests\bin\Debug\ArrowDataBinding.pdb
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowPerformanceTests\bin\Debug\PostSharp.xml
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowPerformanceTests\bin\Debug\nunit.framework.xml
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowPerformanceTests\bin\Debug\ArrowPerformanceTests.pssym
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowPerformanceTests\obj\Debug\ArrowPerformanceTests.exe
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowPerformanceTests\obj\Debug\ArrowPerformanceTests.pdb
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\ArrowPerformanceTests\obj\Debug\ArrowPerformanceTests.exe.postsharp
