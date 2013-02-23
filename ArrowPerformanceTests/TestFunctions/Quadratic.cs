@@ -8,29 +8,27 @@ using ArrowDataBinding.Combinators;
 
 namespace ArrowPerformanceTests.TestFunctions
 {
-    class Pythagoras : TestFunction
+    class Quadratic : TestFunction
     {
-        public Pythagoras()
+        public Quadratic()
         {
-            Name = "Pythagoras";
+            Iterations = 10000000;
+            Name = "Quadratic";
         }
 
         protected override void InitialiseArrow()
         {
-            var square = Op.Arr((int x) => x * x);
-            Func<int, int, int> add = ((int x, int y) => x + y);
-
-            arrow = Op.LiftA2(add, square, square).Combine(Op.Arr((int x) => (int)Math.Sqrt(x)));
+            arrow = Op.Arr((int x) => (x * x) + (2 * x) - 5);
         }
 
         protected override void InitialiseFunc()
         {
-            func = new Func<int, int>(x => (int)Math.Sqrt(x * x * 2));
+            func = (int x) => (x * x) + (2 * x) - 5;
         }
 
         protected override int Function(int input)
         {
-            return (int)Math.Sqrt(input * input * 2);
+            return (input * input) + (2 * input) + 5;
         }
     }
 }

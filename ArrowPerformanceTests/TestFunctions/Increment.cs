@@ -13,6 +13,7 @@ namespace ArrowPerformanceTests.TestFunctions
         public Increment()
         {
             Iterations = 10000000;
+            Name = "Increment";
         }
 
         protected override void InitialiseArrow()

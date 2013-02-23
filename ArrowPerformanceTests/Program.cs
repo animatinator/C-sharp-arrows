@@ -12,7 +12,7 @@ namespace ArrowPerformanceTests
     {
         static List<TestFunction> testFunctions = new List<TestFunction>
         {
-            new Pythagoras(), new Increment()
+            new Pythagoras(), new Increment(), new Quadratic(), new Arctan()
         };
 
         static void Main(string[] args)
@@ -23,6 +23,11 @@ namespace ArrowPerformanceTests
             {
                 test.RunPerformanceTest();
             }
+
+            Console.WriteLine();
+            Console.WriteLine("-- Running identity arrow chain performance test --\n");
+
+            IdentityArrowChainTest.Run();
         }
     }
 }

@@ -10,6 +10,8 @@ namespace ArrowPerformanceTests.TestFunctions
 {
     public abstract class TestFunction
     {
+        public string Name { get; set; }
+
         protected Arrow<int, int> arrow;
         protected Func<int, int> func;
         protected abstract int Function(int input);
@@ -27,6 +29,7 @@ namespace ArrowPerformanceTests.TestFunctions
             InitialiseRunMethods();
 
             Iterations = 1000000;
+            Name = "Test function";
         }
 
         private void InitialiseRunMethods()
@@ -42,22 +45,31 @@ namespace ArrowPerformanceTests.TestFunctions
 
         public void RunPerformanceTest()
         {
+            Console.WriteLine("Running performance test '{0}'", Name);
+
             foreach (RunMethod run in runMethods)
             {
                 Console.WriteLine("Running for {0}", run.Method.Name);
                 double totalRunTime = 0.0d;
-                Random rand = new Random();
 
-                for (int i = 0; i < Iterations; i++)
+                for (int i = 0; i < 10; i++)
                 {
-                    double time = Environment.TickCount;
-                    run(rand.Next());
-                    time = Environment.TickCount - time;
-                    totalRunTime += time;
+                    Console.Write("| ");
+                    Random rand = new Random();
+
+                    for (int j = 0; j < Iterations; j++)
+                    {
+                        double time = Environment.TickCount;
+                        run(rand.Next());
+                        time = Environment.TickCount - time;
+                        totalRunTime += time;
+                    }
                 }
 
-                Console.WriteLine("Time for {0} executions: {1}", Iterations, totalRunTime);
+                Console.WriteLine("\nAverage time for {0} executions: {1}", Iterations, totalRunTime / 10);
             }
+
+            Console.WriteLine();
         }
 
         private void RunArrow(int input)
