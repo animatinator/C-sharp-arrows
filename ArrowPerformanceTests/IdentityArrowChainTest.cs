@@ -28,7 +28,7 @@ namespace ArrowPerformanceTests
 
                 for (int i = 0; i < 10; i++)
                 {
-                    Console.Write("| ");
+                    Console.Write(" | ");
                     Random rand = new Random();
 
                     TimeSpan start = Process.GetCurrentProcess().TotalProcessorTime;

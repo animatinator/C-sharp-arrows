@@ -3,11 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using ArrowDataBinding.Arrows;
 using ArrowDataBinding.Combinators;
 
 namespace ArrowPerformanceTests.TestFunctions
 {
+    public class TestResults
+    {
+        public string Name { get; set; }
+        public Dictionary<string, double> resultsList { get; set; }
+
+        public TestResults(string name)
+        {
+            Name = name;
+            resultsList = new Dictionary<string, double>();
+        }
+
+        public void AddResult(string name, double value)
+        {
+            resultsList.Add(name, value);
+        }
+    }
+
     public abstract class TestFunction
     {
         public string Name { get; set; }
@@ -43,9 +61,10 @@ namespace ArrowPerformanceTests.TestFunctions
         protected abstract void InitialiseArrow();
         protected abstract void InitialiseFunc();
 
-        public void RunPerformanceTest()
+        public TestResults RunPerformanceTest()
         {
             Console.WriteLine("Running performance test '{0}'", Name);
+            TestResults results = new TestResults(Name);
 
             foreach (RunMethod run in runMethods)
             {
@@ -54,22 +73,33 @@ namespace ArrowPerformanceTests.TestFunctions
 
                 for (int i = 0; i < 10; i++)
                 {
-                    Console.Write("| ");
+                    Console.Write(" | ");
                     Random rand = new Random();
+
+                    TimeSpan start = Process.GetCurrentProcess().TotalProcessorTime;
 
                     for (int j = 0; j < Iterations; j++)
                     {
-                        double time = Environment.TickCount;
                         run(rand.Next());
-                        time = Environment.TickCount - time;
-                        totalRunTime += time;
                     }
+
+                    TimeSpan end = Process.GetCurrentProcess().TotalProcessorTime;
+                    double time = (end - start).TotalMilliseconds;
+
+                    Console.Write(time);
+                    totalRunTime += time;
                 }
 
                 Console.WriteLine("\nAverage time for {0} executions: {1}", Iterations, totalRunTime / 10);
+                results.AddResult(run.Method.Name, totalRunTime / 10);
             }
 
-            Console.WriteLine();
+            return results;
+        }
+
+        private static void OutputCSV()
+        {
+            // ...
         }
 
         private void RunArrow(int input)

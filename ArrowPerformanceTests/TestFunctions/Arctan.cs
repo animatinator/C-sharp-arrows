@@ -12,7 +12,7 @@ namespace ArrowPerformanceTests.TestFunctions
     {
         public Arctan()
         {
-            Iterations = 10000000;
+            Iterations = 5000000;
             Name = "Arctan";
         }
 
