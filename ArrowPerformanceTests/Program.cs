@@ -21,7 +21,7 @@ namespace ArrowPerformanceTests
 
             foreach (TestFunction test in testFunctions)
             {
-                test.RunPerformanceTest();
+                //test.RunPerformanceTest();
             }
 
             Console.WriteLine();
