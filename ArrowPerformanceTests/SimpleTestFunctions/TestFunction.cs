@@ -9,23 +9,6 @@ using ArrowDataBinding.Combinators;
 
 namespace ArrowPerformanceTests.TestFunctions
 {
-    public class TestResults
-    {
-        public string Name { get; set; }
-        public Dictionary<string, double> resultsList { get; set; }
-
-        public TestResults(string name)
-        {
-            Name = name;
-            resultsList = new Dictionary<string, double>();
-        }
-
-        public void AddResult(string name, double value)
-        {
-            resultsList.Add(name, value);
-        }
-    }
-
     public abstract class TestFunction
     {
         public string Name { get; set; }
@@ -95,11 +78,6 @@ namespace ArrowPerformanceTests.TestFunctions
             }
 
             return results;
-        }
-
-        private static void OutputCSV()
-        {
-            // ...
         }
 
         private void RunArrow(int input)

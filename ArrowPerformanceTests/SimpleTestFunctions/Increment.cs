@@ -8,7 +8,7 @@ using ArrowDataBinding.Combinators;
 
 namespace ArrowPerformanceTests.TestFunctions
 {
-    class Increment : TestFunction
+    public class Increment : TestFunction
     {
         public Increment()
         {

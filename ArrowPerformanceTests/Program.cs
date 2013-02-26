@@ -5,22 +5,37 @@ using System.Text;
 using System.Threading.Tasks;
 using ArrowDataBinding.Arrows;
 using ArrowPerformanceTests.TestFunctions;
+using ArrowPerformanceTests.ListTestFunctions;
 
 namespace ArrowPerformanceTests
 {
     class Program
     {
-        static List<TestFunction> testFunctions = new List<TestFunction>
+        static List<TestFunction> simpleTestFunctions = new List<TestFunction>
         {
             new Pythagoras(), new Increment(), new Quadratic(), new Arctan()
         };
 
+        static List<ListTestFunction> listTestFunctions = new List<ListTestFunction>
+        {
+            new Filter(), new OrderByThenMap(), new Foldl()
+        };
+
         static void Main(string[] args)
+        {
+            //RunSimpleTestFunctions();
+            //Console.WriteLine();
+            //RunIdentityArrowPerformanceTest();
+            //Console.WriteLine();
+            RunListTestFunctions();
+        }
+
+        public static void RunSimpleTestFunctions()
         {
             Console.WriteLine("-- Running arrow performance tests --\n");
             List<TestResults> results = new List<TestResults>();
 
-            foreach (TestFunction test in testFunctions)
+            foreach (TestFunction test in simpleTestFunctions)
             {
                 TestResults result = test.RunPerformanceTest();
                 results.Add(result);
@@ -29,11 +44,6 @@ namespace ArrowPerformanceTests
             Console.WriteLine();
             Console.WriteLine("CSV results:");
             OutputCSV(results);
-
-            Console.WriteLine();
-            Console.WriteLine("-- Running identity arrow chain performance test --\n");
-
-            IdentityArrowChainTest.Run();
         }
 
         public static void OutputCSV(List<TestResults> results)
@@ -51,6 +61,28 @@ namespace ArrowPerformanceTests
 
                 Console.WriteLine();
             }
+        }
+
+        public static void RunIdentityArrowPerformanceTest()
+        {
+            Console.WriteLine("-- Running identity arrow chain performance test --\n");
+            IdentityArrowChainTest.Run();
+        }
+
+        public static void RunListTestFunctions()
+        {
+            Console.WriteLine("-- Running list arrow performance tests --\n");
+            List<TestResults> results = new List<TestResults>();
+
+            foreach (ListTestFunction test in listTestFunctions)
+            {
+                TestResults result = test.RunPerformanceTest();
+                results.Add(result);
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("CSV results:");
+            OutputCSV(results);
         }
     }
 }
