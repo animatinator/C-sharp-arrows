@@ -1,0 +1,34 @@
+Subject: Phase 1 - Barker: Functional Reactive Programming for Data Binding in C#
+
+Phase 1 Project Selection Status Report
+
+Name: David Barker
+
+College: Jesus
+
+User Identifier: djb218
+
+Director of Studies: Jean Bacon
+
+Please complete 1, 2 and 3 below.
+
+1. Please write 100 words on your current project ideas.
+                                                                 
+My current project will consist of implementing a data binding framework in C# based on functional reactive programming concepts. The Haskell concept of arrows will be used to make it easy to combine lambda expressions to form functional 'paths' through which bound values will propagate. I will also attempt to implement 'invertible arrows' which would work in both directions so that binding can be two-way. A series of binding objects will be used to manage the bindings themselves (using a publish/subscribe arrangement), and these will be included as part of the framework. A possible extension would be to use the Roslyn framework to allow a more natural Haskell-style syntax for combining arrows than is available with simple C# operator overloading.
+
+
+2. Please list names of potential project supervisors.
+
+Tomas Petricek
+
+
+3. Is there any chance that your project will involve any
+computing resources other than the Computing Service's PWF and
+software that is already installed there, for example: your own
+machine, machines in College, special peripherals, imported
+software packages, special hardware, network access, substantial
+extra disc space on the PWF.
+
+If so indicate below what, and what it is needed for.
+
+- Own laptop (with PWF machines as an alternative and regular backup via Github/Google Docs etc.)
