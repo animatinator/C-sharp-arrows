@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.5)  1 MAR 2013 16:15
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.5)  1 MAR 2013 16:37
 entering extended mode
 **Dissertation.tex
 
@@ -254,7 +254,7 @@ Missing character: There is no ™ in font cmr12!
 File: fig/ArgumentMarshalling.pdf Graphic file (type pdf)
 
 <use fig/ArgumentMarshalling.pdf>
-Package pdftex.def Info: fig/ArgumentMarshalling.pdf used on input line 288.
+Package pdftex.def Info: fig/ArgumentMarshalling.pdf used on input line 290.
 (pdftex.def)             Requested size: 411.93877pt x 119.07281pt.
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
@@ -270,35 +270,37 @@ Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
  [12 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
 sertation/fig/ArgumentMarshalling.pdf>]
-Chapter 4.
-[13
-
+[13] [14
 
 ]
-<fig/SimpleFunctionPerformanceChart.pdf, id=89, 496.44887pt x 258.75552pt>
+Chapter 4.
+[15
+
+]
+<fig/SimpleFunctionPerformanceChart.pdf, id=95, 496.44887pt x 258.75552pt>
 File: fig/SimpleFunctionPerformanceChart.pdf Graphic file (type pdf)
 
 <use fig/SimpleFunctionPerformanceChart.pdf>
 Package pdftex.def Info: fig/SimpleFunctionPerformanceChart.pdf used on input l
-ine 377.
+ine 379.
 (pdftex.def)             Requested size: 411.93877pt x 214.71175pt.
 
-<fig/ListFunctionPerformanceChart.pdf, id=90, 496.4172pt x 244.72725pt>
+<fig/ListFunctionPerformanceChart.pdf, id=96, 496.4172pt x 244.72725pt>
 File: fig/ListFunctionPerformanceChart.pdf Graphic file (type pdf)
 
 <use fig/ListFunctionPerformanceChart.pdf>
 Package pdftex.def Info: fig/ListFunctionPerformanceChart.pdf used on input lin
-e 388.
+e 390.
 (pdftex.def)             Requested size: 411.93877pt x 203.08247pt.
- [14] [15 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBindin
+ [16] [17 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBindin
 g/Dissertation/fig/SimpleFunctionPerformanceChart.pdf> <C:/Users/David/Document
 s/Visual Studio 2010/Projects/ArrowDataBinding/Dissertation/fig/ListFunctionPer
-formanceChart.pdf>] [16]
+formanceChart.pdf>] [18]
 Chapter 5.
-[17
+[19
 
 
-] [18
+] [20
 
 ]
 ("C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\Dissert
@@ -322,9 +324,9 @@ pe1/public/amsfonts/cm/cmsl12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publ
 ic/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
 nts/cm/cmtt10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
 mtt12.pfb>
-Output written on Dissertation.pdf (26 pages, 248364 bytes).
+Output written on Dissertation.pdf (28 pages, 250184 bytes).
 PDF statistics:
- 275 PDF objects out of 1000 (max. 8388607)
+ 281 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
