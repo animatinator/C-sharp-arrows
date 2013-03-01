@@ -6,6 +6,9 @@
 \input{epsf}
 \usepackage[pdftex]{graphicx}
 
+\usepackage{listings}
+\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
+
 \raggedbottom                           % try to avoid widows and orphans
 \sloppy
 \clubpenalty1000%
@@ -60,7 +63,8 @@ Jesus College \\
 \begin{tabular}{ll}
 Name:               & \bf David Barker \\
 College:            & \bf Jesus College \\
-Project Title:      & \bf Functional Reactive Programming for Data Binding in C$\sharp$ \\
+Project Title:      & \bf Functional Reactive Programming for \\
+					& \bf Data Binding in C$\sharp$ \\
 Examination:        & \bf Computer Science Tripos Part II \\
 Word Count:         & \bf TBC \\
 Project Originator: & Tomas Petricek \\
@@ -226,11 +230,27 @@ Use diagrams and stuff to explain it.
 
 \subsection{Creating bindable sources and destinations}
 
-Explain it with a bit of code here and there.
+One of the main problems with WPF data binding is the complexity of making sources 'bindable'. This usually requires that the programmer manually implement the \texttt{INotifyPropertyChanged} interface, creating appropriate events and overriding the set methods of all their properties such that they throw the right events. This often becomes a case of copying and pasting the code used for other data sources as it is almost always identical and includes boilerplate tasks like ensuring a variable's new value is different from its old one before throwing the event, and checking that the event isn't null.
+
+For this project I decided to abstract these details away into a base class, called \texttt{Bindable}. This provides events for binding and a set of methods used by binding classes to manage data binding, many of which will be discussed later in this section. The most important are those which allow getting and setting of arbitrary variables by name using reflection, as these are the main interface used by the bindings manager. These have been designed to be dynamically type safe (that is, throwing exceptions at run time where type errors are encountered), to ensure the properties being accessed exist and to abstract away the differences between properties and simple public member variables\footnote{WPF does not allow binding to member variables, but for this project I decided there was no obvious need to distinguish between the two}.
+
+The result of this is that instead of writing all the boilerplate code one would usually write, the programmer need only make their sources and destinations extend Bindable and all the usual things will be handled elsewhere leading to considerably less code clutter. A representative example of the final syntax is given in Listing \ref{lst:bindable_source_class}.
+
+Another addition that can be seen in the listing is the \texttt{[Bindable]} attribute which has been used above the \texttt{value} property. This uses a PostSharp aspect, explained in the next section, to intercept the setter for throwing events and so relieve the programmer of having to do this themselves.
+
+\begin{lstlisting}[language={[Sharp]C}, caption={Creating a bindable source class}, label=lst:bindable_source_class]
+public class DataSource : Bindable
+{
+	[Bindable]
+	public int value { get; set; }
+}
+\end{lstlisting}
 
 \subsubsection*{PostSharp}
 
-Explain AOP and how this was useful in fixing up the syntax.
+PostSharp is a C$\sharp$ extension which provides aspect-oriented programming (AOP) functionality. Essentially, AOP is a means of separating cross-cutting concerns from the code they affect, allowing 'aspects' to be written providing this common functionality. Markers can then be placed in the appropriate points, and the aspects will generate and inject their code into these locations at compile time.
+
+In this case, the \texttt{Bindable} aspect will intercept the setter of any property or member variable it is placed above and insert code to check whether the value has changed and throw appropriate events if it has. This does not interfere with any setters the programmer may already have specified, as it defers to the programmer's setter before throwing the event for the value changing (thus ensuring the event is only thrown once all values are updated and any side-effects have occurred).
 
 \subsection{Creating bindings}
 
@@ -248,16 +268,7 @@ Problems encountered - need for variable ‘locking’ system to avoid infinite 
 
 \subsubsection{Many-to-many bindings}
 
-Mention:
-
-\begin{itemize}
-	\item Difficulties with how to set it up; ultimate decision to pass in lists of sources and destinations
-	\item Tuple marshalling/unmarshalling:
-	\begin{itemize}
-		\item Arrows use binary tree structured tuples due to the way they are constructed, so had to match this structure rather than just going to a flat tuple
-	\end{itemize}
-	\item Test
-\end{itemize}
+Many-to-many bindings presented an additional challenge for the binding system. It was decided that the best approach in terms of syntax would be to have the user pass in a list of source bind points, an arrow and a list of destination bind points, so as to mirror the syntax used in simple bindings. However, this simple approach is out of step with the way parameters are passed to arrows: by construction, all arrows taking multiple inputs will take them in the form of a binary-tree-structured Tuple\footnote{This can be verified by looking at the implementations of the operators; for instance, And converts two arrows (which may be on tuples) into an arrow on two-tuples containing the types of the original arrows, thus building up a binary tree structure}. As there didn't appear to be any C$\sharp$ syntax allowing the user to pass in binding sources in a similar fashion (such that the structure could be understood by the binding), it was decided that an argument marshaller/unmarshaller would be needed to handle the translation between lists of bind points and tree-structured tuples.
 
 \begin{figure}[!ht]
   \centering
@@ -265,6 +276,8 @@ Mention:
   \caption{Marshalling a list of BindPoint sources to pass to an arrow and unmarshalling the result}
   \label{fig:argument_marshalling}
 \end{figure}
+
+By using reflection on the type of the arrow, I was able to convert a list of bind points to a binary-tree-structured Tuple. The code essentially does a recursive depth-first search through the input type of the arrow (obtained via reflection), simultaneously constructing a Tuple of the same structure and inserting values from the bind points wherever a 'leaf' is encountered in the type being searched. At the other end, a similar process is used to extract the values from the returned tuple and put them into a list which is then used to assign to the destination bind points. The process is illustrated in Figure ~\ref{fig:argument_marshalling}, where a set of inputs of types A, B and C are being passed into an arrow from type \texttt{Tuple<Tuple<A, B>, C>} to type \texttt{Tuple<A, Tuple<B, C>>}.
 
 \subsubsection{Problems encountered}
 
