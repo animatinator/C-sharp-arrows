@@ -18,13 +18,13 @@
 \contentsline {subsection}{\numberline {3.3.2}Creating bindable sources and destinations}{9}
 \contentsline {subsection}{\numberline {3.3.3}Creating bindings}{10}
 \contentsline {subsubsection}{Syntax and usage}{11}
-\contentsline {subsubsection}{Cycle and conflict detection}{11}
 \contentsline {subsubsection}{Two-way binding}{11}
-\contentsline {subsubsection}{Many-to-many bindings}{11}
-\contentsline {subsubsection}{Problems encountered}{12}
-\contentsline {paragraph}{Type safety}{12}
-\contentsline {paragraph}{Binding to lists}{13}
-\contentsline {subsection}{\numberline {3.3.4}Integration work with WPF}{13}
+\contentsline {subsubsection}{Cycle and conflict detection}{11}
+\contentsline {subsubsection}{Many-to-many bindings}{13}
+\contentsline {subsubsection}{Problems encountered}{14}
+\contentsline {paragraph}{Type safety}{14}
+\contentsline {paragraph}{Binding to lists}{14}
+\contentsline {subsection}{\numberline {3.3.4}Integration work with WPF}{14}
 \contentsline {chapter}{\numberline {4}Evaluation}{15}
 \contentsline {section}{\numberline {4.1}Correctness of arrow implementations}{15}
 \contentsline {subsection}{\numberline {4.1.1}Automated testing}{15}
@@ -46,3 +46,4 @@
 \contentsline {subsubsection}{Overhead due to arrow chaining}{17}
 \contentsline {subsection}{\numberline {4.3.2}Binding performance}{18}
 \contentsline {chapter}{\numberline {5}Conclusion}{19}
+\contentsline {section}{\numberline {5.1}Future work}{19}

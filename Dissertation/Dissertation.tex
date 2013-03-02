@@ -273,13 +273,40 @@ BindingsManager.CreateBinding(
 	destination.GetBindPoint("result"));
 \end{lstlisting}
 
-\subsubsection{Cycle and conflict detection}
-
-Techniques used and all that.
-
 \subsubsection{Two-way binding}
 
 Problems encountered - need for variable ‘locking’ system to avoid infinite loop
+
+\subsubsection{Cycle and conflict detection}
+
+When setting up a large collection of arbitrary data bindings in a complex application, there is often the risk that some of the bindings could interfere with each other. This generally occurs in one of two ways:
+
+\begin{itemize}
+	\item A collection of bindings ends up forming a cycle, with every update to the first source property ultimately leading to an update of that same property
+	\item One property is directly or indirectly bound to more than one source through functions which will not necessarily yield the same result
+\end{itemize}
+
+The first scenario is especially problematic for this binding framework as binding updates are performed in the same thread, so a binding cycle will lead to an infinite loop of updates causing the application to freeze. The second scenario doesn't necessarily break the application, but the resulting behaviour will be entirely unpredictable\footnote{This is because the order in which bindings are updated is governed by the order in which C$\sharp$ delivers events, and this is outwith the programmer's control}. Naturally, a useful data binding framework would need to handle these situations properly.
+
+To tackle this problem, I implemented a \texttt{BindingGraph} class which is used by the \texttt{BindingsManager} and keeps track of the topology of all the existing bindings (leaving the details of actual bind points to the bindings manager). Whenever a new binding is added or an old binding is removed, the binding graph is notified and it updates its map of the bindings appropriately. It then provides methods which allow the bindings manager to query whether a new binding will introduce a cycle or conflict, and if so the bindings manager will know to abort the binding with an exception.
+
+Both cycles and conflicts can be reduced to the same question: for each node in the binding graph, is there another node which is reachable from it via more than one path? Both situations are therefore handled by the same algorithm, which proceeds by depth-first searching from each node and maintaining a set of nodes which have been seen along the way. Rough pseudocode for this method is given in Listing~\ref{lst:cycle_conflict_pseudocode}.
+
+\begin{lstlisting}[caption={Pseudocode for cycle and conflict detection}, label=lst:cycle_conflict_pseudocode]
+for each node in the graph:
+  seen = {}
+  checkCycles(node, seen)
+
+function checkCycles(node, seen)
+  if node in seen:
+    return 'cycle'
+  else:
+    add node to seen
+    for each child node:
+      checkCycles(child, seen)
+\end{lstlisting}
+
+Further to detecting these situations, another issue which had to be resolved was what action to take on finding a problem. Were the programmer to create a new binding between two objects which were already bound, a possible response would be to simply overwrite the old binding. This would prevent errors from the framework disrupting the user, and is also a fairly reasonable behaviour to expect. However, it was decided that this made the binding process too opaque and could lead to confusing behaviour if the programmer had accidentally overwritten a binding -- for instance, by mistyping the name of one of the objects they intended to bind. Therefore, whenever the programmer attempts to create a binding which would lead to a cycle or conflict, the framework throws an exception explaining the error. The behaviour of 'overwriting' an old binding is still possible as the \texttt{BindingsManager} provides a method for removing specific bindings, but now the programmer has to do the overwriting explicitly.
 
 \subsubsection{Many-to-many bindings}
 
@@ -409,6 +436,16 @@ Todo...
 \chapter{Conclusion}
 
 Conclusion goes here!
+
+\section{Future work}
+
+\begin{itemize}
+	\item Performance issues - optimisations possible with dynamic expression trees?
+	\item Messiness caused by use of Tuples - would be better with a custom tree type?
+	\item Feedback arrows
+	\item Better integration with WPF
+	\item etc...
+\end{itemize}
 
 \cleardoublepage
 
