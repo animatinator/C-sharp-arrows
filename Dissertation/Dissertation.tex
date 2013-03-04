@@ -156,6 +156,10 @@ The FRP paradigm was the inspiration for the project, which sought to implement 
 
 This chapter is empty still!
 
+-Explain FRP here
+-Explain arrows here
+-Software engineering approach - iterations at first, issue-driven Agile
+
 \cleardoublepage
 
 
@@ -173,14 +177,15 @@ Give a general overview
 
 \subsection{Overview}
 
-Overview of how arrows worked
+Implementing the highly functional idea of an arrow in C$\sharp$ posed an interesting challenge. Fundamentally, there were two main obstacles to overcome: C$\sharp$'s syntax, which is far clunkier than Haskell's; and the type system, which is far more restrictive and relies on static analysis at compile time. It was decided early on that arrows would be built on lambda expressions as these seemed the most natural way of expressing the desired functionality. C$\sharp$'s generic \texttt{Func<T1, T2>} type provided a good way of handling arbitrary lambda expressions between arbitrary types, and so this became the basis for the arrow type.
 
-\begin{itemize}
-	\item Type inference chosen instead of reflection
-	\item Techniques for allowing type inference - static constructor methods, extension methods etc.
-	\item Arrow intercompatibility?
-	\item Multiple inputs/outputs and the decision to use C$\sharp$ Tuple class
-\end{itemize}
+Tackling the type system posed a fairly significant challenge. Initially I took the approach of writing arrow combinator functions so that they required no type parameters and instead inferred all their types by reflection. This made the syntax far neater and, using some run-time type checking, could plausibly be made type safe (though the compiler would have no way of enforcing it). However, after some experimenting it became clear that writing new operators and arrow types would be incredibly difficult using this approach, and the resulting code was very complicated and difficult to understand.
+
+It was therefore decided that arrows and combinators should all be statically typed, as this would allow the compiler to do type checking and lead to much cleaner code. However, this meant the issue of the programmer having to provide long lists of type parameters to every combinator was still there. I was eventually able to solve this problem by writing the combinators in such a way that the compiler could always infer types from the arguments without the programmer needing to supply them. Several more situations were fixed by including static extension methods which would use the source object to infer some parameters, and a series of static helper methods were included in the class \texttt{Op} to help fill in the gaps. This was easier said than done in several cases (which will be discussed later), but ultimately I managed to eliminate type parameters completely from the syntax.
+
+A further problem was how best to allow arrows from multiple inputs to multiple outputs. Simply having a \texttt{Func} with multiple inputs would not have worked as the arrow would have had to be rewritten for every given number of inputs, and to make matters worse \texttt{Func} is limited to one output. For some time I debated writing a generic binary-tree-structured type\footnote{All arrows work on nested pairs} to handle this, but on discovering C$\sharp$'s built-in \texttt{Tuple<T1, T2>} type I felt this would be the simplest option. This ended up complicating the data binding (as I will discuss later), but was entirely sufficient for supporting the arrow implementation.
+
+[Maybe mention arrow intercompatibility?]
 
 \subsection{Simple arrows}
 
@@ -188,7 +193,7 @@ Summarise functionality, combinators and syntactic efforts made here, mention th
 
 \subsubsection*{Challenges encountered}
 
-A few - mention type inference challenges, overcoming type system whilst maintaining type safety and difficulties with the And operator (also alternatives considered for this)
+A few - mention type inference challenges, overcoming type system whilst maintaining type safety and difficulties with the First operator (also alternatives considered for this -- the three iterations used, and why the last one makes sense). Also implementing something like a general identity arrow or swap arrow -- ultimately needed to make it a special arrow subclass as having a polymorphic arrow is impossible in C$\sharp$.
 
 \subsection{Invertible arrows}
 
@@ -275,7 +280,7 @@ BindingsManager.CreateBinding(
 
 \subsubsection{Two-way binding}
 
-Problems encountered - need for variable ‘locking’ system to avoid infinite loop
+Mention inference of two-way bindings by reflecting on the type of the arrow passed in. Also mention the problems encountered - need for variable ‘locking’ system to avoid infinite loop
 
 \subsubsection{Cycle and conflict detection}
 
@@ -423,6 +428,13 @@ Results for list-based functions
 
 Explanation of the problem (which will have been highlighted in earlier results) along with test results for increasingly long chains of identity functions. Suggest reasons for this and potential solutions (or maybe the solutions should come in later?)
 
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=\textwidth]{fig/IdentityChains.pdf}
+  \caption{Performance of arrows, Linq queries and normal (loop-based) functions in implementing simple list functionality}
+  \label{fig:arrow_chaining_overhead}
+\end{figure}
+
 \subsection{Binding performance}
 
 Todo...
@@ -446,6 +458,63 @@ Conclusion goes here!
 	\item Better integration with WPF
 	\item etc...
 \end{itemize}
+
+\cleardoublepage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Appendices
+
+\appendix
+
+\chapter{Arrow laws}
+
+Here the arrow laws used in testing are presented both in Haskell syntax and as they were translated into C$\sharp$. For convenience, the following definitions are used:
+
+\begin{lstlisting}
+id = new Func<T, T>(x => x)
+\end{lstlisting}
+
+That is, id represents a C$\sharp$ identity function.
+
+\begin{lstlisting}
+first_f = new Func<Tuple<T, T>, Tuple<T, T>>(
+  tuple => Tuple.Create(f(tuple.Item1), tuple.Item2))
+\end{lstlisting}
+
+This defines a \texttt{Func} which invokes a function 'f' on the first element of a tuple.
+
+\section{Normal arrow laws}
+
+\begin{lstlisting}[mathescape]
+Identity
+arr id = id
+new IDArrow<T>() $\approx$ id
+
+Distributivity
+arr (f >>> g) = arr f >>> arr g
+Op.Arr(x => g(f(x))) $\approx$ Op.Arr(f) .Combine( Op.Arr(g) )
+
+Associativity of arr and first operators
+first (arr f) = arr (first f)
+Op.Arr(f).First<T>() $\approx$ Op.Arr ( first_f )
+
+Piping commutativity
+first (f >>> g) = first f >>> first g
+f .Combine(g) .First<T>() $\approx$ f .First<T>() .Combine( g.First<T>() )
+
+Piping simplification
+first f >>> arr fst = arr fst >>> f
+f.First<T>() .Combine( Op.Arr(tuple => tuple.Item1) ) $\approx$ Op.Arr(tuple => Tuple.Item1) .Combine( f )
+
+Piping reassociation
+first f >>> arr (id *** g) = arr (id *** g) >>> first f
+f.First<T>() .Combine( id.And(g) ) $\approx$ id.And(g) .Combine( f.First<T>() )
+
+first (first f) >>> arr assoc = arr assoc >>> first f
+f .First<T>() .First<T>() .Combine( new AssocArrow<T>() ) $\approx$ new AssocArrow<T>() .Combine( f .First<T>() )
+
+\end{lstlisting}
 
 \cleardoublepage
 
