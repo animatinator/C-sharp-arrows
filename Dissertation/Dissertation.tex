@@ -142,7 +142,7 @@ However, WPF suffers from a similar problem to many other data binding framework
 
 \section{Project inspirations}
 
-Many useful ideas for data binding come from the area of functional programming. Functional reactive programming (FRP), for example, is a paradigm which nicely models the concept of data binding in a general way. Another useful concept is that of the ‘arrows’ implemented in Haskell. An ‘arrow from type A to type B’ essentially represents a process taking an input of type A and returning something of type B, and these can be arbitrarily combined in interesting ways to build up complex functions. More detail on both will be given in the next chapter.
+Many useful ideas for data binding come from the area of functional programming. Functional reactive programming (FRP), for example, is a paradigm which nicely models the concept of data binding in a general way. Another useful concept is that of the `arrows' implemented in Haskell. An `arrow from type A to type B' essentially represents a process taking an input of type A and returning something of type B, and these can be arbitrarily combined in interesting ways to build up complex functions. More detail on both will be given in the next chapter.
 
 The FRP paradigm was the inspiration for the project, which sought to implement a general-purpose data binding framework in C$\sharp$ using concepts derived from functional programming. I successfully implemented a framework which provides data binding in both directions, through arbitrary functions with arbitrary numbers of inputs and outputs, all with a simple syntax based on lambda expressions. Minimal boilerplate code is required to set up bindable properties - the containing class should extend Bindable, and from there marking arbitrary member variables and properties with the [Bindable] tag will make it possible to create bindings to and from them with a single function call. I also implemented a large variety of arrow types and arrow operators along with a number of utility functions to make creating and combining them simple.
 
@@ -179,7 +179,7 @@ Give a general overview
 
 Implementing the highly functional idea of an arrow in C$\sharp$ posed an interesting challenge. Fundamentally, there were two main obstacles to overcome: C$\sharp$'s syntax, which is far clunkier than Haskell's; and the type system, which is far more restrictive and relies on static analysis at compile time. It was decided early on that arrows would be built on lambda expressions as these seemed the most natural way of expressing the desired functionality. C$\sharp$'s generic \texttt{Func<T1, T2>} type provided a good way of handling arbitrary lambda expressions between arbitrary types, and so this became the basis for the arrow type.
 
-Tackling the type system posed a fairly significant challenge. Initially I took the approach of writing arrow combinator functions so that they required no type parameters and instead inferred all their types by reflection. This made the syntax far neater and, using some run-time type checking, could plausibly be made type safe (though the compiler would have no way of enforcing it). However, after some experimenting it became clear that writing new operators and arrow types would be incredibly difficult using this approach, and the resulting code was very complicated and difficult to understand.
+Tackling the type system was particularly difficult. I initially took the approach of writing arrow combinator functions so that they required no type parameters and instead inferred all their types by reflection. This made the syntax far neater and, using some run-time type checking, could plausibly be made type safe (though the compiler would have no way of enforcing it). However, after some experimenting it became clear that writing new operators and arrow types would be incredibly difficult using this approach, and the resulting code was very complicated and difficult to understand.
 
 It was therefore decided that arrows and combinators should all be statically typed, as this would allow the compiler to do type checking and lead to much cleaner code. However, this meant the issue of the programmer having to provide long lists of type parameters to every combinator was still there. I was eventually able to solve this problem by writing the combinators in such a way that the compiler could always infer types from the arguments without the programmer needing to supply them. Several more situations were fixed by including static extension methods which would use the source object to infer some parameters, and a series of static helper methods were included in the class \texttt{Op} to help fill in the gaps. This was easier said than done in several cases (which will be discussed later), but ultimately I managed to eliminate type parameters completely from the syntax.
 
@@ -191,7 +191,56 @@ A further problem was how best to allow arrows from multiple inputs to multiple 
 
 Summarise functionality, combinators and syntactic efforts made here, mention things like the parallelism of the And operator as well.
 
-\subsubsection*{Challenges encountered}
+\begin{itemize}
+	\item Basic operators -- how to create, combine and first/second arrows
+	\item Other operators like And (mention it's parallel)
+	\item Advanced operators
+	\item Table illustrating mapping between C$\sharp$ operators and Haskell equivalents
+\end{itemize}
+
+The first objective in implementing arrows was to get the simple function-based arrow working, as all the others derive from this. As mentioned earlier, it was implemented using the C$\sharp$ \texttt{Func<A, B>} class to hold its function. An \texttt{Invoke} method is then exposed for using the arrow.
+
+Whilst arrows can be constructed using \texttt{new Arrow<A, B>(function)}, a simpler syntax is provided by an extension method:
+
+\begin{lstlisting}[language={[Sharp]C}]
+var increment = ((int x) => x + 1).Arr();
+\end{lstlisting}
+
+The \texttt{Arr} operator effectively lifts a function to arrow status, in much the same way as the \texttt{arr} operator in Haskell. Arrow composition is also possible:
+
+\begin{lstlisting}[language={[Sharp]C}]
+var combinedArrow = arrow.Combine(anotherArrow);
+\end{lstlisting}
+
+This is equivalent to \texttt{arrow >>> anotherArrow} in the Haskell syntax. Implementing a \texttt{>>>} operator was unfortunately not possible in C$\sharp$ as it does not allow user-defined operators. The \texttt{first} operator was then implemented to complete the basic arrow:
+
+\begin{lstlisting}[language={[Sharp]C}]
+var firstArrow = arrow.First(default(T));
+\end{lstlisting}
+
+Or, equally:\footnote{\texttt{Op} is the static class containing all arrow operators and extension methods}
+
+\begin{lstlisting}[language={[Sharp]C}]
+var firstArrow = Op.First(arrow, default(T))
+\end{lstlisting}
+
+The above syntax may not immediately make sense. Essentially, the \texttt{default(T)} passes in null if \texttt{T} is a reference type and some sensible default if it is a null type. The only purpose for this parameter is to allow the compiler to infer the type of the second argument to the resulting arrow, and so any value of the appropriate type would work -- \texttt{default(T)} is used for simplicity. This is the one syntax `glitch' which I was unable to remove, and is explained in more detail at the end of this subsection.
+
+Going beyond the basic operators, many composite operators were also implemented based on these simple combinators. For instance, \texttt{Second} was implemented in terms of \texttt{First}. The standard parallel combinator was also implemented as \texttt{And}:
+
+\begin{lstlisting}[language={[Sharp]C}]
+var parallelArrow = leftArrow.And(rightArrow);
+\end{lstlisting}
+
+This is equivalent to the \texttt{***} operator in Haskell, and executes the two arrows in parallel. This allows a number of complex operations to be conveniently parallelised in one arrow, which could likely be useful when working with data bindings between complex objects. The \texttt{Fanout} operator makes good use of this: given one input arrow of type \texttt{Arrow<A, B>} and two following arrows of types \texttt{Arrow<B, C>} and \texttt{Arrow<B, D>}\footnote{Note that the input types of the two arrows have to match the output type of the first arrow}, it returns an arrow which executes the input arrow, splits the result and then passes it through the two following arrows in parallel yielding a pair of results.
+
+Given a pair result, it is then possible to recombine the two elements using a \texttt{Func<A, B, C>} operator using \texttt{Unsplit}. The following example recombines the tuple by adding its elements together:
+
+\begin{lstlisting}[language={[Sharp]C}]
+var unsplitArrow = arrowOnPairs.Unsplit((x, y) => x + y);
+\end{lstlisting}
+
+\subsubsection{Challenges encountered} \label{sec:simple_arrow_challenges}
 
 A few - mention type inference challenges, overcoming type system whilst maintaining type safety and difficulties with the First operator (also alternatives considered for this -- the three iterations used, and why the last one makes sense). Also implementing something like a general identity arrow or swap arrow -- ultimately needed to make it a special arrow subclass as having a polymorphic arrow is impossible in C$\sharp$.
 
@@ -216,10 +265,12 @@ Discuss the alternative ways of implementing this - a set of preset arrows desig
 
 \subsection{Further utility arrows}
 
+To simplify various common tasks, a number of simple utility arrows were written. These simply inherited from an arrow on the appropriate types, and initialised the arrow to some particular function in the constructor.
+
 \begin{description}
-	\item[Identity arrows] Exist for normal arrows and invertible ones; mention the reason for the class - has to be type parameterised
-	\item[Tuple reassociation arrows] Useful for stuff like arrow law tests, explain here...
-	\item[Others] Any more to mention?
+	\item[Identity arrows] The identity arrow, though very rarely used in practice, plays a key part in several of the arrow laws. Creating it from a \texttt{Func} every time made the tests a lot messier, so a simple \texttt{IDArrow<T>} class was written which takes a type parameter and returns an identity arrow on that type. An invertible version of this was also written for the invertible arrow laws.
+	\item[Swap arrow] This fulfilled a need which came up surprisingly often: given two types \texttt{A} and \texttt{B}, create an arrow on a \texttt{Tuple<A, B>} which swaps them around and outputs a \texttt{Tuple<B, A>}.
+	\item[Tuple reassociation arrows] The tuple operations \texttt{assoc} and \texttt{cossa}\footnote{\texttt{assoc} takes a tuple ((a, b), c) and returns (a, (b, c)), whilst \texttt{cossa} does the opposite} turn up reasonably frequently in functional programming, and feature in several of the arrow laws. As these are fairly fiddly to implement I decided it would make sense to create utility arrows for both these functions.
 \end{description}
 
 \subsection{Feedback in arrows}
@@ -487,33 +538,37 @@ This defines a \texttt{Func} which invokes a function 'f' on the first element o
 \section{Normal arrow laws}
 
 \begin{lstlisting}[mathescape]
+\begin{samepage}
+
 Identity
 arr id = id
 new IDArrow<T>() $\approx$ id
 
-Distributivity
+Arr operator distributivity
 arr (f >>> g) = arr f >>> arr g
 Op.Arr(x => g(f(x))) $\approx$ Op.Arr(f) .Combine( Op.Arr(g) )
+
+First operator distributivity
+first (f >>> g) = first f >>> first g
+f .Combine(g) .First<T>() $\approx$ f .First<T>() .Combine( g.First<T>() )
 
 Associativity of arr and first operators
 first (arr f) = arr (first f)
 Op.Arr(f).First<T>() $\approx$ Op.Arr ( first_f )
 
 Piping commutativity
-first (f >>> g) = first f >>> first g
-f .Combine(g) .First<T>() $\approx$ f .First<T>() .Combine( g.First<T>() )
+first f >>> arr (id *** g) = arr (id *** g) >>> first f
+f.First<T>() .Combine( id.And(g) ) $\approx$ id.And(g) .Combine( f.First<T>() )
 
 Piping simplification
 first f >>> arr fst = arr fst >>> f
 f.First<T>() .Combine( Op.Arr(tuple => tuple.Item1) ) $\approx$ Op.Arr(tuple => Tuple.Item1) .Combine( f )
 
 Piping reassociation
-first f >>> arr (id *** g) = arr (id *** g) >>> first f
-f.First<T>() .Combine( id.And(g) ) $\approx$ id.And(g) .Combine( f.First<T>() )
-
 first (first f) >>> arr assoc = arr assoc >>> first f
 f .First<T>() .First<T>() .Combine( new AssocArrow<T>() ) $\approx$ new AssocArrow<T>() .Combine( f .First<T>() )
 
+\end{samepage}
 \end{lstlisting}
 
 \cleardoublepage

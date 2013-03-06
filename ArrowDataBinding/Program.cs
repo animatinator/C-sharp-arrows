@@ -12,7 +12,7 @@ namespace ArrowDataBinding
     {
         static void Main(string[] args)
         {
-            TestInvertibleArrowLaws test = new TestInvertibleArrowLaws();
+            TestArrowLaws test = new TestArrowLaws();
             test.Run();
         }
     }

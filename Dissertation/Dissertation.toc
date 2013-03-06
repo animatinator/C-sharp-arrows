@@ -8,44 +8,45 @@
 \contentsline {section}{\numberline {3.2}Arrows}{7}
 \contentsline {subsection}{\numberline {3.2.1}Overview}{7}
 \contentsline {subsection}{\numberline {3.2.2}Simple arrows}{8}
-\contentsline {subsection}{\numberline {3.2.3}Invertible arrows}{8}
-\contentsline {subsection}{\numberline {3.2.4}List arrows}{9}
-\contentsline {subsection}{\numberline {3.2.5}Choice arrows}{9}
-\contentsline {subsection}{\numberline {3.2.6}Further utility arrows}{9}
-\contentsline {subsection}{\numberline {3.2.7}Feedback in arrows}{9}
-\contentsline {section}{\numberline {3.3}Data binding}{9}
-\contentsline {subsection}{\numberline {3.3.1}Overall architecture}{9}
-\contentsline {subsection}{\numberline {3.3.2}Creating bindable sources and destinations}{10}
-\contentsline {subsection}{\numberline {3.3.3}Creating bindings}{11}
-\contentsline {subsubsection}{Syntax and usage}{12}
-\contentsline {subsubsection}{Two-way binding}{12}
-\contentsline {subsubsection}{Cycle and conflict detection}{12}
-\contentsline {subsubsection}{Many-to-many bindings}{14}
-\contentsline {subsubsection}{Problems encountered}{15}
-\contentsline {paragraph}{Type safety}{15}
-\contentsline {paragraph}{Binding to lists}{15}
-\contentsline {subsection}{\numberline {3.3.4}Integration work with WPF}{15}
-\contentsline {chapter}{\numberline {4}Evaluation}{17}
-\contentsline {section}{\numberline {4.1}Correctness of arrow implementations}{17}
-\contentsline {subsection}{\numberline {4.1.1}Automated testing}{17}
-\contentsline {subsubsection}{Simple arrows}{17}
-\contentsline {subsubsection}{Invertible arrows}{17}
-\contentsline {subsection}{\numberline {4.1.2}Correctness proof by decomposing into lambda calculus}{17}
-\contentsline {section}{\numberline {4.2}Syntax evaluation}{18}
-\contentsline {subsection}{\numberline {4.2.1}Arrow syntax}{18}
-\contentsline {subsubsection}{Comparison with Haskell}{18}
-\contentsline {subsection}{\numberline {4.2.2}Binding syntax}{18}
-\contentsline {subsubsection}{Username two-way binding}{18}
-\contentsline {subsubsection}{List binding from a mock database}{18}
-\contentsline {subsubsection}{Some other demo}{18}
-\contentsline {section}{\numberline {4.3}Performance testing}{18}
-\contentsline {subsection}{\numberline {4.3.1}Arrow performance}{18}
-\contentsline {subsubsection}{Measuring technique}{18}
-\contentsline {subsubsection}{Simple function results}{18}
-\contentsline {subsubsection}{List function results}{18}
-\contentsline {subsubsection}{Overhead due to arrow chaining}{19}
-\contentsline {subsection}{\numberline {4.3.2}Binding performance}{20}
-\contentsline {chapter}{\numberline {5}Conclusion}{21}
-\contentsline {section}{\numberline {5.1}Future work}{21}
-\contentsline {chapter}{\numberline {A}Arrow laws}{23}
-\contentsline {section}{\numberline {A.1}Normal arrow laws}{23}
+\contentsline {subsubsection}{Challenges encountered}{10}
+\contentsline {subsection}{\numberline {3.2.3}Invertible arrows}{10}
+\contentsline {subsection}{\numberline {3.2.4}List arrows}{10}
+\contentsline {subsection}{\numberline {3.2.5}Choice arrows}{10}
+\contentsline {subsection}{\numberline {3.2.6}Further utility arrows}{10}
+\contentsline {subsection}{\numberline {3.2.7}Feedback in arrows}{11}
+\contentsline {section}{\numberline {3.3}Data binding}{11}
+\contentsline {subsection}{\numberline {3.3.1}Overall architecture}{11}
+\contentsline {subsection}{\numberline {3.3.2}Creating bindable sources and destinations}{11}
+\contentsline {subsection}{\numberline {3.3.3}Creating bindings}{13}
+\contentsline {subsubsection}{Syntax and usage}{13}
+\contentsline {subsubsection}{Two-way binding}{14}
+\contentsline {subsubsection}{Cycle and conflict detection}{14}
+\contentsline {subsubsection}{Many-to-many bindings}{16}
+\contentsline {subsubsection}{Problems encountered}{17}
+\contentsline {paragraph}{Type safety}{17}
+\contentsline {paragraph}{Binding to lists}{17}
+\contentsline {subsection}{\numberline {3.3.4}Integration work with WPF}{17}
+\contentsline {chapter}{\numberline {4}Evaluation}{19}
+\contentsline {section}{\numberline {4.1}Correctness of arrow implementations}{19}
+\contentsline {subsection}{\numberline {4.1.1}Automated testing}{19}
+\contentsline {subsubsection}{Simple arrows}{19}
+\contentsline {subsubsection}{Invertible arrows}{19}
+\contentsline {subsection}{\numberline {4.1.2}Correctness proof by decomposing into lambda calculus}{19}
+\contentsline {section}{\numberline {4.2}Syntax evaluation}{20}
+\contentsline {subsection}{\numberline {4.2.1}Arrow syntax}{20}
+\contentsline {subsubsection}{Comparison with Haskell}{20}
+\contentsline {subsection}{\numberline {4.2.2}Binding syntax}{20}
+\contentsline {subsubsection}{Username two-way binding}{20}
+\contentsline {subsubsection}{List binding from a mock database}{20}
+\contentsline {subsubsection}{Some other demo}{20}
+\contentsline {section}{\numberline {4.3}Performance testing}{20}
+\contentsline {subsection}{\numberline {4.3.1}Arrow performance}{20}
+\contentsline {subsubsection}{Measuring technique}{20}
+\contentsline {subsubsection}{Simple function results}{20}
+\contentsline {subsubsection}{List function results}{20}
+\contentsline {subsubsection}{Overhead due to arrow chaining}{21}
+\contentsline {subsection}{\numberline {4.3.2}Binding performance}{22}
+\contentsline {chapter}{\numberline {5}Conclusion}{23}
+\contentsline {section}{\numberline {5.1}Future work}{23}
+\contentsline {chapter}{\numberline {A}Arrow laws}{25}
+\contentsline {section}{\numberline {A.1}Normal arrow laws}{25}
