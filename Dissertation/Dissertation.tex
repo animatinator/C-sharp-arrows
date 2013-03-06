@@ -206,11 +206,25 @@ Whilst arrows can be constructed using \texttt{new Arrow<A, B>(function)}, a sim
 var increment = ((int x) => x + 1).Arr();
 \end{lstlisting}
 
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=50mm]{fig/ArrOperator.pdf}
+  \caption{The Arr operator}
+  \label{fig:arr_operator}
+\end{figure}
+
 The \texttt{Arr} operator effectively lifts a function to arrow status, in much the same way as the \texttt{arr} operator in Haskell. Arrow composition is also possible:
 
 \begin{lstlisting}[language={[Sharp]C}]
 var combinedArrow = arrow.Combine(anotherArrow);
 \end{lstlisting}
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=50mm]{fig/CompositionOperator.pdf}
+  \caption{The Combine operator}
+  \label{fig:combine_operator}
+\end{figure}
 
 This is equivalent to \texttt{arrow >>> anotherArrow} in the Haskell syntax. Implementing a \texttt{>>>} operator was unfortunately not possible in C$\sharp$ as it does not allow user-defined operators. The \texttt{first} operator was then implemented to complete the basic arrow:
 
@@ -224,6 +238,13 @@ Or, equally:\footnote{\texttt{Op} is the static class containing all arrow opera
 var firstArrow = Op.First(arrow, default(T))
 \end{lstlisting}
 
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=50mm]{fig/FirstOperator.pdf}
+  \caption{The First operator}
+  \label{fig:first_operator}
+\end{figure}
+
 The above syntax may not immediately make sense. Essentially, the \texttt{default(T)} passes in null if \texttt{T} is a reference type and some sensible default if it is a null type. The only purpose for this parameter is to allow the compiler to infer the type of the second argument to the resulting arrow, and so any value of the appropriate type would work -- \texttt{default(T)} is used for simplicity. This is the one syntax `glitch' which I was unable to remove, and is explained in more detail at the end of this subsection.
 
 Going beyond the basic operators, many composite operators were also implemented based on these simple combinators. For instance, \texttt{Second} was implemented in terms of \texttt{First}. The standard parallel combinator was also implemented as \texttt{And}:
@@ -232,6 +253,13 @@ Going beyond the basic operators, many composite operators were also implemented
 var parallelArrow = leftArrow.And(rightArrow);
 \end{lstlisting}
 
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=50mm]{fig/AndOperator.pdf}
+  \caption{The And operator}
+  \label{fig:and_operator}
+\end{figure}
+
 This is equivalent to the \texttt{***} operator in Haskell, and executes the two arrows in parallel. This allows a number of complex operations to be conveniently parallelised in one arrow, which could likely be useful when working with data bindings between complex objects. The \texttt{Fanout} operator makes good use of this: given one input arrow of type \texttt{Arrow<A, B>} and two following arrows of types \texttt{Arrow<B, C>} and \texttt{Arrow<B, D>}\footnote{Note that the input types of the two arrows have to match the output type of the first arrow}, it returns an arrow which executes the input arrow, splits the result and then passes it through the two following arrows in parallel yielding a pair of results.
 
 Given a pair result, it is then possible to recombine the two elements using a \texttt{Func<A, B, C>} operator using \texttt{Unsplit}. The following example recombines the tuple by adding its elements together:
@@ -239,6 +267,10 @@ Given a pair result, it is then possible to recombine the two elements using a \
 \begin{lstlisting}[language={[Sharp]C}]
 var unsplitArrow = arrowOnPairs.Unsplit((x, y) => x + y);
 \end{lstlisting}
+
+An example of a fairly elaborate composite operator is \texttt{LiftA2}. This essentially performs the same function as \texttt{Fanout}, but also takes a function for recombining the two results and so is effectively a \texttt{Fanout} arrow with an \texttt{Unsplit} operation at the end.
+
+Figures [blah] give a visual representation of some of the arrow operators, to make their effects more clear.
 
 \subsubsection{Challenges encountered} \label{sec:simple_arrow_challenges}
 
