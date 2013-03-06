@@ -270,7 +270,7 @@ var unsplitArrow = arrowOnPairs.Unsplit((x, y) => x + y);
 
 An example of a fairly elaborate composite operator is \texttt{LiftA2}. This essentially performs the same function as \texttt{Fanout}, but also takes a function for recombining the two results and so is effectively a \texttt{Fanout} arrow with an \texttt{Unsplit} operation at the end.
 
-Figures [blah] give a visual representation of some of the arrow operators, to make their effects more clear.
+Figures~\ref{fig:arr_operator},~\ref{fig:combine_operator},~\ref{fig:first_operator} and~\ref{fig:and_operator} give a visual representation of some of the arrow operators, to make their effects more clear.
 
 \subsubsection{Challenges encountered} \label{sec:simple_arrow_challenges}
 
@@ -514,7 +514,7 @@ Explanation of the problem (which will have been highlighted in earlier results)
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=\textwidth]{fig/IdentityChains.pdf}
-  \caption{Performance of arrows, Linq queries and normal (loop-based) functions in implementing simple list functionality}
+  \caption{Execution times of chains of identity functions}
   \label{fig:arrow_chaining_overhead}
 \end{figure}
 
