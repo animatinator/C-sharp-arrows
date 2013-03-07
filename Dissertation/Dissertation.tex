@@ -189,15 +189,6 @@ A further problem was how best to allow arrows from multiple inputs to multiple 
 
 \subsection{Simple arrows}
 
-Summarise functionality, combinators and syntactic efforts made here, mention things like the parallelism of the And operator as well.
-
-\begin{itemize}
-	\item Basic operators -- how to create, combine and first/second arrows
-	\item Other operators like And (mention it's parallel)
-	\item Advanced operators
-	\item Table illustrating mapping between C$\sharp$ operators and Haskell equivalents
-\end{itemize}
-
 The first objective in implementing arrows was to get the simple function-based arrow working, as all the others derive from this. As mentioned earlier, it was implemented using the C$\sharp$ \texttt{Func<A, B>} class to hold its function. An \texttt{Invoke} method is then exposed for using the arrow.
 
 Whilst arrows can be constructed using \texttt{new Arrow<A, B>(function)}, a simpler syntax is provided by an extension method:
@@ -272,13 +263,26 @@ An example of a fairly elaborate composite operator is \texttt{LiftA2}. This ess
 
 Figures~\ref{fig:arr_operator},~\ref{fig:combine_operator},~\ref{fig:first_operator} and~\ref{fig:and_operator} give a visual representation of some of the arrow operators, to make their effects more clear.
 
+Include table showing correspondence between C$\sharp$ arrow operators and Haskell ones?
+
 \subsubsection{Challenges encountered} \label{sec:simple_arrow_challenges}
 
 A few - mention type inference challenges, overcoming type system whilst maintaining type safety and difficulties with the First operator (also alternatives considered for this -- the three iterations used, and why the last one makes sense). Also implementing something like a general identity arrow or swap arrow -- ultimately needed to make it a special arrow subclass as having a polymorphic arrow is impossible in C$\sharp$.
 
 \subsection{Invertible arrows}
 
-Discuss the alternative ways of implementing this - a set of preset arrows designed to form a Turing-complete basis, forcing the user to specify an arrow for each direction etc. Final decision to simply construct using a function for each direction then allow arbitrary combination, as inspired by the paper on invertible arrows.
+At the time of writing the proposal, I was still unsure of the best way of implementing invertible arrows. There were two main strategies I was considering: simply requiring the user to supply an arrow for each direction, or providing a basic set of invertible functions and allowing the user to compose these together to build up more complex functions. The former wouldn't have worked very well as part of the advantage of using arrows in data binding is that simple ones can be re-used in building up multiple different bindings, and having to build up two arrows independently would be very messy and prone to error. The latter also has several problems. For instance, what functions should be made available to prevent the system being too restrictive? Also, if the functions were too simple then many would need to be combined in most cases, and this can cause a lot of unnecessary overhead (as explored in Section~\ref{sec:arrow_chaining_overhead}).
+
+Ultimately, a solution roughly combining the two approaches was found. This was largely inspired by [REF], and is based on an \texttt{Arr} operator which takes \textit{two} functions rather than one -- one function for each direction. The arrows can then be combined using all the same combinators as are available for simple arrows (bar those which don't have inverses, such as \texttt{Unsplit}). As a result, it gives the same flexibility as allowing the user to simply define two arrows, but saves time by retaining the composability that makes arrows useful. An example of how an invertible arrow can be constructed using the \texttt{Arr} extension method is given below:
+
+\begin{lstlisting}[language={[Sharp]C}]
+var invertibleIncrement = new Func((int x) => x + 1)
+                                .Arr((int x) => x - 1);
+\end{lstlisting}
+
+An invertible arrow can be used in the other direction by calling \texttt{Invert()} to get a new invertible arrow which is the original one reversed.
+
+To make implementation simpler and reduce code duplication, many of the invertible arrow combinators make use of the standard arrow combinators in their implementations. The basic operators, \texttt{Arr}, \texttt{Combine} and \texttt{First}, are all overloaded so that any composite operators which use them will work for invertible arrows for free.
 
 \subsection{List arrows}
 
@@ -287,6 +291,35 @@ Discuss the alternative ways of implementing this - a set of preset arrows desig
 	\item SQL-style syntax - helped by various extension methods
 	\item Functional-style operations - foldl and foldr
 \end{itemize}
+
+Whilst exploring existing uses of data binding in WPF applications, it was discovered that a fairly common use case involves binding some form of list display to an enumerable data structure in the model. WPF provides support for this already, but trying to do it with arrows would be syntactically clunky -- for one thing, the arrow types would all be of the form \texttt{Arrow<IEnumerable<T1>, IEnumerable<T2>>}. To simplify this I decided it would make sense to implement an 'arrow on lists' abstracting away the actual list processing details and exposing a simple set of common list operators.
+
+The result is a set of simple arrows implementing SQL-like functionality on enumerable data sources. List arrows are all of the type \texttt{ListArrow<T1, T2>}, which extends \texttt{Arrow<IEnumerable<T1>, IEnumerable<T2>>} for compatibility with existing arrows. There are a variety of simple list arrows which can be combined to build up complex functionality:
+
+\begin{description}
+	\item[\texttt{FilterArrow<A>}] Accepts a function from \texttt{A} to \texttt{bool}, which it uses to filter the list to those matching the predicate
+	\item[\texttt{MapArrow<A, B>}] Accepts a function from \texttt{A} to \texttt{B} which it uses to map all items in the list to a list of \texttt{B}s
+	\item[\texttt{OrderByArrow<A>}] Takes a function from two elements of type \texttt{A} to \texttt{int} and uses it to sort the list
+	\item[\texttt{ReverseArrow<A>}] Simply reverses the input list
+\end{description}
+
+For simplicity, these arrows all essentially wrap Linq queries. As well as these operators, the standard functional operations \texttt{foldl} and \texttt{foldr} were implemented to make gathering a list into a single result easier.
+
+The list arrows are all supported by a simple syntax which has been made possible using several extension methods. For instance, given a particular \texttt{ListArrow<int, int>}, one can quickly attach a filter to it as follows:
+
+\begin{lstlisting}[language={[Sharp]C}]
+var filtered = listArrow.Filter(x => x > 3);
+\end{lstlisting}
+
+In this example, the Filter extension method takes \texttt{listArrow} and the function \texttt{(int x) => x > 3}, creates a \texttt{FilterArrow<int>} out of the function, and returns a list arrow which is the original arrow and the filter arrow combined. Whole chains of list arrows can be quickly set up in this way:
+
+\begin{lstlisting}[language={[Sharp]C}]
+var filtered = listArrow
+                   .OrderBy((x, y) => y - x)
+                   .Filter(x => x > 3)
+                   .Map(x => "Number"+x)
+                   .Reverse();
+\end{lstlisting}
 
 \subsection{Choice arrows}
 
@@ -508,6 +541,7 @@ Results for list-based functions
 \end{figure}
 
 \subsubsection{Overhead due to arrow chaining}
+\label{sec:arrow_chaining_overhead}
 
 Explanation of the problem (which will have been highlighted in earlier results) along with test results for increasingly long chains of identity functions. Suggest reasons for this and potential solutions (or maybe the solutions should come in later?)
 
