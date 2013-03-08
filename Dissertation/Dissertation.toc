@@ -9,23 +9,23 @@
 \contentsline {subsection}{\numberline {3.2.1}Overview}{7}
 \contentsline {subsection}{\numberline {3.2.2}Simple arrows}{8}
 \contentsline {subsubsection}{Challenges encountered}{10}
-\contentsline {subsection}{\numberline {3.2.3}Invertible arrows}{11}
-\contentsline {subsection}{\numberline {3.2.4}List arrows}{11}
-\contentsline {subsection}{\numberline {3.2.5}Choice arrows}{13}
-\contentsline {subsection}{\numberline {3.2.6}Further utility arrows}{13}
-\contentsline {subsection}{\numberline {3.2.7}Feedback in arrows}{13}
-\contentsline {section}{\numberline {3.3}Data binding}{13}
-\contentsline {subsection}{\numberline {3.3.1}Overall architecture}{13}
-\contentsline {subsection}{\numberline {3.3.2}Creating bindable sources and destinations}{14}
-\contentsline {subsection}{\numberline {3.3.3}Creating bindings}{15}
-\contentsline {subsubsection}{Syntax and usage}{16}
-\contentsline {subsubsection}{Two-way binding}{16}
-\contentsline {subsubsection}{Cycle and conflict detection}{16}
-\contentsline {subsubsection}{Many-to-many bindings}{18}
-\contentsline {subsubsection}{Problems encountered}{19}
-\contentsline {paragraph}{Type safety}{19}
-\contentsline {paragraph}{Binding to lists}{19}
-\contentsline {subsection}{\numberline {3.3.4}Integration work with WPF}{19}
+\contentsline {subsection}{\numberline {3.2.3}Invertible arrows}{12}
+\contentsline {subsection}{\numberline {3.2.4}List arrows}{12}
+\contentsline {subsection}{\numberline {3.2.5}Choice arrows}{14}
+\contentsline {subsection}{\numberline {3.2.6}Further utility arrows}{14}
+\contentsline {subsection}{\numberline {3.2.7}Feedback in arrows}{14}
+\contentsline {section}{\numberline {3.3}Data binding}{14}
+\contentsline {subsection}{\numberline {3.3.1}Overall architecture}{14}
+\contentsline {subsection}{\numberline {3.3.2}Creating bindable sources and destinations}{15}
+\contentsline {subsection}{\numberline {3.3.3}Creating bindings}{16}
+\contentsline {subsubsection}{Syntax and usage}{17}
+\contentsline {subsubsection}{Two-way binding}{17}
+\contentsline {subsubsection}{Cycle and conflict detection}{17}
+\contentsline {subsubsection}{Many-to-many bindings}{19}
+\contentsline {subsubsection}{Problems encountered}{20}
+\contentsline {paragraph}{Type safety}{20}
+\contentsline {paragraph}{Binding to lists}{20}
+\contentsline {subsection}{\numberline {3.3.4}Integration work with WPF}{20}
 \contentsline {chapter}{\numberline {4}Evaluation}{21}
 \contentsline {section}{\numberline {4.1}Correctness of arrow implementations}{21}
 \contentsline {subsection}{\numberline {4.1.1}Automated testing}{21}

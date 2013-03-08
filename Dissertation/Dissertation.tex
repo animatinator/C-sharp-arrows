@@ -175,7 +175,7 @@ Give a general overview
 
 \section{Arrows}
 
-\subsection{Overview}
+\subsection{Overview} \label{sec:arrows_overview}
 
 Implementing the highly functional idea of an arrow in C$\sharp$ posed an interesting challenge. Fundamentally, there were two main obstacles to overcome: C$\sharp$'s syntax, which is far clunkier than Haskell's; and the type system, which is far more restrictive and relies on static analysis at compile time. It was decided early on that arrows would be built on lambda expressions as these seemed the most natural way of expressing the desired functionality. C$\sharp$'s generic \texttt{Func<T1, T2>} type provided a good way of handling arbitrary lambda expressions between arbitrary types, and so this became the basis for the arrow type.
 
@@ -267,7 +267,24 @@ Include table showing correspondence between C$\sharp$ arrow operators and Haske
 
 \subsubsection{Challenges encountered} \label{sec:simple_arrow_challenges}
 
-A few - mention type inference challenges, overcoming type system whilst maintaining type safety and difficulties with the First operator (also alternatives considered for this -- the three iterations used, and why the last one makes sense). Also implementing something like a general identity arrow or swap arrow -- ultimately needed to make it a special arrow subclass as having a polymorphic arrow is impossible in C$\sharp$.
+As mentioned in Section~\ref{sec:arrows_overview}, one of the main challenges in implementing usable arrows was eliminating the need for the programmer to specify large lists of type parameters when using arrow combinators. This was achieved by writing the combinators in such a way as to allow the compiler to infer the parameters, and in a few cases this required the use of extension methods (so that the type of the arrow it would be used with could be inferred).
+
+The most difficult operator to implement cleanly was \texttt{First}. The problem here is that it takes an arrow from type \texttt{A} to type \texttt{B} and turns it into an arrow on tuples, applying the arrow to one input and leaving the other untouched. In Haskell, the type of the other input needn't be specified as the function doesn't make use of it. However, C$\sharp$'s type system is far more restrictive, and in constructing an arrow one must pass in the full types of its inputs and outputs. As a result, however the operator worked it would require the programmer to specify this third type.
+
+The first implementation simply required the programmer to specify type parameters. However, there is no way in C$\sharp$ to specify the one unknown parameter and let the compiler infer the other two, and so the programmer would have to pass in all three types. This often became very unwieldy when the types of the original arrow were complex. For instance, consider the following example where an arrow from types \texttt{A} and \texttt{B} to types \texttt{C} and \texttt{D} is used with the First operator to allow an \texttt{int} to pass alongside as a third parameter:
+
+\begin{lstlisting}[language={[Sharp]C}]
+Arrow<Tuple<A, B>, Tuple<C, D>> originalArrow = [...];
+
+var firstArrow = originalArrow
+                         .First<Tuple<A, B>, Tuple<C, D>, int>();
+\end{lstlisting}
+
+It was decided that this was too cumbersome to be used in practice. The next attempt used a supplementary \texttt{First} method taking only the one unknown parameter, and using reflection to get the type of the arrow and invoke the original \texttt{First} method with its type. This works reasonably well and so was kept in the final version, but the code is incredibly messy due to all the reflection.
+
+The final version was a modification of the first which allowed the compiler to infer the third type parameter by requiring that the user pass in a value of that type (hence the syntax shown in the last section). Although this isn't perfect, it is by far the cleanest workaround.
+
+Another problem which was discovered was implementing standard polymorphic arrows, like an identity or one for swapping two inputs. This was also a result of the type system being too strict: to create an identity arrow, one had to specify in the definition what type it would work on. Several workarounds were considered for this, the most plausible being 'generic' arrows whose \texttt{Invoke} methods took a type parameter. However, the problem with this is that the resulting arrows would be very difficult to combine with non-generic arrows (and would most likely involve a lot of reflection). I eventually settled for implementing actual arrow subtypes for identity and other common functions, which take type parameters on construction -- these are discussed further in Section~\ref{sec:further_utility_arrows}.
 
 \subsection{Invertible arrows}
 
@@ -285,12 +302,6 @@ An invertible arrow can be used in the other direction by calling \texttt{Invert
 To make implementation simpler and reduce code duplication, many of the invertible arrow combinators make use of the standard arrow combinators in their implementations. The basic operators, \texttt{Arr}, \texttt{Combine} and \texttt{First}, are all overloaded so that any composite operators which use them will work for invertible arrows for free.
 
 \subsection{List arrows}
-
-\begin{itemize}
-	\item Wrapping Linq
-	\item SQL-style syntax - helped by various extension methods
-	\item Functional-style operations - foldl and foldr
-\end{itemize}
 
 Whilst exploring existing uses of data binding in WPF applications, it was discovered that a fairly common use case involves binding some form of list display to an enumerable data structure in the model. WPF provides support for this already, but trying to do it with arrows would be syntactically clunky -- for one thing, the arrow types would all be of the form \texttt{Arrow<IEnumerable<T1>, IEnumerable<T2>>}. To simplify this I decided it would make sense to implement an 'arrow on lists' abstracting away the actual list processing details and exposing a simple set of common list operators.
 
@@ -321,6 +332,8 @@ var filtered = listArrow
                    .Reverse();
 \end{lstlisting}
 
+[More on foldl and foldr?]
+
 \subsection{Choice arrows}
 
 \begin{itemize}
@@ -328,7 +341,7 @@ var filtered = listArrow
 	\item This wouldn't be much good for bindings though
 \end{itemize}
 
-\subsection{Further utility arrows}
+\subsection{Further utility arrows} \label{sec:further_utility_arrows}
 
 To simplify various common tasks, a number of simple utility arrows were written. These simply inherited from an arrow on the appropriate types, and initialised the arrow to some particular function in the constructor.
 
