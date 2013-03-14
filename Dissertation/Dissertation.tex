@@ -479,17 +479,37 @@ Mention difficulties with the value converter and inability to properly integrat
 
 \section{Correctness of arrow implementations}
 
-Mention here that the main device for determining their correctness has been the arrow laws, and possibly list them with explanations? Also mention that 'special' arrows like ListArrows are correct because they are based on simple arrows and invertible arrows. Also, maybe say that ArrowChoice was ignored here as it's slightly extraneous and its correctness probably follows from the correctness of simple arrows anyway.
+The key requirement for an arrow type satisfying the original definition by Hughes is that it conforms to a set of 'arrow laws' defining how the various basic combinators should work. While there are numerous variations on the set of arrow laws, the standard ones used by Haskell are given in [REF]. These are listed in Appendix \ref{sec:arrow_laws}, along with their equivalent definitions using the C$\sharp$ syntax.
+
+As invertible arrows conform to a slightly different set of arrow laws (which put extra requirements on their inverses), both one-way arrows and invertible arrows had to be tested separately. List and choice arrows were not separately tested as they are entirely built upon normal one-way arrows, and so will conform to the arrow laws for free if simple arrows do.
+
+[Mention correctness proof by decomposition into lambda calculus?]
 
 \subsection{Automated testing}
 
+The main method of testing the arrow laws was using a set of unit tests, each testing one of the arrow laws using a large set of randomly-generated inputs. These were in most cases a simple case of generating the appropriate arrows for each side of the equality, pushing the set of inputs through both and checking that the outputs matched up. A few sample cases are given in the following subsections to illustrate the techniques used.
+
+The tests are all supported by a large set of utility methods -- for instance, \texttt{AssertArrowsGiveSameOutput} and \texttt{AssertInvertibleArrowsGiveSameOutput} run the arrow comparison algorithms, whilst \texttt{AssertArrowEqualsFunc} checks that an arrow performs the same operation as a supplied C$\sharp$ \texttt{Func}.
+
 \subsubsection{Simple arrows}
 
-Give tests and results for arrows.
+The laws for simple arrows can be found in Appendix \ref{sec:simle_arrow_laws}. The first few of these are fairly simple, but there were some which were more complicated to test -- indeed, the \texttt{SwapArrow} and \texttt{AssocArrow} arrows were mainly added to make these tests more readable and simpler to write.
+
+One interesting case was the identity law -- in C$\sharp$ notation:
+
+\begin{lstlisting}[mathescape]
+new IDArrow<T>() $\approx$ id
+\end{lstlisting}
+
+This differs from the other laws because it has to be proven true over all \textit{types} rather than simply for all inputs. As such, the test proceeds by obtaining a representative list of types and using reflection to build an identity arrow for each, then uses the standard technique of firing lots or random inputs at it and asserting that the arrow does indeed represent the identity function. The set of types used was just the set of primitive types, obtained by querying the current assembly for all available types and filtering the non-primitive ones (as non-primitive types would have to be initialised to null, which defeats the purpose of testing correctness over all types).
+
+To reduce complexity, 'random' arrows were produced by randomly selecting a function from a set of pre-defined functions and constructing an arrow with it. It seems reasonable to assume that if an arrow law were to hold for some combination of these functions, but fail on another, then the problem is more likely with the C$\sharp$ compiler than with the arrow implementation.
 
 \subsubsection{Invertible arrows}
 
-Same for invertible arrows.
+Invertible arrow laws are listed in Appendix \ref{sec:invertible_arrow_laws}, again with their C$\sharp$ equivalents. These were slightly more complicated to test than simple arrows as the laws have to hold for inverses as well.
+
+[TBContinued]
 
 \subsection{Correctness proof by decomposing into lambda calculus}
 
@@ -597,7 +617,7 @@ Conclusion goes here!
 
 \appendix
 
-\chapter{Arrow laws}
+\chapter{Arrow laws} \label{sec:arrow_laws}
 
 Here the arrow laws used in testing are presented both in Haskell syntax and as they were translated into C$\sharp$. For convenience, the following definitions are used:
 
@@ -614,10 +634,10 @@ first_f = new Func<Tuple<T, T>, Tuple<T, T>>(
 
 This defines a \texttt{Func} which invokes a function 'f' on the first element of a tuple.
 
-\section{Normal arrow laws}
+\section{Normal arrow laws} \label{sec:simle_arrow_laws}
 
-\begin{lstlisting}[mathescape]
 \begin{samepage}
+\begin{lstlisting}[mathescape]
 
 Identity
 arr id = id
@@ -647,8 +667,12 @@ Piping reassociation
 first (first f) >>> arr assoc = arr assoc >>> first f
 f .First<T>() .First<T>() .Combine( new AssocArrow<T>() ) $\approx$ new AssocArrow<T>() .Combine( f .First<T>() )
 
-\end{samepage}
 \end{lstlisting}
+\end{samepage}
+
+\section{Invertible arrow laws} \label{sec:invertible_arrow_laws}
+
+Todo
 
 \cleardoublepage
 

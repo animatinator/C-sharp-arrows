@@ -29,24 +29,25 @@
 \contentsline {chapter}{\numberline {4}Evaluation}{21}
 \contentsline {section}{\numberline {4.1}Correctness of arrow implementations}{21}
 \contentsline {subsection}{\numberline {4.1.1}Automated testing}{21}
-\contentsline {subsubsection}{Simple arrows}{21}
-\contentsline {subsubsection}{Invertible arrows}{21}
-\contentsline {subsection}{\numberline {4.1.2}Correctness proof by decomposing into lambda calculus}{21}
-\contentsline {section}{\numberline {4.2}Syntax evaluation}{22}
-\contentsline {subsection}{\numberline {4.2.1}Arrow syntax}{22}
-\contentsline {subsubsection}{Comparison with Haskell}{22}
-\contentsline {subsection}{\numberline {4.2.2}Binding syntax}{22}
-\contentsline {subsubsection}{Username two-way binding}{22}
-\contentsline {subsubsection}{List binding from a mock database}{22}
-\contentsline {subsubsection}{Some other demo}{22}
-\contentsline {section}{\numberline {4.3}Performance testing}{22}
-\contentsline {subsection}{\numberline {4.3.1}Arrow performance}{22}
-\contentsline {subsubsection}{Measuring technique}{22}
-\contentsline {subsubsection}{Simple function results}{22}
-\contentsline {subsubsection}{List function results}{22}
-\contentsline {subsubsection}{Overhead due to arrow chaining}{23}
-\contentsline {subsection}{\numberline {4.3.2}Binding performance}{24}
-\contentsline {chapter}{\numberline {5}Conclusion}{25}
-\contentsline {section}{\numberline {5.1}Future work}{25}
-\contentsline {chapter}{\numberline {A}Arrow laws}{27}
-\contentsline {section}{\numberline {A.1}Normal arrow laws}{27}
+\contentsline {subsubsection}{Simple arrows}{22}
+\contentsline {subsubsection}{Invertible arrows}{22}
+\contentsline {subsection}{\numberline {4.1.2}Correctness proof by decomposing into lambda calculus}{22}
+\contentsline {section}{\numberline {4.2}Syntax evaluation}{23}
+\contentsline {subsection}{\numberline {4.2.1}Arrow syntax}{23}
+\contentsline {subsubsection}{Comparison with Haskell}{23}
+\contentsline {subsection}{\numberline {4.2.2}Binding syntax}{23}
+\contentsline {subsubsection}{Username two-way binding}{23}
+\contentsline {subsubsection}{List binding from a mock database}{23}
+\contentsline {subsubsection}{Some other demo}{23}
+\contentsline {section}{\numberline {4.3}Performance testing}{23}
+\contentsline {subsection}{\numberline {4.3.1}Arrow performance}{23}
+\contentsline {subsubsection}{Measuring technique}{23}
+\contentsline {subsubsection}{Simple function results}{23}
+\contentsline {subsubsection}{List function results}{23}
+\contentsline {subsubsection}{Overhead due to arrow chaining}{24}
+\contentsline {subsection}{\numberline {4.3.2}Binding performance}{25}
+\contentsline {chapter}{\numberline {5}Conclusion}{27}
+\contentsline {section}{\numberline {5.1}Future work}{27}
+\contentsline {chapter}{\numberline {A}Arrow laws}{29}
+\contentsline {section}{\numberline {A.1}Normal arrow laws}{29}
+\contentsline {section}{\numberline {A.2}Invertible arrow laws}{30}

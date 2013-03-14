@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.5)  8 MAR 2013 13:58
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.5)  14 MAR 2013 17:16
 entering extended mode
 **Dissertation.tex
 
@@ -300,55 +300,57 @@ Chapter 4.
 [21
 
 
-]
-<fig/SimpleFunctionPerformanceChart.pdf, id=155, 496.44887pt x 258.75552pt>
+] [22]
+<fig/SimpleFunctionPerformanceChart.pdf, id=158, 496.44887pt x 258.75552pt>
 File: fig/SimpleFunctionPerformanceChart.pdf Graphic file (type pdf)
 
 <use fig/SimpleFunctionPerformanceChart.pdf>
 Package pdftex.def Info: fig/SimpleFunctionPerformanceChart.pdf used on input l
-ine 540.
+ine 560.
 (pdftex.def)             Requested size: 411.93877pt x 214.71175pt.
 
-<fig/ListFunctionPerformanceChart.pdf, id=156, 496.4172pt x 244.72725pt>
+<fig/ListFunctionPerformanceChart.pdf, id=159, 496.4172pt x 244.72725pt>
 File: fig/ListFunctionPerformanceChart.pdf Graphic file (type pdf)
 
 <use fig/ListFunctionPerformanceChart.pdf>
 Package pdftex.def Info: fig/ListFunctionPerformanceChart.pdf used on input lin
-e 551.
+e 571.
 (pdftex.def)             Requested size: 411.93877pt x 203.08247pt.
- [22]
-<fig/IdentityChains.pdf, id=160, 496.51498pt x 216.57913pt>
+ [23]
+<fig/IdentityChains.pdf, id=164, 496.51498pt x 216.57913pt>
 File: fig/IdentityChains.pdf Graphic file (type pdf)
 
 <use fig/IdentityChains.pdf>
-Package pdftex.def Info: fig/IdentityChains.pdf used on input line 563.
+Package pdftex.def Info: fig/IdentityChains.pdf used on input line 583.
 (pdftex.def)             Requested size: 411.93877pt x 179.69122pt.
- [23 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
+ [24 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
 sertation/fig/SimpleFunctionPerformanceChart.pdf> <C:/Users/David/Documents/Vis
 ual Studio 2010/Projects/ArrowDataBinding/Dissertation/fig/ListFunctionPerforma
-nceChart.pdf>] [24 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowD
+nceChart.pdf>] [25 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowD
 ataBinding/Dissertation/fig/IdentityChains.pdf>]
+[26
+
+]
 Chapter 5.
-[25
+[27
 
-
-] [26
+] [28
 
 ]
 Appendix A.
-[27
+[29
 
-] [28]
+] [30]
 ("C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\Dissert
 ation\Dissertation.aux") ) 
 Here is how much of TeX's memory you used:
- 2754 strings out of 494045
- 39596 string characters out of 3148387
- 178417 words of memory out of 3000000
- 6041 multiletter control sequences out of 15000+200000
+ 2755 strings out of 494045
+ 39641 string characters out of 3148387
+ 185448 words of memory out of 3000000
+ 6042 multiletter control sequences out of 15000+200000
  12602 words of font info for 44 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 27i,8n,42p,1132b,1485s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,8n,42p,1132b,1509s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
 nts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
 mmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pf
@@ -361,9 +363,9 @@ ic/amsfonts/cm/cmsl12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
 nts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
 mti12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pf
 b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Dissertation.pdf (36 pages, 376583 bytes).
+Output written on Dissertation.pdf (38 pages, 381875 bytes).
 PDF statistics:
- 495 PDF objects out of 1000 (max. 8388607)
+ 504 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  41 words of extra memory for PDF output out of 10000 (max. 10000000)
 
