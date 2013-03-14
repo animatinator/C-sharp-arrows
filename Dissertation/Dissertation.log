@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.5)  14 MAR 2013 17:16
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.5)  14 MAR 2013 18:13
 entering extended mode
 **Dissertation.tex
 
@@ -165,29 +165,29 @@ Underfull \hbox (badness 10000) in paragraph at lines 63--74
 
  []
 
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 78.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 78.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 78.
 [1
 
-] [2]
-("C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\Dissert
-ation\Dissertation.toc"
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 2.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 2.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 2.
- [3
+] [2] [3] [4
 
+]
+("C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\Dissert
+ation\Dissertation.toc" [5
 
 ])
 \tf@toc=\write3
- [4]
+ [6]
 ("C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\Dissert
 ation\Dissertation.lof")
 \tf@lof=\write4
- [5
+ [7
 
-] [6
+] [8
 
 ]
 Chapter 1.
@@ -198,7 +198,7 @@ Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 139.
+(Font)              <5> on input line 140.
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ˜ in font cmr12!
@@ -221,35 +221,35 @@ Chapter 3.
 File: lstlang1.sty 2004/09/05 1.3 listings language file
 )
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 197.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 198.
 
-<fig/ArrOperator.pdf, id=58, 259.19409pt x 106.89937pt>
+<fig/ArrOperator.pdf, id=64, 259.19409pt x 106.89937pt>
 File: fig/ArrOperator.pdf Graphic file (type pdf)
 
 <use fig/ArrOperator.pdf>
-Package pdftex.def Info: fig/ArrOperator.pdf used on input line 202.
+Package pdftex.def Info: fig/ArrOperator.pdf used on input line 203.
 (pdftex.def)             Requested size: 142.26378pt x 58.67412pt.
  [8 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Diss
 ertation/fig/ArrOperator.pdf>]
-<fig/CompositionOperator.pdf, id=72, 349.81836pt x 107.12521pt>
+<fig/CompositionOperator.pdf, id=78, 349.81836pt x 107.12521pt>
 File: fig/CompositionOperator.pdf Graphic file (type pdf)
 
 <use fig/CompositionOperator.pdf>
-Package pdftex.def Info: fig/CompositionOperator.pdf used on input line 215.
+Package pdftex.def Info: fig/CompositionOperator.pdf used on input line 216.
 (pdftex.def)             Requested size: 142.26378pt x 43.56526pt.
 
-<fig/FirstOperator.pdf, id=73, 262.49013pt x 219.44516pt>
+<fig/FirstOperator.pdf, id=79, 262.49013pt x 219.44516pt>
 File: fig/FirstOperator.pdf Graphic file (type pdf)
 
 <use fig/FirstOperator.pdf>
-Package pdftex.def Info: fig/FirstOperator.pdf used on input line 234.
+Package pdftex.def Info: fig/FirstOperator.pdf used on input line 235.
 (pdftex.def)             Requested size: 142.26378pt x 118.93391pt.
 
-<fig/AndOperator.pdf, id=74, 565.02242pt x 248.2334pt>
+<fig/AndOperator.pdf, id=80, 565.02242pt x 248.2334pt>
 File: fig/AndOperator.pdf Graphic file (type pdf)
 
 <use fig/AndOperator.pdf>
-Package pdftex.def Info: fig/AndOperator.pdf used on input line 249.
+Package pdftex.def Info: fig/AndOperator.pdf used on input line 250.
 (pdftex.def)             Requested size: 142.26378pt x 62.50134pt.
  [9 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Diss
 ertation/fig/CompositionOperator.pdf> <C:/Users/David/Documents/Visual Studio 2
@@ -257,15 +257,15 @@ ertation/fig/CompositionOperator.pdf> <C:/Users/David/Documents/Visual Studio 2
 s/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dissertation/fig
 /AndOperator.pdf>] [11] [12]
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 311.
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 340.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 312.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 341.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 340.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 341.
  [13] [14] [15]
 [16]
 Missing character: There is no â in font cmr12!
@@ -275,11 +275,11 @@ Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
  [17] [18]
-<fig/ArgumentMarshalling.pdf, id=136, 511.24123pt x 147.77261pt>
+<fig/ArgumentMarshalling.pdf, id=142, 511.24123pt x 147.77261pt>
 File: fig/ArgumentMarshalling.pdf Graphic file (type pdf)
 
 <use fig/ArgumentMarshalling.pdf>
-Package pdftex.def Info: fig/ArgumentMarshalling.pdf used on input line 451.
+Package pdftex.def Info: fig/ArgumentMarshalling.pdf used on input line 452.
 (pdftex.def)             Requested size: 411.93877pt x 119.07281pt.
  [19]
 Missing character: There is no â in font cmr12!
@@ -301,27 +301,27 @@ Chapter 4.
 
 
 ] [22]
-<fig/SimpleFunctionPerformanceChart.pdf, id=158, 496.44887pt x 258.75552pt>
+<fig/SimpleFunctionPerformanceChart.pdf, id=165, 496.44887pt x 258.75552pt>
 File: fig/SimpleFunctionPerformanceChart.pdf Graphic file (type pdf)
 
 <use fig/SimpleFunctionPerformanceChart.pdf>
 Package pdftex.def Info: fig/SimpleFunctionPerformanceChart.pdf used on input l
-ine 560.
+ine 561.
 (pdftex.def)             Requested size: 411.93877pt x 214.71175pt.
 
-<fig/ListFunctionPerformanceChart.pdf, id=159, 496.4172pt x 244.72725pt>
+<fig/ListFunctionPerformanceChart.pdf, id=166, 496.4172pt x 244.72725pt>
 File: fig/ListFunctionPerformanceChart.pdf Graphic file (type pdf)
 
 <use fig/ListFunctionPerformanceChart.pdf>
 Package pdftex.def Info: fig/ListFunctionPerformanceChart.pdf used on input lin
-e 571.
+e 572.
 (pdftex.def)             Requested size: 411.93877pt x 203.08247pt.
  [23]
-<fig/IdentityChains.pdf, id=164, 496.51498pt x 216.57913pt>
+<fig/IdentityChains.pdf, id=170, 496.51498pt x 216.57913pt>
 File: fig/IdentityChains.pdf Graphic file (type pdf)
 
 <use fig/IdentityChains.pdf>
-Package pdftex.def Info: fig/IdentityChains.pdf used on input line 583.
+Package pdftex.def Info: fig/IdentityChains.pdf used on input line 584.
 (pdftex.def)             Requested size: 411.93877pt x 179.69122pt.
  [24 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
 sertation/fig/SimpleFunctionPerformanceChart.pdf> <C:/Users/David/Documents/Vis
@@ -363,9 +363,9 @@ ic/amsfonts/cm/cmsl12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
 nts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
 mti12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pf
 b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Dissertation.pdf (38 pages, 381875 bytes).
+Output written on Dissertation.pdf (40 pages, 383734 bytes).
 PDF statistics:
- 504 PDF objects out of 1000 (max. 8388607)
+ 510 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  41 words of extra memory for PDF output out of 10000 (max. 10000000)
 
