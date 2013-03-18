@@ -546,15 +546,44 @@ Todo
 
 \subsection{Arrow performance}
 
-Tests indicating how arrows perform vs. functions and funcs.
+Naturally, the C$\sharp$ arrow implementation comes with some overhead. Being built on \texttt{Func} objects, arrows are slower than normal functions and slightly slower than plain \texttt{Func} objects. However, the difference isn't very large in most cases -- depending on how arrows are constructed, their performance is often very similar to using a plain \texttt{Func}. A number of performance tests were conducted to explore how using arrows affects performance, and the results are given in the next few sub-sections.
 
 \subsubsection{Measuring technique}
 
-Explain how the results were obtained
+A modular test framework was set up in which performance tests could be added by simply extending a base class and implementing methods for creating the arrow, the \texttt{Func} and the normal method. Timing was done by taking measurements of the total CPU time utilised by the current process, as follows:
+
+\begin{lstlisting}[language={[sharp]C}]
+TimeSpan start = Process.GetCurrentProcess().TotalProcessorTime;
+RunTest();
+TimeSpan end = Process.GetCurrentProcess().TotalProcessorTime;
+
+double timeTaken = (end - start).TotalMilliseconds;
+\end{lstlisting}
+
+Each method was run for several million iterations and the resulting execution times were recorded and graphed to show relative performance.
 
 \subsubsection{Simple function results}
 
-The simple function results can be seen in the graph.
+To test how arrows perform implementing simple functions (on primitive types), a selection of simple arrows was implemented along with \texttt{Func} objects and normal functions implementing the same functionality. The functions chosen are given below, along with the number of iterations used for each\footnote{Different numbers of iterations were used to normalise the resulting graph}:
+
+\begin{description}
+	\item[Arctan] This function involved computing the \texttt{arctan} function on its input and converting the result to degrees. This was run for 5,000,000 iterations.
+	\item[Quadratic] Computed the simple quadratic function $x^2 + 2x - 5$, and was run for 10,000,000 iterations.
+	\item[Increment] Simply incremented its input, and was run for 10,000,000 iterations.
+	\item[Pythagoras] Computed the function $\sqrt{2 x^2}$, as though finding the hypotenuse of a right-angled triangle with two sides of length $x$. For this one, the arrow was created by combining several sub-arrows, and so the overhead was considerably greater. 3,000,000 iterations were used here.
+\end{description}
+
+The results of these tests are given in Figure \ref{fig:simple_function_performance}. There are a few key observations which can be made here. Firstly, for simple functions like incrementing, arrows fare reasonably well with only slightly worsened performance. This is because these functions were implemented directly as one uncombined arrow, and so the overhead above a simple \texttt{Func} is minimal. Indeed, in the case of \texttt{arctan}, the performance difference is almost non-existent, as here function is sufficiently complex that the time taken to compute it becomes the main factor and makes the arrow overhead negligible. However, with the \texttt{Pythagoras} function, the arrow performs significantly worse than the other two. This is most likely due to the way the arrow is composed of many sub-arrows, as shown in the following code:
+
+\begin{lstlisting}[language={[sharp]C}]
+Func<int, int, int> add = ((int x, int y) => x + y);
+
+arrow = Op.Arr((int x) => Tuple.Create(x * x, x * x))
+          .Unsplit(add)
+          .Combine(Op.Arr((int x) => (int)Math.Sqrt(x)));
+\end{lstlisting}
+
+Arrow chaining is the main performance issue arrows have, as increasingly complex combinations of arrows lead to a linear performance overhead. This issue is explored in more detail at the end of this sub-section. However, this is to be expected as a result of the implementation technique, and could perhaps be mitigated in future by optimising combined arrows as they are built up (discussed further in Section \ref{sec:performance_enhancements}).
 
 \begin{figure}[!ht]
   \centering
@@ -578,6 +607,10 @@ Results for list-based functions
 \label{sec:arrow_chaining_overhead}
 
 Explanation of the problem (which will have been highlighted in earlier results) along with test results for increasingly long chains of identity functions. Suggest reasons for this and potential solutions (or maybe the solutions should come in later?)
+
+As was discovered earlier on, complex arrow chaining imposes a performance overhead. To establish how severe the effects of this are, a test was set up in which the execution times of chains of identity arrows were compared. In an ideal world, fifty identity arrows chained end-to-end would run in the same time as a single one, but in reality the implementation leads to longer chains taking considerably longer to execute. A set of identity chains with lengths ranging from one to twenty was created, and each one was timed over 1,000,000 executions.
+
+Fortunately, it was found that the execution time is linear in the length of the chain -- that is, each arrow combination adds only a constant extra overhead. The results can be seen in Figure \ref{fig:arrow_chaining_overhead}. Aside from small random variations, the timings clearly follow a linear trend. As noted earlier on, the overhead is far less pronounced when the function implemented is more complex than identity or incrementing, and so it is likely that for the majority of use cases combination overhead won't be significant enough to noticeably harm performance.
 
 \begin{figure}[!ht]
   \centering
@@ -609,6 +642,10 @@ Conclusion goes here!
 	\item Better integration with WPF
 	\item etc...
 \end{itemize}
+
+\section{Performance enhancements} \label{sec:performance_enhancements}
+
+Blah
 
 \cleardoublepage
 

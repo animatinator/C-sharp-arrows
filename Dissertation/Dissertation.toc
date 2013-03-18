@@ -41,13 +41,14 @@
 \contentsline {subsubsection}{Some other demo}{23}
 \contentsline {section}{\numberline {4.3}Performance testing}{23}
 \contentsline {subsection}{\numberline {4.3.1}Arrow performance}{23}
-\contentsline {subsubsection}{Measuring technique}{23}
-\contentsline {subsubsection}{Simple function results}{23}
-\contentsline {subsubsection}{List function results}{23}
-\contentsline {subsubsection}{Overhead due to arrow chaining}{24}
-\contentsline {subsection}{\numberline {4.3.2}Binding performance}{25}
-\contentsline {chapter}{\numberline {5}Conclusion}{27}
-\contentsline {section}{\numberline {5.1}Future work}{27}
-\contentsline {chapter}{\numberline {A}Arrow laws}{29}
-\contentsline {section}{\numberline {A.1}Normal arrow laws}{29}
-\contentsline {section}{\numberline {A.2}Invertible arrow laws}{30}
+\contentsline {subsubsection}{Measuring technique}{24}
+\contentsline {subsubsection}{Simple function results}{24}
+\contentsline {subsubsection}{List function results}{25}
+\contentsline {subsubsection}{Overhead due to arrow chaining}{26}
+\contentsline {subsection}{\numberline {4.3.2}Binding performance}{27}
+\contentsline {chapter}{\numberline {5}Conclusion}{29}
+\contentsline {section}{\numberline {5.1}Future work}{29}
+\contentsline {section}{\numberline {5.2}Performance enhancements}{29}
+\contentsline {chapter}{\numberline {A}Arrow laws}{31}
+\contentsline {section}{\numberline {A.1}Normal arrow laws}{31}
+\contentsline {section}{\numberline {A.2}Invertible arrow laws}{32}
