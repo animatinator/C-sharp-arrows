@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.5)  29 MAR 2013 18:30
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.5)  29 MAR 2013 18:40
 entering extended mode
 **Dissertation.tex
 
@@ -211,11 +211,10 @@ Missing character: There is no ™ in font cmr12!
 Chapter 2.
 [5
 
-] [6] [7] [8
-
-]
+] [6] [7] [8]
 Chapter 3.
 [9
+
 
 ] ("C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstlang1.sty"
 File: lstlang1.sty 2004/09/05 1.3 listings language file
@@ -362,7 +361,7 @@ ic/amsfonts/cm/cmsl12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
 nts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
 mti12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pf
 b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Dissertation.pdf (44 pages, 399346 bytes).
+Output written on Dissertation.pdf (44 pages, 399920 bytes).
 PDF statistics:
  524 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
