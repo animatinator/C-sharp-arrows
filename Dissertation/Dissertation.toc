@@ -3,52 +3,57 @@
 \contentsline {section}{\numberline {1.2}Data binding in .NET}{2}
 \contentsline {section}{\numberline {1.3}Project inspirations}{2}
 \contentsline {chapter}{\numberline {2}Preparation}{5}
-\contentsline {chapter}{\numberline {3}Implementation}{7}
-\contentsline {section}{\numberline {3.1}Overview}{7}
-\contentsline {section}{\numberline {3.2}Arrows}{7}
-\contentsline {subsection}{\numberline {3.2.1}Overview}{7}
-\contentsline {subsection}{\numberline {3.2.2}Simple arrows}{8}
-\contentsline {subsubsection}{Challenges encountered}{10}
-\contentsline {subsection}{\numberline {3.2.3}Invertible arrows}{12}
-\contentsline {subsection}{\numberline {3.2.4}List arrows}{12}
-\contentsline {subsection}{\numberline {3.2.5}Choice arrows}{14}
-\contentsline {subsection}{\numberline {3.2.6}Further utility arrows}{14}
-\contentsline {subsection}{\numberline {3.2.7}Feedback in arrows}{14}
-\contentsline {section}{\numberline {3.3}Data binding}{14}
-\contentsline {subsection}{\numberline {3.3.1}Overall architecture}{14}
-\contentsline {subsection}{\numberline {3.3.2}Creating bindable sources and destinations}{15}
-\contentsline {subsection}{\numberline {3.3.3}Creating bindings}{16}
-\contentsline {subsubsection}{Syntax and usage}{17}
-\contentsline {subsubsection}{Two-way binding}{17}
-\contentsline {subsubsection}{Cycle and conflict detection}{17}
-\contentsline {subsubsection}{Many-to-many bindings}{19}
-\contentsline {subsubsection}{Problems encountered}{20}
-\contentsline {paragraph}{Type safety}{20}
-\contentsline {paragraph}{Binding to lists}{20}
-\contentsline {subsection}{\numberline {3.3.4}Integration work with WPF}{20}
-\contentsline {chapter}{\numberline {4}Evaluation}{21}
-\contentsline {section}{\numberline {4.1}Correctness of arrow implementations}{21}
-\contentsline {subsection}{\numberline {4.1.1}Automated testing}{21}
-\contentsline {subsubsection}{Simple arrows}{22}
-\contentsline {subsubsection}{Invertible arrows}{22}
-\contentsline {subsection}{\numberline {4.1.2}Correctness proof by decomposing into lambda calculus}{22}
-\contentsline {section}{\numberline {4.2}Syntax evaluation}{23}
-\contentsline {subsection}{\numberline {4.2.1}Arrow syntax}{23}
-\contentsline {subsubsection}{Comparison with Haskell}{23}
-\contentsline {subsection}{\numberline {4.2.2}Binding syntax}{23}
-\contentsline {subsubsection}{Username two-way binding}{23}
-\contentsline {subsubsection}{List binding from a mock database}{23}
-\contentsline {subsubsection}{Some other demo}{23}
-\contentsline {section}{\numberline {4.3}Performance testing}{23}
-\contentsline {subsection}{\numberline {4.3.1}Arrow performance}{23}
-\contentsline {subsubsection}{Measuring technique}{24}
-\contentsline {subsubsection}{Simple function results}{24}
-\contentsline {subsubsection}{List function results}{25}
-\contentsline {subsubsection}{Overhead due to arrow chaining}{26}
-\contentsline {subsection}{\numberline {4.3.2}Binding performance}{27}
-\contentsline {chapter}{\numberline {5}Conclusion}{29}
-\contentsline {section}{\numberline {5.1}Future work}{29}
-\contentsline {subsection}{\numberline {5.1.1}Performance enhancements}{29}
-\contentsline {chapter}{\numberline {A}Arrow laws}{31}
-\contentsline {section}{\numberline {A.1}Normal arrow laws}{31}
-\contentsline {section}{\numberline {A.2}Invertible arrow laws}{32}
+\contentsline {section}{\numberline {2.1}Background theory}{5}
+\contentsline {subsection}{\numberline {2.1.1}Functional reactive programming}{5}
+\contentsline {subsection}{\numberline {2.1.2}Arrows}{5}
+\contentsline {section}{\numberline {2.2}Requirements analysis}{6}
+\contentsline {section}{\numberline {2.3}Software engineering approach}{7}
+\contentsline {chapter}{\numberline {3}Implementation}{9}
+\contentsline {section}{\numberline {3.1}Overview}{9}
+\contentsline {section}{\numberline {3.2}Arrows}{9}
+\contentsline {subsection}{\numberline {3.2.1}Overview}{9}
+\contentsline {subsection}{\numberline {3.2.2}Simple arrows}{10}
+\contentsline {subsubsection}{Challenges encountered}{12}
+\contentsline {subsection}{\numberline {3.2.3}Invertible arrows}{14}
+\contentsline {subsection}{\numberline {3.2.4}List arrows}{14}
+\contentsline {subsection}{\numberline {3.2.5}Choice arrows}{16}
+\contentsline {subsection}{\numberline {3.2.6}Further utility arrows}{16}
+\contentsline {subsection}{\numberline {3.2.7}Feedback in arrows}{16}
+\contentsline {section}{\numberline {3.3}Data binding}{16}
+\contentsline {subsection}{\numberline {3.3.1}Overall architecture}{16}
+\contentsline {subsection}{\numberline {3.3.2}Creating bindable sources and destinations}{17}
+\contentsline {subsection}{\numberline {3.3.3}Creating bindings}{18}
+\contentsline {subsubsection}{Syntax and usage}{19}
+\contentsline {subsubsection}{Two-way binding}{19}
+\contentsline {subsubsection}{Cycle and conflict detection}{19}
+\contentsline {subsubsection}{Many-to-many bindings}{21}
+\contentsline {subsubsection}{Problems encountered}{22}
+\contentsline {paragraph}{Type safety}{22}
+\contentsline {paragraph}{Binding to lists}{22}
+\contentsline {subsection}{\numberline {3.3.4}Integration work with WPF}{22}
+\contentsline {chapter}{\numberline {4}Evaluation}{23}
+\contentsline {section}{\numberline {4.1}Correctness of arrow implementations}{23}
+\contentsline {subsection}{\numberline {4.1.1}Automated testing}{23}
+\contentsline {subsubsection}{Simple arrows}{24}
+\contentsline {subsubsection}{Invertible arrows}{24}
+\contentsline {subsection}{\numberline {4.1.2}Correctness proof by decomposing into lambda calculus}{24}
+\contentsline {section}{\numberline {4.2}Syntax evaluation}{25}
+\contentsline {subsection}{\numberline {4.2.1}Arrow syntax}{25}
+\contentsline {subsubsection}{Comparison with Haskell}{25}
+\contentsline {subsection}{\numberline {4.2.2}Binding syntax}{25}
+\contentsline {subsubsection}{Username two-way binding}{25}
+\contentsline {subsubsection}{List binding from a mock database}{25}
+\contentsline {subsubsection}{Some other demo}{25}
+\contentsline {section}{\numberline {4.3}Performance testing}{25}
+\contentsline {subsection}{\numberline {4.3.1}Arrow performance}{25}
+\contentsline {subsubsection}{Measuring technique}{26}
+\contentsline {subsubsection}{Simple function results}{26}
+\contentsline {subsubsection}{List function results}{27}
+\contentsline {subsubsection}{Overhead due to arrow chaining}{28}
+\contentsline {subsection}{\numberline {4.3.2}Binding performance}{28}
+\contentsline {chapter}{\numberline {5}Conclusion}{31}
+\contentsline {section}{\numberline {5.1}Future work}{31}
+\contentsline {subsection}{\numberline {5.1.1}Performance enhancements}{31}
+\contentsline {chapter}{\numberline {A}Arrow laws}{33}
+\contentsline {section}{\numberline {A.1}Normal arrow laws}{33}
+\contentsline {section}{\numberline {A.2}Invertible arrow laws}{34}

@@ -1,14 +1,14 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces The Arr operator}}{8}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces The Combine operator}}{9}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces The First operator}}{9}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces The And operator}}{10}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Marshalling a list of BindPoint sources to pass to an arrow and unmarshalling the result}}{20}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces The Arr operator}}{10}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces The Combine operator}}{11}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces The First operator}}{11}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces The And operator}}{12}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Marshalling a list of BindPoint sources to pass to an arrow and unmarshalling the result}}{22}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Performance of arrows, Funcs and normal functions in implementing simple functionality}}{25}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Performance of arrows, Linq queries and normal (loop-based) functions in implementing simple list functionality}}{26}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Execution times of chains of identity functions}}{27}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Performance of arrows, Funcs and normal functions in implementing simple functionality}}{27}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Performance of arrows, Linq queries and normal (loop-based) functions in implementing simple list functionality}}{28}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Execution times of chains of identity functions}}{29}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

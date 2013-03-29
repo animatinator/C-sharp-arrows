@@ -155,11 +155,41 @@ The FRP paradigm was the inspiration for the project, which sought to implement 
 
 \chapter{Preparation}
 
-This chapter is empty still!
+\section{Background theory}
 
--Explain FRP here
--Explain arrows here
--Software engineering approach - iterations at first, issue-driven Agile
+\subsection{Functional reactive programming}
+
+Functional reactive programming (FRP) was one of the initial inspirations for the project. A good introduction is given by [http://conal.net/fran/tutorial.htm], which demonstrates how the principles can be applied to animation. In essence, functional reactive programming is a declarative way of specifying the relationships between different values. 'Signals' which change over time are created and passed around as first-class values, and other values can then be defined as functions of these signals.
+
+One of the main advantages of FRP is that it removes the need for explicitly defining how values are to be kept consistent and writing code to make this so. This is clearly solving a very similar problem to data binding, and so inspired the idea of making data binding more like FRP.
+
+\subsection{Arrows}
+
+Arrows were introduced by Hughes as a generalisation of \texttt{monads}. A monad takes the form \texttt{m a}, representing some computation which will give a result of type \texttt{a}. These are often useful in representing sequences of operations and those which involve side-effects. The basic monad type interface provides an identity function, which gives a monad returning whatever its input was, and a means of chaining monadic functions together. One way of viewing these is as a way of letting the programmer chain together functions in a way controlled by the monad -- for instance, the monad could be written to ensure that some form of global state is passed through along with the function results, or it could be used to handle error conditions without the programmer needing to write extra code for this. In all cases it is essentially handling some side-effect or background operation for the programmer, allowing them to chain various operations together without explicitly handling the side-effects.
+
+Arrows represent a generalisation of monads, in the sense that any monad can be equivalently implemented as an arrow. However, an arrow is of the form \texttt{a b c}, taking an input of type \texttt{b} and transforming it into an output of type \texttt{c}.
+
+Arrows were selected for this project as the semantic nature of an \texttt{arrow a b} is simply a transformation from an input of type \texttt{a} to an output of type \texttt{b}, an interpretation which works well as a generalised model of the nature of data binding.
+
+\section{Requirements analysis}
+
+From the outset, the main objectives of the project were to make the data binding framework syntactically clear and free from boilerplate, and to make the arrows as powerful and easy to use as possible. Therefore, some time was spent at the beginning of the project establishing what could be done to achieve this and just what sort of functionality would likely be needed.
+
+To start off, I spent some time understanding how data binding is already done in .NET's WPF framework. It was clear that the existing approach involved a lot of repetitive coding from the programmer to set up bindable sources and destinations, and there were several different conflicting ways of actually creating the binding -- either in the XAML code describing the user interface or in the code-behind. Thus I decided a good first objective would be to find a way of making the framework completely general, with one consistent way of creating bindings which handles all the situation-specific details itself. I also focussed on ways of removing the usual boilerplate code for creating sources and destinations, replacing it with a base class which manages events and interactions and an attribute which can be placed on properties the programmer wishes to bind.
+
+I also investigated what sort of features modern data binding frameworks implement, and which would be most useful for an arrow-based one. Binding through functions is not a new concept by any means, and indeed two-way binding is already implemented in .NET. However, in most cases these are fairly messy to set up -- in .NET, for instance, large \texttt{ValueConverter} classes have to be written to perform the transformation. It was decided that the cleanest way of handling this would be simply requiring that all bindings have an arrow attached. This way, the syntax is consistent whether the binding is direct or functional, and of course it is easy to pass in an identity arrow for a non-functional binding.
+
+Exploring existing libraries highlighted a couple of extra features which I had not previously thought would be necessary: arbitrary many-to-many bindings, which are useful in a variety of situations, and list bindings. The latter refers to the situation where the data source is actually a list of data, and would have been possible with normal arrows. However, it would have been fairly messy to do, and simple tasks like filtering and mapping would have required large loops. Given list binding is done fairly often in reality, I decided it would make sense to add an arrow type for handling them and a variety of list processing methods.
+
+[Arrow requirements...]
+
+\section{Software engineering approach}
+
+The implementation work was roughly done in two phases. In the early stages, a spiral model was used as it was unclear what the best way of implementing the arrows and binding framework would be. The first iteration was completed before the beginning of the project, and featured a very limited arrow class which worked on integers and supported only the basic combinators, and a binding framework which couldn't yet use arrows and required the sources and destinations to be special \texttt{BindingSource} and \texttt{BindingDestination} objects. Over several iterations the approach was refined until I found a suitable general and extensible implementation.
+
+From there, development was issue-driven Agile with sprints defined to be the work packages designated at the start of the project (though many of these work packages were altered and expanded slightly). The FogBugz\footnote{\texttt{www.fogcreek.com/fogbugz}} issue tracker was used to manage this and keep track of the various milestones. The project was tested throughout development with a series of unit tests, and I frequently tried implementing complex data bindings to ensure that new features being added were compatible with what was already there and the syntax was still reasonably clean.
+
+The entire project (dissertation included) was stored in a Git repository which was backed up on external storage and online with BitBucket\footnote{\texttt{www.bitbucket.org}}.
 
 \cleardoublepage
 
@@ -326,7 +356,7 @@ var filtered = listArrow.Filter(x => x > 3);
 In this example, the Filter extension method takes \texttt{listArrow} and the function \texttt{(int x) => x > 3}, creates a \texttt{FilterArrow<int>} out of the function, and returns a list arrow which is the original arrow and the filter arrow combined. Whole chains of list arrows can be quickly set up in this way:
 
 \begin{lstlisting}[language={[Sharp]C}]
-var filtered = listArrow
+var listArrow = listArrow
                    .OrderBy((x, y) => y - x)
                    .Filter(x => x > 3)
                    .Map(x => "Number"+x)
@@ -606,8 +636,6 @@ Results for list-based functions
 \subsubsection{Overhead due to arrow chaining}
 \label{sec:arrow_chaining_overhead}
 
-Explanation of the problem (which will have been highlighted in earlier results) along with test results for increasingly long chains of identity functions. Suggest reasons for this and potential solutions (or maybe the solutions should come in later?)
-
 As was discovered earlier on, complex arrow chaining imposes a performance overhead. To establish how severe the effects of this are, a test was set up in which the execution times of chains of identity arrows were compared. In an ideal world, fifty identity arrows chained end-to-end would run in the same time as a single one, but in reality the implementation leads to longer chains taking considerably longer to execute. A set of identity chains with lengths ranging from one to twenty was created, and each one was timed over 1,000,000 executions.
 
 Fortunately, it was found that the execution time is linear in the length of the chain -- that is, each arrow combination adds only a constant extra overhead. The results can be seen in Figure \ref{fig:arrow_chaining_overhead}. Aside from small random variations, the timings clearly follow a linear trend. As noted earlier on, the overhead is far less pronounced when the function implemented is more complex than identity or incrementing, and so it is likely that for the majority of use cases combination overhead won't be significant enough to noticeably harm performance.
@@ -640,7 +668,7 @@ Conclusion goes here!
 	\item Messiness caused by use of Tuples - would be better with a custom tree type?
 	\item Feedback arrows
 	\item Better integration with WPF
-	\item etc...
+	\item Syntax enhancements, perhaps through Roslyn
 \end{itemize}
 
 \subsection{Performance enhancements} \label{sec:performance_enhancements}
