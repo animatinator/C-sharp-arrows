@@ -167,7 +167,7 @@ One of the main advantages of FRP is that it removes the need for explicitly def
 
 Arrows were introduced by Hughes as a generalisation of \texttt{monads}. A monad takes the form \texttt{m a}, representing some computation which will give a result of type \texttt{a}. These are often useful in representing sequences of operations and those which involve side-effects. The basic monad type interface provides an identity function, which gives a monad returning whatever its input was, and a means of chaining monadic functions together. One way of viewing these is as a way of letting the programmer chain together functions in a way controlled by the monad -- for instance, the monad could be written to ensure that some form of global state is passed through along with the function results, or it could be used to handle error conditions without the programmer needing to write extra code for this. In all cases it is essentially handling some side-effect or background operation for the programmer, allowing them to chain various operations together without explicitly handling the side-effects.
 
-Arrows represent a generalisation of monads, in the sense that any monad can be equivalently implemented as an arrow. However, an arrow is of the form \texttt{a b c}, taking an input of type \texttt{b} and transforming it into an output of type \texttt{c}.
+Arrows represent a generalisation of monads, in the sense that any monad can be equivalently implemented as an arrow. However, an arrow is of the form \texttt{arrow b c}, taking an input of type \texttt{b} and transforming it into an output of type \texttt{c}. The basic operators are similar: an \texttt{arr} operator takes a function as an argument and returns the arrow representing that function, and the \texttt{>>>} operator chains two arrows together such that the output of the first is passed through the second. Further to these, the \texttt{first} operator takes an \texttt{arrow b c} and returns an \texttt{arrow (b, d) (c, d)} -- an arrow taking a pair and applying the original arrow only to the first element of the pair. With these basic operators, a number of more complex standard operators can be built up. These are discussed in Section \ref{sec:simple_arrow_implementation} on the implementation of arrows.
 
 Arrows were selected for this project as the semantic nature of an \texttt{arrow a b} is simply a transformation from an input of type \texttt{a} to an output of type \texttt{b}, an interpretation which works well as a generalised model of the nature of data binding.
 
@@ -218,7 +218,7 @@ A further problem was how best to allow arrows from multiple inputs to multiple 
 
 [Maybe mention arrow intercompatibility?]
 
-\subsection{Simple arrows}
+\subsection{Simple arrows} \label{sec:simple_arrow_implementation}
 
 The first objective in implementing arrows was to get the simple function-based arrow working, as all the others derive from this. As mentioned earlier, it was implemented using the C$\sharp$ \texttt{Func<A, B>} class to hold its function. An \texttt{Invoke} method is then exposed for using the arrow.
 
@@ -391,7 +391,9 @@ Discuss whether this would be useful or not, reasons for it not being there (lac
 
 \subsection{Overall architecture}
 
-Use diagrams and stuff to explain it.
+The basis for the data binding system is a publish/subscribe network, where bound values publish events when they are updated and bindings update on receiving these events. A couple of alternatives were considered for this: the first idea was to have binding sources hold a reference to their target and a copy of the arrow associated with the binding, allowing them to simply update the referenced value via the arrow when needed. However, C$\sharp$ lacks the ability to hold references as member variables in this way. The simple approach of simply periodically polling all bound variables to check for updates was also considered, but this was clearly no good: polling is system-intensive and wasteful with many bindings using the same source, a binding target's value would potentially be 'invalid' between polling updates, and the bindings manager would need to store a copy of every bound variable.
+
+Conveniently, C$\sharp$ provides simple syntax for event-based programming. Events can be created for a class and thrown with a method call, and other objects can subscribe and unsubscribe simply by adding or removing their handler methods from the event. The clearest approach was therefore to attach events to bindable objects and have them trigger whenever a bound variable is updated. The bindings manager, when creating a binding, need only tell the binding to subscribe to the source object's event and the rest is simple. [Continue]
 
 \subsection{Creating bindable sources and destinations}
 
