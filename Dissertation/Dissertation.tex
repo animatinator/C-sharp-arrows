@@ -393,7 +393,16 @@ Discuss whether this would be useful or not, reasons for it not being there (lac
 
 The basis for the data binding system is a publish/subscribe network, where bound values publish events when they are updated and bindings update on receiving these events. A couple of alternatives were considered for this: the first idea was to have binding sources hold a reference to their target and a copy of the arrow associated with the binding, allowing them to simply update the referenced value via the arrow when needed. However, C$\sharp$ lacks the ability to hold references as member variables in this way. The simple approach of simply periodically polling all bound variables to check for updates was also considered, but this was clearly no good: polling is system-intensive and wasteful with many bindings using the same source, a binding target's value would potentially be 'invalid' between polling updates, and the bindings manager would need to store a copy of every bound variable.
 
-Conveniently, C$\sharp$ provides simple syntax for event-based programming. Events can be created for a class and thrown with a method call, and other objects can subscribe and unsubscribe simply by adding or removing their handler methods from the event. The clearest approach was therefore to attach events to bindable objects and have them trigger whenever a bound variable is updated. The bindings manager, when creating a binding, need only tell the binding to subscribe to the source object's event and the rest is simple. [Continue]
+Conveniently, C$\sharp$ provides simple syntax for event-based programming. Events can be created for a class and thrown with a method call, and other objects can subscribe and unsubscribe simply by adding or removing their handler methods from the event. The clearest approach was therefore to attach events to bindable objects and have them trigger whenever a bound variable is updated. The bindings manager, when creating a binding, need only tell the binding to subscribe to the source object's event and it will then be notified of all updates to variables. Information stored in the event arguments is used to filter out events from variables the binding is not watching, and the updated value is passed through the binding's arrow and then assigned to the destination variable. This approach is shown in Figure \ref{fig:binding_framework}.
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=\textwidth]{fig/BindingFramework.pdf}
+  \caption{Overview of the binding method}
+  \label{fig:binding_framework}
+\end{figure}
+
+An advantage of this technique is that sources and destinations can be treated in exactly the same way: both extend the \texttt{Bindable} base class, which handles events for binding updates and allows \texttt{Binding} objects to set the values of its bindable variables.
 
 \subsection{Creating bindable sources and destinations}
 
@@ -442,7 +451,11 @@ BindingsManager.CreateBinding(
 
 \subsubsection{Two-way binding}
 
-Mention inference of two-way bindings by reflecting on the type of the arrow passed in. Also mention the problems encountered - need for variable ‘locking’ system to avoid infinite loop
+For simplicity, two-way bindings are inferred based on the type of arrow passed in; the function for creating bindings is overloaded such that passing in an invertible arrow will automatically set the binding up as two-directional. Two-way bindings are accomplished in much the same way as one-way ones, with the difference being that the binding subscribes to events from both sides and decides which way to update based on the binding point which triggered the update event.
+
+The main difficulty encountered here was that these bindings initially led to infinite loops. If we consider a two-way binding between `A' and `B', whenever `A' is updated the binding will then update `B'. However, the setter for `B' has been modified to throw an event when it's updated signalling the binding to update, and so the binding is then forced to update `A' again. This continues back and forth in the main thread causing the whole application to hang.
+
+The solution to this was to allow variables to be \textit{locked} when they are first updated. Essentially, the \texttt{Bindable} base class maintains a list of all the bindable variables it manages and holds a `locked' flag for each. Setting a variable through the methods supplied by \texttt{Bindable} will have no effect when the variable is locked, and so loops can be prevented simply by modifying the variable setter to lock, set and unlock the variable. Considering the previous example with this addition, when `A' changes it will first be locked and then set. `B' will then be updated by the binding, and will throw an event signalling the binding to update `A'. However, the binding's attempt to update `A' will fail and the loop will stop, unwinding back to `A' which is then unlocked.
 
 \subsubsection{Cycle and conflict detection}
 
