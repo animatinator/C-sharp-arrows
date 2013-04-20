@@ -37,6 +37,12 @@ namespace CaseStudyNameSplitter_Arrows
 
         [Bindable]
         public string Surname { get; set; }
+
+        public NameSplit()
+        {
+            Forename = "f";
+            Surname = "s";
+        }
     }
 
     public partial class MainWindow : Window
@@ -64,7 +70,9 @@ namespace CaseStudyNameSplitter_Arrows
         {
             nameArrow = Op.Arr((string x) => Tuple.Create(
                                                     x.Split()[0],
-                                                    x.Split()[1]));
+                                                    x.Split()[1]),
+                                (Tuple<string, string> splitName) =>
+                                            String.Join(" ", new List<string> {splitName.Item1, splitName.Item2}));
         }
 
         public void InitialiseBindings()
@@ -82,6 +90,7 @@ namespace CaseStudyNameSplitter_Arrows
         {
             Binding bind = new Binding();
             bind.Source = splitName;
+            bind.Mode = BindingMode.TwoWay;
             bind.Path = new PropertyPath(property);
             textBox.SetBinding(TextBox.TextProperty, bind);
         }

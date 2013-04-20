@@ -113,7 +113,7 @@ namespace ArrowDataBinding.Bindings
             // If the tupleSample is a tuple and not a leaf, recurse into its children
             if (tupleType.Name == typeof(Tuple<,>).Name)
             {
-                return Tuple.Create(MarshalArguments(elements, tupleType.GetGenericArguments()[0]),
+                return Tuple.Create<dynamic, dynamic>(MarshalArguments(elements, tupleType.GetGenericArguments()[0]),
                     MarshalArguments(elements, tupleType.GetGenericArguments()[1]));
             }
             else  // If the tupleSample is a leaf, return one of the elements and remove it from the list
