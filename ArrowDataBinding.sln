@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Performance1.psess = Performance1.psess
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaseStudyNameSplitter-WPF", "CaseStudyNameSplitter-WPF\CaseStudyNameSplitter-WPF.csproj", "{11B02F7C-E12E-4EF2-BF7F-CBF43A6BD0CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,16 @@ Global
 		{EC6BF130-268C-4793-AA21-B9904F6C5B1A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{EC6BF130-268C-4793-AA21-B9904F6C5B1A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{EC6BF130-268C-4793-AA21-B9904F6C5B1A}.Release|x86.ActiveCfg = Release|Any CPU
+		{11B02F7C-E12E-4EF2-BF7F-CBF43A6BD0CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11B02F7C-E12E-4EF2-BF7F-CBF43A6BD0CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11B02F7C-E12E-4EF2-BF7F-CBF43A6BD0CE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{11B02F7C-E12E-4EF2-BF7F-CBF43A6BD0CE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{11B02F7C-E12E-4EF2-BF7F-CBF43A6BD0CE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{11B02F7C-E12E-4EF2-BF7F-CBF43A6BD0CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11B02F7C-E12E-4EF2-BF7F-CBF43A6BD0CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11B02F7C-E12E-4EF2-BF7F-CBF43A6BD0CE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{11B02F7C-E12E-4EF2-BF7F-CBF43A6BD0CE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{11B02F7C-E12E-4EF2-BF7F-CBF43A6BD0CE}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

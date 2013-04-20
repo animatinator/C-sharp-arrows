@@ -363,14 +363,14 @@ var listArrow = listArrow
                    .Reverse();
 \end{lstlisting}
 
-[More on foldl and foldr?]
+%More on foldl and foldr?
 
-\subsection{Choice arrows}
+%\subsection{Choice arrows}
 
-\begin{itemize}
-	\item Not deeply implemented or tested but could be handy for some things, most likely convenient exception handling
-	\item This wouldn't be much good for bindings though
-\end{itemize}
+%\begin{itemize}
+%	\item Not deeply implemented or tested but could be handy for some things, most likely convenient exception handling
+%	\item This wouldn't be much good for bindings though
+%\end{itemize}
 
 \subsection{Further utility arrows} \label{sec:further_utility_arrows}
 
@@ -382,9 +382,9 @@ To simplify various common tasks, a number of simple utility arrows were written
 	\item[Tuple reassociation arrows] The tuple operations \texttt{assoc} and \texttt{cossa}\footnote{\texttt{assoc} takes a tuple ((a, b), c) and returns (a, (b, c)), whilst \texttt{cossa} does the opposite} turn up reasonably frequently in functional programming, and feature in several of the arrow laws. As these are fairly fiddly to implement I decided it would make sense to create utility arrows for both these functions.
 \end{description}
 
-\subsection{Feedback in arrows}
+%\subsection{Feedback in arrows}
 
-Discuss whether this would be useful or not, reasons for it not being there (lack of real-world use cases?) and how one might implement it.
+%Discuss whether this would be useful or not, reasons for it not being there (lack of real-world use cases?) and how one might implement it.
 
 
 \section{Data binding}
@@ -505,11 +505,19 @@ By using reflection on the type of the arrow, I was able to convert a list of bi
 
 \paragraph{Type safety}
 
-All sort of problems here; difficulties of type checking arrows should also be mentioned.
+The binding framework at the moment is unfortunately not statically type safe: binding sources and destinations are of type \texttt{BindPoint}, which doesn't say anything about the actual type of the variable it refers to. An obvious solution would be to simply make the \texttt{BindPoint} class parameterised by the type of the variable it refers to (e.g. \texttt{BindPoint<int>} would refer to an integer variable), but this approach removed the ability to treat sets of bind points polymorphically which is used heavily by the methods for creating many-to-many bindings. As a result, it was decided that ensuring the types are correct should be left to the programmer. However, I was able to implement dynamic type checking at runtime so the framework will throw explanatory exceptions whenever the programmer has made a mistake rather than simply failing unexpectedly.
 
 \paragraph{Binding to lists}
 
-They don't throw events! Binding to lists needs the list to be ‘assigned’ to for it to update. Possible solutions like ObservableEnumerable (or whatever it was called), potentially more boilerplate, future work ‘n’ shit.
+Unfortunately, the technique of intercepting assignments to trigger binding update events doesn't easily work for lists. The vast majority of list operations occurring in practice involve changing elements of the list rather than reassigning the list variable itself, and so the list's overridden assignment method will not be called. This means that list bindings will not update unless the programmer explicitly assigns a modified version of the list to itself:
+
+\begin{lstlisting}[language={[Sharp]C}, caption={Explicitly reassigning a list to trigger a binding update}]
+var tempList = listToBeUpdated;
+tempList[3] = newValue;
+listToBeUpdated = tempList;  // Triggers the binding update
+\end{lstlisting}
+
+This can be overcome by using an \texttt{ObservableCollection} instead of a list. An \texttt{ObservableCollection} is essentially the same as a normal list but provides a \texttt{CollectionChanged} event to which listeners can subscribe for notifications whenever the contents of the collection change, and so it would be fairly simple to have list bindings subscribe to these events and update in that way. However, this would require that all bound collections be of type \texttt{ObservableCollection} -- far more limiting than the current system which only requires that they be subtypes of \texttt{IEnumerable}, the base type of all collections.
 
 \subsection{Integration work with WPF}
 
@@ -565,11 +573,11 @@ Explain the technique used to translate into lambda calculus and the likely corr
 
 \subsection{Arrow syntax}
 
-Arrow syntaxy stuff.
+Show major operators - arrow construction (niceish), arrow combination (niceish), First operator (not ideal - perhaps show all the differently imperfect ways of applying it); discuss the lack of type parameters despite the mad type-ing skillz going on (woo mad type inference skills!).
 
 \subsubsection{Comparison with Haskell}
 
-Might not be great, but why not?
+Firstly, mention difference in specifying lambdas and shizz (C sharp stunted from the start). From there, show how C sharp arrows create arrows from them (need types specified somewhere is an issue (no type inference like Haskell gets), C sharp also has a strict function calling syntax which doesn't allow Haskell's pretty currying syntax). Go on to give a few examples of complicated-ish arrows expressed in both? Also, maaaybe mention the shiny new syntax Haskell has for arrows, but the C sharp implementation can't really battle that so it's not worth going into much detail about.
 
 \subsection{Binding syntax}
 
@@ -639,7 +647,15 @@ Arrow chaining is the main performance issue arrows have, as increasingly comple
 
 \subsubsection{List function results}
 
-Results for list-based functions
+List arrows were also evaluated, this time in comparison with Linq queries and simple functions based on loops. For this, a simple mock database was created of \texttt{Person} objects, each having a name, age and reference to and \texttt{Employer} object. The three functions tested follow:
+
+\begin{description}
+	\item[Filter] The task here was to filter the input to the list of people over ten years old. This was run for 1,000,000 iterations.
+	\item[Foldl] This tested the performance of the \texttt{foldl} method implemented for list arrows. The method had to combine all the \texttt{Person} objects into a single \texttt{Person} whose age was the sum of all the others and whose name was a concatenation of every name interspersed with `and' ("Alice and Bob and Eve and ..."). This was run for 300,000 iterations.
+	\item[Order by then map] This function involved ordering the list by age and then mapping each person such that their name was followed by " mapped". This was also run for 300,000 iterations.
+\end{description}
+
+The results can be seen in Figure \ref{fig:list_function_performance}. Interestingly, arrows performed fairly well on the first two tests. The loop-based function was fastest for filtering, with arrows following close behind -- presumably as a result of their filter method also being a simple loop. The Linq expression was slowest as it seems the Linq overhead ended up dominating. For foldl, the results are too similar to draw much from, but the arrow implementation appears to have been slightly more efficient. Again, the difference is likely to have been influenced by the overhead associated with Linq queries. Finally, filter then map shows the effect of arrow concatenation slowing things down -- in the case of list arrows, this overhead is greater than normal because the \texttt{IEnumerable} is converted to a list before being passed on to the next arrow\footnote{This was necessary to make some of the list arrows compatible, as various type errors were being encountered previously}.
 
 \begin{figure}[!ht]
   \centering

@@ -10,7 +10,6 @@ namespace ArrowDataBinding.Bindings
 {
     public class ArrowValueConverter : IValueConverter
     {
-        // TODO: When creating, this arrow will need to be assigned to in the XAML
         public IArrow arrow { get; set; }
 
         public ArrowValueConverter(IArrow arrow)

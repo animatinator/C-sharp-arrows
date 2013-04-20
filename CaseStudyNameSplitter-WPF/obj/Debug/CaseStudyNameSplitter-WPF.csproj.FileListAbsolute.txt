@@ -1,0 +1,13 @@
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyNameSplitter-WPF\bin\Debug\CaseStudyNameSplitter-WPF.exe.config
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyNameSplitter-WPF\bin\Debug\CaseStudyNameSplitter-WPF.exe
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyNameSplitter-WPF\bin\Debug\CaseStudyNameSplitter-WPF.pdb
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyNameSplitter-WPF\obj\Debug\MainWindow.baml
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyNameSplitter-WPF\obj\Debug\MainWindow.g.cs
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyNameSplitter-WPF\obj\Debug\App.g.cs
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyNameSplitter-WPF\obj\Debug\CaseStudyNameSplitter-WPF_MarkupCompile.cache
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyNameSplitter-WPF\obj\Debug\CaseStudyNameSplitter-WPF.g.resources
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyNameSplitter-WPF\obj\Debug\CaseStudyNameSplitter_WPF.Properties.Resources.resources
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyNameSplitter-WPF\obj\Debug\CaseStudyNameSplitter-WPF.csproj.GenerateResource.Cache
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyNameSplitter-WPF\obj\Debug\CaseStudyNameSplitter-WPF.exe
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyNameSplitter-WPF\obj\Debug\CaseStudyNameSplitter-WPF.pdb
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyNameSplitter-WPF\obj\Debug\CaseStudyNameSplitter-WPF.csprojResolveAssemblyReference.cache

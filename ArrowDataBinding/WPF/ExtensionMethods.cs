@@ -8,7 +8,7 @@ namespace ArrowDataBinding.Bindings
 {
     public static class ExtensionMethods
     {
-        public static ArrowValueConverter GetValueConverter(IArrow arrow)
+        public static ArrowValueConverter GetValueConverter(this IArrow arrow)
         {
             return new ArrowValueConverter(arrow);
         }
