@@ -1,11 +1,11 @@
-﻿<Window x:Class="CaseStudyNameSplitter_WPF.MainWindow"
+﻿<Window x:Class="CaseStudyNameSplitter_Arrows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Name binding" Height="159.54" Width="152.739">
     <Grid x:Name="LayoutRoot">
         <TextBox x:Name="ForenameBox" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="SurnameBox" HorizontalAlignment="Left" Height="23" Margin="10,38,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="NameChangeButton" Content="Change name" HorizontalAlignment="Center" Margin="0,84,0,10" VerticalAlignment="Top" Width="95" Click="NameChangeButton_Click"/>
+        <Button x:Name="NameChangeButton" Content="Change name" HorizontalAlignment="Center" Margin="0,84,0,10" VerticalAlignment="Top" Width="95" Click="NameChangeButton_Click" />
 
 
 

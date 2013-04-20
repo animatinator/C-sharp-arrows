@@ -83,27 +83,32 @@ namespace CaseStudyNameSplitter_WPF
         {
             InitializeComponent();
             InitialisePerson();
-            InitialiseBinding();
+            InitialiseBindings();
         }
 
         public void InitialisePerson()
         {
-            name = new NameData("Bob Bobertson");
+            name = new NameData("Deita Bindings");
         }
 
-        public void InitialiseBinding()
+        public void InitialiseBindings()
+        {
+            InitialiseNameBinding(ForenameBox, new ForenameValueConverter());
+            InitialiseNameBinding(SurnameBox, new SurnameValueConverter());
+        }
+
+        public void InitialiseNameBinding(TextBox textBox, IValueConverter converter)
         {
             Binding bind = new Binding();
             bind.Source = name;
             bind.Path = new PropertyPath("Name");
-            bind.Converter = new SurnameValueConverter();
-            SurnameBox.SetBinding(TextBox.TextProperty, bind);
+            bind.Converter = converter;
+            textBox.SetBinding(TextBox.TextProperty, bind);
+        }
 
-            Binding bind1 = new Binding();
-            bind1.Source = name;
-            bind1.Path = new PropertyPath("Name");
-            bind1.Converter = new ForenameValueConverter();
-            ForenameBox.SetBinding(TextBox.TextProperty, bind1);
+        private void NameChangeButton_Click(object sender, RoutedEventArgs e)
+        {
+            name.Name = "Mister Newname";
         }
     }
 }
