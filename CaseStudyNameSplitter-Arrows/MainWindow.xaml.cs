@@ -68,11 +68,9 @@ namespace CaseStudyNameSplitter_Arrows
 
         public void InitialiseArrow()
         {
-            nameArrow = Op.Arr((string x) => Tuple.Create(
-                                                    x.Split()[0],
-                                                    x.Split()[1]),
+            nameArrow = Op.Arr((string x) => Tuple.Create(x.Split()[0], x.Split()[1]),
                                 (Tuple<string, string> splitName) =>
-                                            String.Join(" ", new List<string> {splitName.Item1, splitName.Item2}));
+                                            String.Format("{0} {1}", splitName.Item1, splitName.Item2));
         }
 
         public void InitialiseBindings()

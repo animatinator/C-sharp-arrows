@@ -55,3 +55,7 @@
 \contentsline {chapter}{\numberline {A}Arrow laws}{35}
 \contentsline {section}{\numberline {A.1}Normal arrow laws}{35}
 \contentsline {section}{\numberline {A.2}Invertible arrow laws}{36}
+\contentsline {chapter}{\numberline {B}Code samples for case studies}{37}
+\contentsline {section}{\numberline {B.1}Username two-way binding}{37}
+\contentsline {section}{\numberline {B.2}List binding from a mock database}{39}
+\contentsline {section}{\numberline {B.3}Some other demo}{41}
