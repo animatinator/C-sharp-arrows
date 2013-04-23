@@ -81,6 +81,24 @@ namespace ArrowDataBinding.Utils
                 return 1;
             }
         }
+
+        public static dynamic ConvertType(dynamic tuple, Type requiredType)
+        {
+            if (tuple.GetType().Name == typeof(Tuple<,>).Name)
+            {
+                var types = requiredType.GenericTypeArguments;
+                var constructor = requiredType.GetConstructor(types);
+
+                dynamic left = ConvertType(tuple.Item1, types[0]);
+                dynamic right = ConvertType(tuple.Item2, types[1]);
+
+                return constructor.Invoke(new object[] { left, right });
+            }
+            else
+            {
+                return Convert.ChangeType(tuple, requiredType);
+            }
+        }
     }
 
     public static class ExtensionMethods

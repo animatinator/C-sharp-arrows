@@ -57,12 +57,18 @@ namespace ArrowDataBinding.Arrows
 
         public override dynamic Invoke<T>(T input)
         {
-            if (typeof(T) == typeof(A) || true)  // This type check fails on dynamic types, hence the ||true
+            try
             {
-                return func((A)Convert.ChangeType(input, typeof(A)));  // TODO: Make a custom ChangeType method for changing tuples' types
-                // (ChangeType from Tuple<object, object> to Tuple<string, string> fails even if the items it holds can be converted to strings)
+                if (typeof(T) != typeof(A))
+                {
+                    return func((A)TupleOp.ConvertType(input, typeof(A)));
+                }
+                else
+                {
+                    return func((A)Convert.ChangeType(input, typeof(A)));
+                }
             }
-            else
+            catch (Exception)
             {
                 throw new Exception("Invalid type supplied to 'Arrow.Invoke'!");
             }
