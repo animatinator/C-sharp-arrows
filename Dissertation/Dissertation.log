@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.5)  23 APR 2013 17:08
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.5)  23 APR 2013 21:01
 entering extended mode
 **Dissertation.tex
 
@@ -110,6 +110,9 @@ File: listings.cfg 2007/02/22 1.4 listings configuration
 ))
 Package: listings 2007/02/22 1.4 (Carsten Heinz)
 
+("C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstlang1.sty"
+File: lstlang1.sty 2004/09/05 1.3 listings language file
+)
 ("C:\Program Files\MiKTeX 2.9\tex\latex\sauerj\parcolumns.sty"
 Package: parcolumns 2004/11/25 v1.2 Typeset multiple parallel columns
 
@@ -226,13 +229,10 @@ Chapter 3.
 [9
 
 
-] ("C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstlang1.sty"
-File: lstlang1.sty 2004/09/05 1.3 listings language file
-)
-LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
+]
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <8> not available
 (Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 230.
-
-<fig/ArrOperator.pdf, id=72, 259.19409pt x 106.89937pt>
+ <fig/ArrOperator.pdf, id=72, 259.19409pt x 106.89937pt>
 File: fig/ArrOperator.pdf Graphic file (type pdf)
 
 <use fig/ArrOperator.pdf>
@@ -240,21 +240,21 @@ Package pdftex.def Info: fig/ArrOperator.pdf used on input line 235.
 (pdftex.def)             Requested size: 142.26378pt x 58.67412pt.
  [10 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
 sertation/fig/ArrOperator.pdf>]
-<fig/CompositionOperator.pdf, id=85, 349.81836pt x 107.12521pt>
+<fig/CompositionOperator.pdf, id=86, 349.81836pt x 107.12521pt>
 File: fig/CompositionOperator.pdf Graphic file (type pdf)
 
 <use fig/CompositionOperator.pdf>
 Package pdftex.def Info: fig/CompositionOperator.pdf used on input line 248.
 (pdftex.def)             Requested size: 142.26378pt x 43.56526pt.
 
-<fig/FirstOperator.pdf, id=86, 262.49013pt x 219.44516pt>
+<fig/FirstOperator.pdf, id=87, 262.49013pt x 219.44516pt>
 File: fig/FirstOperator.pdf Graphic file (type pdf)
 
 <use fig/FirstOperator.pdf>
 Package pdftex.def Info: fig/FirstOperator.pdf used on input line 267.
 (pdftex.def)             Requested size: 142.26378pt x 118.93391pt.
 
-<fig/AndOperator.pdf, id=87, 565.02242pt x 248.2334pt>
+<fig/AndOperator.pdf, id=88, 565.02242pt x 248.2334pt>
 File: fig/AndOperator.pdf Graphic file (type pdf)
 
 <use fig/AndOperator.pdf>
@@ -268,7 +268,7 @@ g/AndOperator.pdf>] [13] [14]
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
 (Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 344.
  [15] [16]
-<fig/BindingFramework.pdf, id=134, 568.86269pt x 261.31383pt>
+<fig/BindingFramework.pdf, id=135, 568.86269pt x 261.31383pt>
 File: fig/BindingFramework.pdf Graphic file (type pdf)
 
 <use fig/BindingFramework.pdf>
@@ -285,7 +285,7 @@ File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 467.
  [21]
-<fig/ArgumentMarshalling.pdf, id=176, 511.24123pt x 147.77261pt>
+<fig/ArgumentMarshalling.pdf, id=177, 511.24123pt x 147.77261pt>
 File: fig/ArgumentMarshalling.pdf Graphic file (type pdf)
 
 <use fig/ArgumentMarshalling.pdf>
@@ -298,98 +298,95 @@ Chapter 4.
 [25
 
 
-] [26] [27] [28]
-<fig/SimpleFunctionPerformanceChart.pdf, id=209, 496.44887pt x 258.75552pt>
+] [26] <fig/CaseStudyNameBinding.png, id=204, 283.0575pt x 210.7875pt>
+File: fig/CaseStudyNameBinding.png Graphic file (type png)
+
+<use fig/CaseStudyNameBinding.png>
+Package pdftex.def Info: fig/CaseStudyNameBinding.png used on input line 594.
+(pdftex.def)             Requested size: 283.0568pt x 210.78699pt.
+ [27] [28 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBindin
+g/Dissertation/fig/CaseStudyNameBinding.png>] [29]
+<fig/SimpleFunctionPerformanceChart.pdf, id=215, 496.44887pt x 258.75552pt>
 File: fig/SimpleFunctionPerformanceChart.pdf Graphic file (type pdf)
 
 <use fig/SimpleFunctionPerformanceChart.pdf>
 Package pdftex.def Info: fig/SimpleFunctionPerformanceChart.pdf used on input l
-ine 645.
+ine 660.
 (pdftex.def)             Requested size: 411.93877pt x 214.71175pt.
- [29]
-<fig/ListFunctionPerformanceChart.pdf, id=213, 496.4172pt x 244.72725pt>
+ [30] [31 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBindin
+g/Dissertation/fig/SimpleFunctionPerformanceChart.pdf>]
+<fig/ListFunctionPerformanceChart.pdf, id=292, 496.4172pt x 244.72725pt>
 File: fig/ListFunctionPerformanceChart.pdf Graphic file (type pdf)
 
 <use fig/ListFunctionPerformanceChart.pdf>
 Package pdftex.def Info: fig/ListFunctionPerformanceChart.pdf used on input lin
-e 664.
+e 679.
 (pdftex.def)             Requested size: 411.93877pt x 203.08247pt.
- [30 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
-sertation/fig/SimpleFunctionPerformanceChart.pdf>] <fig/IdentityChains.pdf, id=
-287, 496.51498pt x 216.57913pt>
+ [32 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
+sertation/fig/ListFunctionPerformanceChart.pdf>] <fig/IdentityChains.pdf, id=36
+0, 496.51498pt x 216.57913pt>
 File: fig/IdentityChains.pdf Graphic file (type pdf)
 
 <use fig/IdentityChains.pdf>
-Package pdftex.def Info: fig/IdentityChains.pdf used on input line 678.
+Package pdftex.def Info: fig/IdentityChains.pdf used on input line 693.
 (pdftex.def)             Requested size: 411.93877pt x 179.69122pt.
- [31 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
-sertation/fig/ListFunctionPerformanceChart.pdf>]
-[32 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Diss
-ertation/fig/IdentityChains.pdf>]
+ [33 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
+sertation/fig/IdentityChains.pdf>] [34
+
+]
 Chapter 5.
-[33
+[35
 
-
-] [34
+] [36
 
 ]
 Appendix A.
-[35
+[37
 
-] [36]
+] [38]
 Appendix B.
 \pc@column@1=\box29
 \pc@column@width@1=\dimen119
 \pc@column@2=\box30
 \pc@column@width@2=\dimen120
 Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
-ne 785.
+ne 800.
 Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
-ne 785.
+ne 800.
+[39
 
-Overfull \hbox (8.48015pt too wide) in paragraph at lines 790--792
-[][] 
- []
-
-
-Overfull \hbox (14.78014pt too wide) in paragraph at lines 816--817
-[][] 
- []
-
-[37
-
-
-] [38]
-Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
-ne 842.
-Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
-ne 842.
- [39
 
 ] [40]
 Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
-ne 889.
+ne 857.
 Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
-ne 889.
+ne 857.
  [41
 
-] [42
+] [42]
+Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
+ne 904.
+Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
+ne 904.
+ [43
 
-] [43] [44
+] [44
 
 ] [45] [46
+
+] [47] [48
 
 ]
 ("C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\Dissert
 ation\Dissertation.aux") ) 
 Here is how much of TeX's memory you used:
- 2872 strings out of 494045
- 41817 string characters out of 3148387
- 186774 words of memory out of 3000000
- 6150 multiletter control sequences out of 15000+200000
- 12770 words of font info for 45 fonts, out of 3000000 for 9000
+ 2883 strings out of 494045
+ 42065 string characters out of 3148387
+ 216622 words of memory out of 3000000
+ 6158 multiletter control sequences out of 15000+200000
+ 12938 words of font info for 46 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 27i,8n,42p,1132b,1509s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,8n,40p,1132b,1506s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
 nts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
 mitt10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.p
@@ -400,12 +397,14 @@ X 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fon
 ts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/p
 ublic/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
 onts/cm/cmsl12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
-cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.p
-fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/P
-rogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Dissertation.pdf (56 pages, 453079 bytes).
+cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pf
+b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Pr
+ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Fi
+les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb><C:/Program Files/MiKT
+eX 2.9/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
+Output written on Dissertation.pdf (58 pages, 483252 bytes).
 PDF statistics:
- 590 PDF objects out of 1000 (max. 8388607)
+ 605 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 46 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 51 words of extra memory for PDF output out of 10000 (max. 10000000)
 

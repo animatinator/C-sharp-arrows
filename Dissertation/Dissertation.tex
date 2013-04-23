@@ -7,7 +7,7 @@
 \usepackage[pdftex]{graphicx}
 
 \usepackage{listings}
-\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
+\lstset{basicstyle=\scriptsize\ttfamily,breaklines=true,language={[Sharp]C}}
 
 \raggedbottom                           % try to avoid widows and orphans
 \sloppy
@@ -583,11 +583,26 @@ Firstly, mention difference in specifying lambdas and shizz (C sharp stunted fro
 
 \subsection{Binding syntax}
 
-Pretty good. Say something about the demo apps and stuff:
+To evaluate how concise and readable the binding syntax is, a few case study applications were written using both normal WPF binding and arrow-based binding. The key code snippets from the resulting programs are listed in Appendix \ref{sec:case_studies}, and this section explores how the samples differ and how successful the attempt to simplify binding syntax and reduce boilerplate code was.
 
 \subsubsection{Username two-way binding}
 
-Todo
+The first case study was relatively simple: given a data source containing a full name (forename and surname separated by a space), bind this information to two text boxes in the interface such that one shows the forename and the other shows the surname. To demonstrate that the binding was working, I also added a button which triggers a change in the name stored in the data source. A screenshot of the resulting application is given in Figure \ref{fig:case_study_name}, and code snippets are given in Appendix \ref{sec:case_study_name}.
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics{fig/CaseStudyNameBinding.png}
+  \caption{The username two-way binding application}
+  \label{fig:case_study_name}
+\end{figure}
+
+This case study revealed a weakness in WPF's data binding, as it turned out to be impossible to do an invertible one-to-many binding linking the name data in the data source with the text box in the user interface\footnote{The IValueConverter interface's method for updating the reverse binding can take only one input, and so bindings have to be many-to-one}. It was possible to do the binding with two one-way bindings, one for each name, but reversing the binding -- taking the names, concatenating them and assigning this to the variable in the data source -- proved impossible without hacking around the inability to create invertible one-to-many bindings.
+
+Looking at the code for creating the data source, it is clear that the arrow-based framework has considerably less boilerplate -- setting the name string up as bindable is a simple case of putting the \texttt{[Bindable]} tag above it, whereas the WPF approach involves creating an event, writing a method to throw that event if it exists and overriding the variable's setter to trigger that method. A real-world application would probably also have code to ensure the variable had actually changed value before calling the method.
+
+Setting up the arrow is then a simple method call with two lambda functions defining the function either way, whilst the WPF version has two large \texttt{ValueConverter} classes for the forename and the surname. The arrow syntax is denser, however, which may make it harder to read -- it would perhaps be beneficial to allow invertible arrows to be constructed from two normal arrows so that the code can be more neatly separated.
+
+For creating the actual binding, it's not clear which is better. The arrow-based code is shorter, but also more complicated due to the need to construct arrays of sources and destinations. However, the comparison is not entirely fair -- the WPF code is simply creating two one-to-one bindings, and if the same was being done with the arrow code it would be a lot neater than it is as the bind points wouldn't need to be put into arrays.
 
 \subsubsection{List binding from a mock database}
 
@@ -653,8 +668,8 @@ List arrows were also evaluated, this time in comparison with Linq queries and s
 
 \begin{description}
 	\item[Filter] The task here was to filter the input to the list of people over ten years old. This was run for 1,000,000 iterations.
-	\item[Foldl] This tested the performance of the \texttt{foldl} method implemented for list arrows. The method had to combine all the \texttt{Person} objects into a single \texttt{Person} whose age was the sum of all the others and whose name was a concatenation of every name interspersed with `and' ("Alice and Bob and Eve and ..."). This was run for 300,000 iterations.
-	\item[Order by then map] This function involved ordering the list by age and then mapping each person such that their name was followed by " mapped". This was also run for 300,000 iterations.
+	\item[Foldl] This tested the performance of the \texttt{foldl} method implemented for list arrows. The method had to combine all the \texttt{Person} objects into a single \texttt{Person} whose age was the sum of all the others and whose name was a concatenation of every name interspersed with `and' (``Alice and Bob and Eve and\ldots''). This was run for 300,000 iterations.
+	\item[Order by then map] This function involved ordering the list by age and then mapping each person such that their name was followed by `` mapped''. This was also run for 300,000 iterations.
 \end{description}
 
 The results can be seen in Figure \ref{fig:list_function_performance}. Interestingly, arrows performed fairly well on the first two tests. The loop-based function was fastest for filtering, with arrows following close behind -- presumably as a result of their filter method also being a simple loop. The Linq expression was slowest as it seems the Linq overhead ended up dominating. For foldl, the results are too similar to draw much from, but the arrow implementation appears to have been slightly more efficient. Again, the difference is likely to have been influenced by the overhead associated with Linq queries. Finally, filter then map shows the effect of arrow concatenation slowing things down -- in the case of list arrows, this overhead is greater than normal because the \texttt{IEnumerable} is converted to a list before being passed on to the next arrow\footnote{This was necessary to make some of the list arrows compatible, as various type errors were being encountered previously}.
@@ -776,9 +791,9 @@ Todo
 \cleardoublepage
 
 
-\chapter{Code samples for case studies}
+\chapter{Code samples for case studies} \label{sec:case_studies}
 
-\section{Username two-way binding}
+\section{Username two-way binding} \label{sec:case_study_name}
 
 \subsection{Creating the bindable data source}
 
@@ -920,7 +935,7 @@ BindingsManager.CreateBinding(
 
 \cleardoublepage
 
-\section{List binding from a mock database}
+\section{List binding from a mock database} \label{sec:case_study_list}
 
 Todo
 
