@@ -23,6 +23,8 @@
 \setcounter{secnumdepth}{2}				% make all subsubsections appear in the table of contents
 \setcounter{tocdepth}{5}
 
+\usepackage{parcolumns}
+
 \begin{document}
 
 \bibliographystyle{plain}
@@ -778,7 +780,143 @@ Todo
 
 \section{Username two-way binding}
 
-Todo
+\subsection{Creating the bindable data source}
+
+\begin{parcolumns}{2}
+	\colchunk{
+	\begin{lstlisting}
+public class NameData : INotifyPropertyChanged
+{
+  public event PropertyChangedEventHandler PropertyChanged;
+
+  private String fullName;
+  public String Name
+  {
+    get
+    {
+      return fullName;
+    }
+    
+    set
+    {
+      fullName = value;
+      RaisePropertyChanged("Name");
+    }
+  }
+
+  public NameData(string name)
+  {
+    Name = name;
+  }
+
+  public void RaisePropertyChanged(string name)
+  {
+    if (PropertyChanged != null)
+    {
+      PropertyChanged(this, new PropertyChangedEventArgs(name));
+    }
+  }
+}
+	\end{lstlisting}
+	}
+	\colchunk{
+	\begin{lstlisting}
+public class NameData : Bindable
+{
+  [Bindable]
+  public string Name { get; set; }
+
+  public NameData(string name)
+  {
+    Name = name;
+  }
+}
+	\end{lstlisting}
+	}
+\end{parcolumns}
+
+\clearpage
+
+\subsection{Creating the functionality for splitting the name}
+
+\begin{parcolumns}{2}
+\colchunk{
+\begin{lstlisting}
+public class ForenameValueConverter : IValueConverter
+{
+  public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+  {
+    return ((string)value).Split(' ')[0];
+  }
+
+  public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+  {
+    throw new NotImplementedException();
+  }
+}
+
+public class SurnameValueConverter : IValueConverter
+{
+  public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+  {
+    return ((string)value).Split(' ')[1];
+  }
+
+  public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+  {
+    throw new NotImplementedException();
+  }
+}
+\end{lstlisting}
+}
+
+\colchunk {
+\begin{lstlisting}
+nameArrow = Op.Arr(
+  (string x) => Tuple.Create(
+    x.Split()[0],
+    x.Split()[1]),
+  (Tuple<string, string> splitName) =>
+    String.Format("{0} {1}", splitName.Item1, splitName.Item2));
+\end{lstlisting}
+}
+\end{parcolumns}
+
+\clearpage
+
+\subsection{Creating the binding}
+
+\begin{parcolumns}{2}
+\colchunk{
+\begin{lstlisting}
+public void InitialiseBindings()
+{
+  InitialiseNameBinding(ForenameBox, new ForenameValueConverter());
+  InitialiseNameBinding(SurnameBox, new SurnameValueConverter());
+}
+
+public void InitialiseNameBinding(TextBox textBox, IValueConverter converter)
+{
+  Binding bind = new Binding();
+  bind.Source = name;
+  bind.Path = new PropertyPath("Name");
+  bind.Converter = converter;
+  textBox.SetBinding(TextBox.TextProperty, bind);
+}
+\end{lstlisting}
+}
+
+\colchunk{
+\begin{lstlisting}
+BindingsManager.CreateBinding(
+  BindingsManager.Sources(name.GetBindPoint("Name")),
+  nameArrow,
+  BindingsManager.Destinations(
+    splitName.GetBindPoint("Forename"),
+    splitName.GetBindPoint("Surname")));
+\end{lstlisting}
+}
+\end{parcolumns}
 
 \cleardoublepage
 

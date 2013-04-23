@@ -70,12 +70,7 @@ namespace CaseStudyNameSplitter_Arrows
         {
             nameArrow = Op.Arr((string x) => Tuple.Create(x.Split()[0], x.Split()[1]),
                                 (Tuple<string, string> splitName) =>
-                                            String.Format("{0} {1}", splitName.Item1, Breaker(splitName.Item2)));
-        }
-
-        public static string Breaker(string input)
-        {
-            return input;
+                                            String.Format("{0} {1}", splitName.Item1, splitName.Item2));
         }
 
         public void InitialiseBindings()

@@ -1,0 +1,13 @@
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyListBinding-WPF\bin\Debug\CaseStudyListBinding-WPF.exe.config
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyListBinding-WPF\obj\Debug\CaseStudyListBinding-WPF.csprojResolveAssemblyReference.cache
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyListBinding-WPF\obj\Debug\MainWindow.baml
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyListBinding-WPF\obj\Debug\MainWindow.g.cs
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyListBinding-WPF\obj\Debug\App.g.cs
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyListBinding-WPF\obj\Debug\CaseStudyListBinding-WPF_MarkupCompile.cache
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyListBinding-WPF\obj\Debug\CaseStudyListBinding-WPF.g.resources
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyListBinding-WPF\obj\Debug\CaseStudyListBinding_WPF.Properties.Resources.resources
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyListBinding-WPF\obj\Debug\CaseStudyListBinding-WPF.csproj.GenerateResource.Cache
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyListBinding-WPF\bin\Debug\CaseStudyListBinding-WPF.exe
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyListBinding-WPF\bin\Debug\CaseStudyListBinding-WPF.pdb
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyListBinding-WPF\obj\Debug\CaseStudyListBinding-WPF.exe
+C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\CaseStudyListBinding-WPF\obj\Debug\CaseStudyListBinding-WPF.pdb
