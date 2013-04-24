@@ -1,7 +1,7 @@
 ﻿<Window x:Class="CaseStudyListBinding_Arrows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="371.025" Width="541.077">
+        Title="List binding" Height="371.025" Width="541.077">
     <Grid>
         <ListBox x:Name="BoundListBox" HorizontalAlignment="Center" Height="300" Margin="10,10,10,10" VerticalAlignment="Center" Width="450"/>
 
