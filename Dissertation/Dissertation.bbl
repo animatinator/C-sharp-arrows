@@ -1,3 +1,74 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{10}
+
+\bibitem{invertible_arrows}
+Artem Alimarine, Sjaak Smetsers, Arjen Weelden, Marko Eekelen, and Rinus
+  Plasmeijer.
+\newblock There and back again: arrows for invertible programming.
+\newblock In {\em In Proceedings of the 2005 ACM SIGPLAN workshop on Haskell},
+  pages 86--97. ACM Press, 2006.
+
+\bibitem{composing_reactive_animations}
+Conal Elliott.
+\newblock Composing reactive animations.
+\newblock {\em Dr. Dobb's Journal}, 1998.
+\newblock Also in expanded animated form at http://conal.net/fran/tutorial.htm.
+
+\bibitem{functional_reactive_programming}
+Paul Hudak.
+\newblock Functional reactive programming.
+\newblock In S.Doaitse Swierstra, editor, {\em Programming Languages and
+  Systems}, volume 1576 of {\em Lecture Notes in Computer Science}, pages 1--1.
+  Springer Berlin Heidelberg, 1999.
+
+\bibitem{arrows_robots_frp}
+Paul Hudak, Antony Courtney, Henrik Nilsson, and John Peterson.
+\newblock Arrows, robots, and functional reactive programming.
+\newblock In {\em Advanced Functional Programming, 4th International School,
+  volume 2638 of LNCS}, pages 159--187. Springer-Verlag, 2002.
+
+\bibitem{hughes_arrows}
+John Hughes.
+\newblock Generalising monads to arrows.
+\newblock 1998.
+
+\bibitem{hughes_programming_with_arrows}
+John Hughes.
+\newblock Programming with arrows.
+\newblock In {\em Advanced Functional Programming}, pages 73--129. Springer,
+  2005.
+
+\bibitem{arrow_calculus}
+Sam Lindley, Philip Wadler, and Jeremy Yallop.
+\newblock The arrow calculus (functional pearl).
+\newblock 2008.
+
+\bibitem{wpf_data_binding_overview}
+MSDN.
+\newblock Data binding overview.
+\newblock http://msdn.microsoft.com/en-us/library/ms752347.aspx (accessed on
+  24/04/2013).
+
+\bibitem{haskell_arrows}
+Ross Paterson.
+\newblock Arrows: A general interface to computation.
+\newblock http://www.haskell.org/arrows (accessed on 24/04/2013).
+
+\bibitem{arrow_notation}
+Ross Paterson.
+\newblock A new notation for arrows.
+\newblock In {\em International Conference on Functional Programming}, pages
+  229--240. ACM Press, September 2001.
+
+\bibitem{arrows_and_computation}
+Ross Paterson.
+\newblock Arrows and computation.
+\newblock In Jeremy Gibbons and Oege de~Moor, editors, {\em The Fun of
+  Programming}, pages 201--222. Palgrave, 2003.
+
+\bibitem{frp_first_principles}
+Zhanyong Wan and Paul Hudak.
+\newblock Functional reactive programming from first principles.
+\newblock In {\em In ACM SIGPLAN Conference on Programming Language Design and
+  Implementation}, pages 242--252, 2000.
 
 \end{thebibliography}

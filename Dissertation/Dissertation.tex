@@ -147,7 +147,7 @@ However, WPF suffers from a similar problem to many other data binding framework
 
 Many useful ideas for data binding come from the area of functional programming. Functional reactive programming (FRP), for example, is a paradigm which nicely models the concept of data binding in a general way. Another useful concept is that of the `arrows' implemented in Haskell. An `arrow from type A to type B' essentially represents a process taking an input of type A and returning something of type B, and these can be arbitrarily combined in interesting ways to build up complex functions. More detail on both will be given in the next chapter.
 
-The FRP paradigm was the inspiration for the project, which sought to implement a general-purpose data binding framework in C$\sharp$ using concepts derived from functional programming. I successfully implemented a framework which provides data binding in both directions, through arbitrary functions with arbitrary numbers of inputs and outputs, all with a simple syntax based on lambda expressions. Minimal boilerplate code is required to set up bindable properties - the containing class should extend Bindable, and from there marking arbitrary member variables and properties with the [Bindable] tag will make it possible to create bindings to and from them with a single function call. I also implemented a large variety of arrow types and arrow operators along with a number of utility functions to make creating and combining them simple.
+The FRP paradigm was the inspiration for the project, which sought to implement a general-purpose data binding framework in C$\sharp$ using concepts derived from functional programming. I successfully implemented a framework which provides data binding in both directions, through arbitrary functions with arbitrary numbers of inputs and outputs, all with a simple syntax based on lambda expressions. Minimal boilerplate code is required to set up bindable properties - the containing class should extend \texttt{Bindable}, and from there marking arbitrary member variables and properties with the \texttt{[Bindable]} tag will make it possible to create bindings to and from them with a single function call. I also implemented a large variety of arrow types and arrow operators along with a number of utility functions to make creating and combining them simple.
 
 \cleardoublepage
 
@@ -203,7 +203,7 @@ The entire project (dissertation included) was stored in a Git repository which 
 
 \section{Overview}
 
-Give a general overview
+The implementation work consisted of two main parts: the arrows and the binding framework. As mentioned, these were both initially developed through repeated iterations as different strategies were being investigated and new options discovered. This chapter describes the main development work and highlights the various difficulties encountered along the way.
 
 
 \section{Arrows}
@@ -218,7 +218,7 @@ It was therefore decided that arrows and combinators should all be statically ty
 
 A further problem was how best to allow arrows from multiple inputs to multiple outputs. Simply having a \texttt{Func} with multiple inputs would not have worked as the arrow would have had to be rewritten for every given number of inputs, and to make matters worse \texttt{Func} is limited to one output. For some time I debated writing a generic binary-tree-structured type\footnote{All arrows work on nested pairs} to handle this, but on discovering C$\sharp$'s built-in \texttt{Tuple<T1, T2>} type I felt this would be the simplest option. This ended up complicating the data binding (as I will discuss later), but was entirely sufficient for supporting the arrow implementation.
 
-[Maybe mention arrow intercompatibility?]
+%Maybe mention arrow intercompatibility?
 
 \subsection{Simple arrows} \label{sec:simple_arrow_implementation}
 
@@ -286,7 +286,7 @@ var parallelArrow = leftArrow.And(rightArrow);
 
 This is equivalent to the \texttt{***} operator in Haskell, and executes the two arrows in parallel. This allows a number of complex operations to be conveniently parallelised in one arrow, which could likely be useful when working with data bindings between complex objects. The \texttt{Fanout} operator makes good use of this: given one input arrow of type \texttt{Arrow<A, B>} and two following arrows of types \texttt{Arrow<B, C>} and \texttt{Arrow<B, D>}\footnote{Note that the input types of the two arrows have to match the output type of the first arrow}, it returns an arrow which executes the input arrow, splits the result and then passes it through the two following arrows in parallel yielding a pair of results.
 
-Given a pair result, it is then possible to recombine the two elements using a \texttt{Func<A, B, C>} operator using \texttt{Unsplit}. The following example recombines the tuple by adding its elements together:
+Given a pair result, it is then possible to recombine the two elements with a binary operator (passed as a \texttt{Func<A, B, C>}) using \texttt{Unsplit}. The following example recombines the tuple by adding its elements together:
 
 \begin{lstlisting}[language={[Sharp]C}]
 var unsplitArrow = arrowOnPairs.Unsplit((x, y) => x + y);
@@ -294,9 +294,26 @@ var unsplitArrow = arrowOnPairs.Unsplit((x, y) => x + y);
 
 An example of a fairly elaborate composite operator is \texttt{LiftA2}. This essentially performs the same function as \texttt{Fanout}, but also takes a function for recombining the two results and so is effectively a \texttt{Fanout} arrow with an \texttt{Unsplit} operation at the end.
 
-Figures~\ref{fig:arr_operator},~\ref{fig:combine_operator},~\ref{fig:first_operator} and~\ref{fig:and_operator} give a visual representation of some of the arrow operators, to make their effects more clear.
+Figures~\ref{fig:arr_operator},~\ref{fig:combine_operator},~\ref{fig:first_operator} and~\ref{fig:and_operator} give a visual representation of some of the arrow operators, to make their effects more clear. A correspondence between Haskell arrow operators and the C$\sharp$ equivalents is given in Figure \ref{fig:operator_correspondence}.
 
-Include table showing correspondence between C$\sharp$ arrow operators and Haskell ones?
+%Include table showing correspondence between C$\sharp$ arrow operators and Haskell ones?
+
+\begin{figure}
+\centering
+\begin{tabular}{| l | l |}
+\hline
+Haskell & C$\sharp$ \\
+\hline
+\texttt {arr f} & \texttt{f.Arr()} \\
+\texttt{a >>> b} & \texttt{a.Combine(b)} \\
+\texttt{first arrow} & \texttt{arrow.First(default(T))} \\
+\texttt{second arrow} & \texttt{arrow.Second(default(T))} \\
+\texttt{a *** b} & \texttt{a.And(b)} \\
+\hline
+\end{tabular}
+\caption{Correspondence between Haskell and C$\sharp$ arrow operators}
+\label{fig:operator_correspondence}
+\end{figure}
 
 \subsubsection{Challenges encountered} \label{sec:simple_arrow_challenges}
 
@@ -523,7 +540,8 @@ This can be overcome by using an \texttt{ObservableCollection} instead of a list
 
 \subsection{Integration work with WPF}
 
-Mention difficulties with the value converter and inability to properly integrate it into XAML and stuff.
+%Mention difficulties with the value converter and inability to properly integrate it into XAML and stuff.
+Todo
 
 \cleardoublepage
 
@@ -937,7 +955,7 @@ BindingsManager.CreateBinding(
 
 \section{List binding from a mock database} \label{sec:case_study_list}
 
-Todo
+Todo\cite{arrow_calculus}
 
 \cleardoublepage
 
@@ -947,5 +965,20 @@ Todo
 
 \cleardoublepage
 
+
+\nocite{hughes_arrows}
+\nocite{arrows_robots_frp}
+\nocite{frp_first_principles}
+\nocite{composing_reactive_animations}
+\nocite{haskell_arrows}
+\nocite{arrows_and_computation}
+\nocite{hughes_programming_with_arrows}
+\nocite{wpf_data_binding_overview}
+\nocite{functional_reactive_programming}
+\nocite{invertible_arrows}
+\nocite{arrow_notation}
+
+\bibliographystyle{plain}
+\bibliography{Bibliography}
 
 \end{document}

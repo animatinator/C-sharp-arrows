@@ -1,12 +1,13 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces The Arr operator}}{10}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces The Arr operator}}{11}
 \contentsline {figure}{\numberline {3.2}{\ignorespaces The Combine operator}}{11}
 \contentsline {figure}{\numberline {3.3}{\ignorespaces The First operator}}{11}
 \contentsline {figure}{\numberline {3.4}{\ignorespaces The And operator}}{12}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Overview of the binding method}}{17}
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Marshalling a list of BindPoint sources to pass to an arrow and unmarshalling the result}}{23}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Correspondence between Haskell and C$\sharp $ arrow operators}}{13}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Overview of the binding method}}{17}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Marshalling a list of BindPoint sources to pass to an arrow and unmarshalling the result}}{23}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces The username two-way binding application}}{28}
 \contentsline {figure}{\numberline {4.2}{\ignorespaces Performance of arrows, Funcs and normal functions in implementing simple functionality}}{31}
