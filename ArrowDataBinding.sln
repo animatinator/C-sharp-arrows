@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaseStudyListBinding-WPF", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaseStudyListBinding-Arrows", "CaseStudyListBinding-Arrows\CaseStudyListBinding-Arrows.csproj", "{BBE4BEFF-B4EE-42A7-B0BC-A0854D74D8EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFIntegrationDemo", "WPFIntegrationDemo\WPFIntegrationDemo.csproj", "{132E0087-B3DB-4FBE-9A9A-08AE51C2BBBE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -112,6 +114,16 @@ Global
 		{BBE4BEFF-B4EE-42A7-B0BC-A0854D74D8EE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{BBE4BEFF-B4EE-42A7-B0BC-A0854D74D8EE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{BBE4BEFF-B4EE-42A7-B0BC-A0854D74D8EE}.Release|x86.ActiveCfg = Release|Any CPU
+		{132E0087-B3DB-4FBE-9A9A-08AE51C2BBBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{132E0087-B3DB-4FBE-9A9A-08AE51C2BBBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{132E0087-B3DB-4FBE-9A9A-08AE51C2BBBE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{132E0087-B3DB-4FBE-9A9A-08AE51C2BBBE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{132E0087-B3DB-4FBE-9A9A-08AE51C2BBBE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{132E0087-B3DB-4FBE-9A9A-08AE51C2BBBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{132E0087-B3DB-4FBE-9A9A-08AE51C2BBBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{132E0087-B3DB-4FBE-9A9A-08AE51C2BBBE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{132E0087-B3DB-4FBE-9A9A-08AE51C2BBBE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{132E0087-B3DB-4FBE-9A9A-08AE51C2BBBE}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

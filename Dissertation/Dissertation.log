@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.5)  24 APR 2013 13:42
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.5)  28 APR 2013 13:29
 entering extended mode
 **Dissertation.tex
 
@@ -192,19 +192,18 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 ("C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\Dissert
 ation\Dissertation.toc" [5
 
-])
+] [6])
 \tf@toc=\write3
- [6]
+ [7]
 ("C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\Dissert
 ation\Dissertation.lof")
 \tf@lof=\write4
- [7
-
-] [8
+ [8
 
 ]
 Chapter 1.
 [1
+
 
 ]
 Missing character: There is no â in font cmr12!
@@ -305,37 +304,45 @@ File: fig/CaseStudyNameBinding.png Graphic file (type png)
 Package pdftex.def Info: fig/CaseStudyNameBinding.png used on input line 612.
 (pdftex.def)             Requested size: 283.0568pt x 210.78699pt.
  [27] [28 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBindin
-g/Dissertation/fig/CaseStudyNameBinding.png>] [29]
-<fig/SimpleFunctionPerformanceChart.pdf, id=214, 496.44887pt x 258.75552pt>
+g/Dissertation/fig/CaseStudyNameBinding.png>] <fig/CaseStudyListBinding.png, id
+=211, 596.2275pt x 423.5825pt>
+File: fig/CaseStudyListBinding.png Graphic file (type png)
+
+<use fig/CaseStudyListBinding.png>
+Package pdftex.def Info: fig/CaseStudyListBinding.png used on input line 633.
+(pdftex.def)             Requested size: 411.93877pt x 292.66003pt.
+ [29 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
+sertation/fig/CaseStudyListBinding.png>]
+[30] [31]
+<fig/SimpleFunctionPerformanceChart.pdf, id=221, 496.44887pt x 258.75552pt>
 File: fig/SimpleFunctionPerformanceChart.pdf Graphic file (type pdf)
 
 <use fig/SimpleFunctionPerformanceChart.pdf>
 Package pdftex.def Info: fig/SimpleFunctionPerformanceChart.pdf used on input l
-ine 678.
+ine 691.
 (pdftex.def)             Requested size: 411.93877pt x 214.71175pt.
- [30] [31 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBindin
-g/Dissertation/fig/SimpleFunctionPerformanceChart.pdf>]
-<fig/ListFunctionPerformanceChart.pdf, id=291, 496.4172pt x 244.72725pt>
+ [32 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
+sertation/fig/SimpleFunctionPerformanceChart.pdf>]
+<fig/ListFunctionPerformanceChart.pdf, id=295, 496.4172pt x 244.72725pt>
 File: fig/ListFunctionPerformanceChart.pdf Graphic file (type pdf)
 
 <use fig/ListFunctionPerformanceChart.pdf>
 Package pdftex.def Info: fig/ListFunctionPerformanceChart.pdf used on input lin
-e 697.
+e 710.
 (pdftex.def)             Requested size: 411.93877pt x 203.08247pt.
- [32 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
-sertation/fig/ListFunctionPerformanceChart.pdf>] <fig/IdentityChains.pdf, id=35
-9, 496.51498pt x 216.57913pt>
+ [33 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
+sertation/fig/ListFunctionPerformanceChart.pdf>] <fig/IdentityChains.pdf, id=36
+4, 496.51498pt x 216.57913pt>
 File: fig/IdentityChains.pdf Graphic file (type pdf)
 
 <use fig/IdentityChains.pdf>
-Package pdftex.def Info: fig/IdentityChains.pdf used on input line 711.
+Package pdftex.def Info: fig/IdentityChains.pdf used on input line 724.
 (pdftex.def)             Requested size: 411.93877pt x 179.69122pt.
- [33 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
-sertation/fig/IdentityChains.pdf>] [34
-
-]
+ [34 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
+sertation/fig/IdentityChains.pdf>]
 Chapter 5.
 [35
+
 
 ] [36
 
@@ -350,31 +357,37 @@ Appendix B.
 \pc@column@2=\box30
 \pc@column@width@2=\dimen120
 Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
-ne 818.
+ne 831.
 Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
-ne 818.
+ne 831.
 [39
 
 
-] [40]
+]
 Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
-ne 875.
+ne 886.
 Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
-ne 875.
- [41
-
-] [42]
+ne 886.
+ [40]
 Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
-ne 922.
+ne 931.
 Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
-ne 922.
+ne 931.
+ [41] [42]
+Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
+ne 973.
+Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
+ne 973.
  [43
 
-] [44
+]
+Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
+ne 1015.
+Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
+ne 1015.
+ [44] [45
 
-] [45] [46
-
-] [47] [48
+] [46
 
 ]
 ("C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\Dissert
@@ -390,16 +403,16 @@ Underfull \hbox (badness 6461) in paragraph at lines 52--55
 a-tion.
  []
 
-[49
+[47
 
-]) [50]
+]) [48]
 ("C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\Dissert
 ation\Dissertation.aux") ) 
 Here is how much of TeX's memory you used:
- 2899 strings out of 494045
- 42566 string characters out of 3148387
+ 2926 strings out of 494045
+ 43033 string characters out of 3148387
  216622 words of memory out of 3000000
- 6171 multiletter control sequences out of 15000+200000
+ 6197 multiletter control sequences out of 15000+200000
  12938 words of font info for 46 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
  27i,8n,40p,1132b,1520s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -418,9 +431,9 @@ b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb><C:/Program Files/MiKT
 eX 2.9/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on Dissertation.pdf (60 pages, 495326 bytes).
+Output written on Dissertation.pdf (58 pages, 521897 bytes).
 PDF statistics:
- 610 PDF objects out of 1000 (max. 8388607)
+ 605 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 51 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 56 words of extra memory for PDF output out of 10000 (max. 10000000)
 

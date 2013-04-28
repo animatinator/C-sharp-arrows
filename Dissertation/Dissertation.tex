@@ -83,7 +83,7 @@ The project aimed to provide a general-purpose data binding framework for C$\sha
 
 All the original goals were met: a general-purpose data binding framework based on arrows has been implemented, and an extensive arrow implementation has been completed. As well as the standard operators, a series of more complex extra operators have also been added, and some additional arrow types have been included -- for instance, 'list arrows' which map between enumerable data types. The framework allows bindings in both directions, between multiple sources and multiple destinations, and the arrows can be used in conjunction with WPF data binding with reasonable ease.
 
-[Continue this?]
+%Continue this?
 
 \section*{Special Difficulties}
 
@@ -100,10 +100,10 @@ material that has already been used to any substantial extent for a
 comparable purpose.
 
 \bigskip
-\leftline{Signed [signature]}
+\leftline{Signed}
 
 \medskip
-\leftline{Date [date]}
+\leftline{Date}
 
 \cleardoublepage
 
@@ -624,7 +624,20 @@ For creating the actual binding, it's not clear which is better. The arrow-based
 
 \subsubsection{List binding from a mock database}
 
-Todo
+For a second case study, a simple `database' (a \texttt{List} of data for simplicity) containing information on orders placed for certain products was created. The objective for this was to bind this data to a list view, filtering it to only the orders with volume greater than one and mapping the result to a list of user-friendly strings describing the order (of the form ``Order from [name] in [location] for [volume] `[product]' from [supplier]''). The simple application is pictured in Figure \ref{fig:case_study_list}, and its source code is given in Appendix \ref{sec:case_study_list}.
+
+%Should sort too?
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=\textwidth]{fig/CaseStudyListBinding.png}
+  \caption{The list binding application}
+  \label{fig:case_study_list}
+\end{figure}
+
+As with the last example, the arrow syntax is a lot more concise than the value converter. Filtering and mapping is done by calling \texttt{Filter} and \texttt{Map} on a base list arrow and passing in the appropriate lambda functions for each. The value converter, meanwhile, has to convert its input to the correct type and then manually cycle through each element, adding a string version of it to the result if its volume exceeds one. However, it could be argued that with more complex bindings like this the value converter is easier to debug than arrows: breakpoints can be conveniently set up inside the filtering loop and the code can be stepped through, whereas if the arrow gives unexpected results a lot of the work will be done by `behind the scenes' methods which the user cannot step through (this is more of an issue for list arrows as they are built up with the map, filter and sort operators).
+
+The code for creating the binding is much simpler this time, and the arrow-based code is very short: only a single line calling the \texttt{GetBindPoint} methods of the source and destination and passing in the arrow. The WPF binding is again more verbose, requiring the programmer to create a new \texttt{Binding}; individually set the \texttt{Source}, \texttt{Path} and \texttt{Converter} properties\footnote{\texttt{Source} is the object to bind to, \texttt{Path} is the name of the property being bound and \texttt{Converter} is the \texttt{IValueConverter} used to convert the source value into the destination value} and attach it to the list view. The main advantage of arrow data binding here is the \texttt{GetBindPoint} method provided by \texttt{Bindable} objects, which simplifies specifying the bound variable to one call and means the variable name is `attached' to the object it belongs to.
 
 \subsubsection{Some other demo}
 
@@ -868,8 +881,6 @@ public class NameData : Bindable
 	}
 \end{parcolumns}
 
-\clearpage
-
 \subsection{Creating the functionality for splitting the name}
 
 \begin{parcolumns}{2}
@@ -915,8 +926,6 @@ nameArrow = Op.Arr(
 }
 \end{parcolumns}
 
-\clearpage
-
 \subsection{Creating the binding}
 
 \begin{parcolumns}{2}
@@ -955,7 +964,74 @@ BindingsManager.CreateBinding(
 
 \section{List binding from a mock database} \label{sec:case_study_list}
 
-Todo\cite{arrow_calculus}
+\subsection{Creating the bindable `database'}
+
+This was much the same as creating the data source for the username binding case study, with the main additional difference between the two being that the WPF version used an \texttt{ObservableCollection} rather than a plain \texttt{List}.
+
+\subsection{Filtering and mapping the list}
+
+\begin{parcolumns}{2}
+\colchunk {
+\begin{lstlisting}
+public class ListFilterConverter : IValueConverter
+{
+  public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+  {
+    ObservableCollection<Order> list = (ObservableCollection<Order>)value;
+    List<string> resultsList = new List<string>();
+
+    foreach (Order order in list)
+    {
+      if (order.Volume > 1)
+      {
+        resultsList.Add(String.Format("Order from {0} in {1} for {2} '{3}' from {4}", order.Customer.Name, order.Customer.Location, order.Volume, order.Product, order.Supplier.Name));
+      }
+    }
+
+    return resultsList;
+  }
+
+  public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+  {
+    throw new NotImplementedException();
+  }
+}
+\end{lstlisting}
+}
+
+\colchunk {
+\begin{lstlisting}
+arrow = ListArrow.Filter<Order>
+  ((Order o) => o.Volume > 1)
+  .Map((Order o) =>
+    String.Format("Order from {0} in {1} for {2} {3}s from {4}",
+    o.Customer.Name, o.Customer.Location, o.Volume, o.Product, o.Supplier.Name));
+\end{lstlisting}
+}
+\end{parcolumns}
+
+\subsection{Creating the binding}
+
+\begin{parcolumns}{2}
+\colchunk {
+\begin{lstlisting}
+Binding listBinding = new Binding();
+listBinding.Source = ordersDB;
+listBinding.Path = new PropertyPath("Orders");
+listBinding.Converter = new ListFilterConverter();
+BoundListBox.SetBinding(ListBox.ItemsSourceProperty, listBinding);
+\end{lstlisting}
+}
+
+\colchunk {
+\begin{lstlisting}
+BindingsManager.CreateBinding(
+  ordersDB.GetBindPoint("Orders"),
+  arrow,
+  arrowResult.GetBindPoint("Result"));
+\end{lstlisting}
+}
+\end{parcolumns}
 
 \cleardoublepage
 
@@ -966,6 +1042,7 @@ Todo
 \cleardoublepage
 
 
+\nocite{arrow_calculus}
 \nocite{hughes_arrows}
 \nocite{arrows_robots_frp}
 \nocite{frp_first_principles}
