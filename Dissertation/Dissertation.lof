@@ -8,7 +8,7 @@
 \contentsline {figure}{\numberline {3.5}{\ignorespaces Correspondence between Haskell and C$\sharp $ arrow operators}}{13}
 \contentsline {figure}{\numberline {3.6}{\ignorespaces Overview of the binding method}}{17}
 \contentsline {figure}{\numberline {3.7}{\ignorespaces Marshalling a list of BindPoint sources to pass to an arrow and unmarshalling the result}}{23}
-\contentsline {figure}{\numberline {3.8}{\ignorespaces The WPF integration demo -- the progress bar goes sinusoidally up and down}}{25}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces WPF integration demo}}{25}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces The username two-way binding application}}{30}
 \contentsline {figure}{\numberline {4.2}{\ignorespaces The list binding application}}{31}

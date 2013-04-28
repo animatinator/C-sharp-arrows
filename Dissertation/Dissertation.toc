@@ -56,6 +56,9 @@
 \contentsline {section}{\numberline {A.1}Normal arrow laws}{39}
 \contentsline {section}{\numberline {A.2}Invertible arrow laws}{40}
 \contentsline {chapter}{\numberline {B}WPF integration demo -- code listings}{41}
+\contentsline {section}{\numberline {B.1}Creating the bindable source}{41}
+\contentsline {section}{\numberline {B.2}The binding arrow}{41}
+\contentsline {section}{\numberline {B.3}Doing the binding}{41}
 \contentsline {chapter}{\numberline {C}Code samples for case studies}{43}
 \contentsline {section}{\numberline {C.1}Username two-way binding}{43}
 \contentsline {subsection}{\numberline {C.1.1}Creating the bindable data source}{43}
