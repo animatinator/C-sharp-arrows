@@ -541,7 +541,18 @@ This can be overcome by using an \texttt{ObservableCollection} instead of a list
 \subsection{Integration work with WPF}
 
 %Mention difficulties with the value converter and inability to properly integrate it into XAML and stuff.
-Todo
+As the standard WPF binding method is fairly widely-used and naturally compatible with WPF, it was decided that arrows should be made compatible with it. WPF's standard approach to binding through a function is by creating a class extending the \texttt{IValueConverter} interface which implements the desired functionality through its \texttt{Convert} and \texttt{ConvertBack} methods. It was therefore reasonably simple to implement a value converter which allowed an arrow to be used for the conversion. However, this cannot be used when defining bindings in XAML as it does not allow constructor parameters to be passed in (it is possible to \textit{set} parameters in XAML, but this is a clunky workaround and the application would crash if the arrow was left unset). Creating WPF bindings with arrows is therefore limited to the code-behind.
+
+One area where WPF integration went particularly well is in removing the boilerplate usually required to make a source bindable. In general, the programmer has to set up an event to be triggered when the bound variable changes and override the setters of all bound variables so that they throw this event. The method throwing the event also has to pass in the name of the variable triggering it (for disambiguation) and ensure that the event is not null (which occurs when it has no subscribers). This is usually combined with a method which stores variables' old values and checks that they have actually changed to avoid redundant updates. I was able to extract all this functionality into the \texttt{Bindable} base class and the PostSharp aspect, thus removing all the standard boilerplate. Variables can now be made bindable simply by making their class extend \texttt{Bindable} and placing the \texttt{[Bindable]} tag above them.
+
+To demonstrate the WPF integration, a simple demo application was made in which a constantly incrementing 'time' variable is bound through a sin function to a progress bar. This is pictured in Figure \ref{fig:wpf_integration_demo}, and the main source code listings can be found in [Appendix].
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=\textwidth]{fig/WPFIntegrationDemo.png}
+  \caption{The WPF integration demo -- the progress bar goes sinusoidally up and down}
+  \label{fig:wpf_integration_demo}
+\end{figure}
 
 \cleardoublepage
 
@@ -818,6 +829,13 @@ f .First<T>() .First<T>() .Combine( new AssocArrow<T>() ) $\approx$ new AssocArr
 \section{Invertible arrow laws} \label{sec:invertible_arrow_laws}
 
 Todo
+
+\cleardoublepage
+
+
+\chapter{WPF integration demo -- code listings}
+
+To be done
 
 \cleardoublepage
 

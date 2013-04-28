@@ -29,39 +29,40 @@
 \contentsline {paragraph}{Type safety}{23}
 \contentsline {paragraph}{Binding to lists}{24}
 \contentsline {subsection}{\numberline {3.3.4}Integration work with WPF}{24}
-\contentsline {chapter}{\numberline {4}Evaluation}{25}
-\contentsline {section}{\numberline {4.1}Correctness of arrow implementations}{25}
-\contentsline {subsection}{\numberline {4.1.1}Automated testing}{25}
-\contentsline {subsubsection}{Simple arrows}{26}
-\contentsline {subsubsection}{Invertible arrows}{26}
-\contentsline {subsection}{\numberline {4.1.2}Correctness proof by decomposing into lambda calculus}{26}
-\contentsline {section}{\numberline {4.2}Syntax evaluation}{27}
-\contentsline {subsection}{\numberline {4.2.1}Arrow syntax}{27}
-\contentsline {subsubsection}{Comparison with Haskell}{27}
-\contentsline {subsection}{\numberline {4.2.2}Binding syntax}{27}
-\contentsline {subsubsection}{Username two-way binding}{27}
-\contentsline {subsubsection}{List binding from a mock database}{29}
-\contentsline {subsubsection}{Some other demo}{30}
-\contentsline {section}{\numberline {4.3}Performance testing}{30}
-\contentsline {subsection}{\numberline {4.3.1}Arrow performance}{30}
-\contentsline {subsubsection}{Measuring technique}{30}
-\contentsline {subsubsection}{Simple function results}{31}
-\contentsline {subsubsection}{List function results}{32}
-\contentsline {subsubsection}{Overhead due to arrow chaining}{34}
-\contentsline {subsection}{\numberline {4.3.2}Binding performance}{34}
-\contentsline {chapter}{\numberline {5}Conclusion}{35}
-\contentsline {section}{\numberline {5.1}Future work}{35}
-\contentsline {subsection}{\numberline {5.1.1}Performance enhancements}{35}
-\contentsline {chapter}{\numberline {A}Arrow laws}{37}
-\contentsline {section}{\numberline {A.1}Normal arrow laws}{37}
-\contentsline {section}{\numberline {A.2}Invertible arrow laws}{38}
-\contentsline {chapter}{\numberline {B}Code samples for case studies}{39}
-\contentsline {section}{\numberline {B.1}Username two-way binding}{39}
-\contentsline {subsection}{\numberline {B.1.1}Creating the bindable data source}{39}
-\contentsline {subsection}{\numberline {B.1.2}Creating the functionality for splitting the name}{40}
-\contentsline {subsection}{\numberline {B.1.3}Creating the binding}{41}
-\contentsline {section}{\numberline {B.2}List binding from a mock database}{43}
-\contentsline {subsection}{\numberline {B.2.1}Creating the bindable `database'}{43}
-\contentsline {subsection}{\numberline {B.2.2}Filtering and mapping the list}{43}
-\contentsline {subsection}{\numberline {B.2.3}Creating the binding}{44}
-\contentsline {section}{\numberline {B.3}Some other demo}{45}
+\contentsline {chapter}{\numberline {4}Evaluation}{27}
+\contentsline {section}{\numberline {4.1}Correctness of arrow implementations}{27}
+\contentsline {subsection}{\numberline {4.1.1}Automated testing}{27}
+\contentsline {subsubsection}{Simple arrows}{28}
+\contentsline {subsubsection}{Invertible arrows}{28}
+\contentsline {subsection}{\numberline {4.1.2}Correctness proof by decomposing into lambda calculus}{28}
+\contentsline {section}{\numberline {4.2}Syntax evaluation}{29}
+\contentsline {subsection}{\numberline {4.2.1}Arrow syntax}{29}
+\contentsline {subsubsection}{Comparison with Haskell}{29}
+\contentsline {subsection}{\numberline {4.2.2}Binding syntax}{29}
+\contentsline {subsubsection}{Username two-way binding}{29}
+\contentsline {subsubsection}{List binding from a mock database}{31}
+\contentsline {subsubsection}{Some other demo}{32}
+\contentsline {section}{\numberline {4.3}Performance testing}{32}
+\contentsline {subsection}{\numberline {4.3.1}Arrow performance}{32}
+\contentsline {subsubsection}{Measuring technique}{32}
+\contentsline {subsubsection}{Simple function results}{33}
+\contentsline {subsubsection}{List function results}{34}
+\contentsline {subsubsection}{Overhead due to arrow chaining}{36}
+\contentsline {subsection}{\numberline {4.3.2}Binding performance}{36}
+\contentsline {chapter}{\numberline {5}Conclusion}{37}
+\contentsline {section}{\numberline {5.1}Future work}{37}
+\contentsline {subsection}{\numberline {5.1.1}Performance enhancements}{37}
+\contentsline {chapter}{\numberline {A}Arrow laws}{39}
+\contentsline {section}{\numberline {A.1}Normal arrow laws}{39}
+\contentsline {section}{\numberline {A.2}Invertible arrow laws}{40}
+\contentsline {chapter}{\numberline {B}WPF integration demo -- code listings}{41}
+\contentsline {chapter}{\numberline {C}Code samples for case studies}{43}
+\contentsline {section}{\numberline {C.1}Username two-way binding}{43}
+\contentsline {subsection}{\numberline {C.1.1}Creating the bindable data source}{43}
+\contentsline {subsection}{\numberline {C.1.2}Creating the functionality for splitting the name}{44}
+\contentsline {subsection}{\numberline {C.1.3}Creating the binding}{45}
+\contentsline {section}{\numberline {C.2}List binding from a mock database}{47}
+\contentsline {subsection}{\numberline {C.2.1}Creating the bindable `database'}{47}
+\contentsline {subsection}{\numberline {C.2.2}Filtering and mapping the list}{47}
+\contentsline {subsection}{\numberline {C.2.3}Creating the binding}{48}
+\contentsline {section}{\numberline {C.3}Some other demo}{49}

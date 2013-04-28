@@ -21,6 +21,7 @@ namespace WPFIntegrationDemo
 {
     public partial class MainWindow : Window
     {
+        private Arrow<int, double> progressArrow;
         private Arrow<int, string> arrow;
         private Time time;
 
@@ -28,8 +29,8 @@ namespace WPFIntegrationDemo
         {
             InitializeComponent();
             InitialiseTime();
-            InitialiseArrow();
-            InitialiseBinding();
+            InitialiseArrows();
+            InitialiseBindings();
         }
 
         public void InitialiseTime()
@@ -37,14 +38,21 @@ namespace WPFIntegrationDemo
             time = new Time();
         }
 
-        public void InitialiseArrow()
+        public void InitialiseArrows()
         {
-            var sinArrow = Op.Arr((int x) => 50 + (int)(50.0*Math.Sin(x / 30.0)));
-            var textSizeArrow = Op.Arr((int length) => new String('|', length));
+            progressArrow = Op.Arr((int x) => 50.0 + (50.0*Math.Sin(x / 30.0)));
+            var sinArrow = progressArrow.Combine(Op.Arr((double x) => (int)x));
+            var textSizeArrow = Op.Arr((int length) => new String('☺', length));
             arrow = sinArrow.Combine(textSizeArrow);
         }
 
-        public void InitialiseBinding()
+        public void InitialiseBindings()
+        {
+            InitialiseTextBinding();
+            InitialiseProgressBarBinding();
+        }
+
+        public void InitialiseTextBinding()
         {
             Binding binding = new Binding();
             binding.Source = time;
@@ -52,6 +60,16 @@ namespace WPFIntegrationDemo
             binding.Path = new PropertyPath("CurrentTime");
             binding.Converter = new ArrowValueConverter(arrow);
             TextBox.SetBinding(TextBlock.TextProperty, binding);
+        }
+
+        public void InitialiseProgressBarBinding()
+        {
+            Binding binding = new Binding();
+            binding.Source = time;
+            binding.Mode = BindingMode.OneWay;
+            binding.Path = new PropertyPath("CurrentTime");
+            binding.Converter = new ArrowValueConverter(progressArrow);
+            Progress.SetBinding(ProgressBar.ValueProperty, binding);
         }
     }
 
