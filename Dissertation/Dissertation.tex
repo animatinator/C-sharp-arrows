@@ -510,7 +510,7 @@ function checkCycles(node, seen)
 
 Further to detecting these situations, another issue which had to be resolved was what action to take on finding a problem. Were the programmer to create a new binding between two objects which were already bound, a possible response would be to simply overwrite the old binding. This would prevent errors from the framework disrupting the user, and is also a fairly reasonable behaviour to expect. However, it was decided that this made the binding process too opaque and could lead to confusing behaviour if the programmer had accidentally overwritten a binding -- for instance, by mistyping the name of one of the objects they intended to bind. Therefore, whenever the programmer attempts to create a binding which would lead to a cycle or conflict, the framework throws an exception explaining the error. The behaviour of 'overwriting' an old binding is still possible as the \texttt{BindingsManager} provides a method for removing specific bindings, but now the programmer has to do the overwriting explicitly.
 
-\subsubsection{Many-to-many bindings}
+\subsubsection{Many-to-many bindings} \label{sec:many_many_bindings}
 
 Many-to-many bindings presented an additional challenge for the binding system. It was decided that the best approach in terms of syntax would be to have the user pass in a list of source bind points, an arrow and a list of destination bind points, so as to mirror the syntax used in simple bindings. However, this simple approach is out of step with the way parameters are passed to arrows: by construction, all arrows taking multiple inputs will take them in the form of a binary-tree-structured Tuple\footnote{This can be verified by looking at the implementations of the operators; for instance, And converts two arrows (which may be on tuples) into an arrow on two-tuples containing the types of the original arrows, thus building up a binary tree structure}. As there didn't appear to be any C$\sharp$ syntax allowing the user to pass in binding sources in a similar fashion (such that the structure could be understood by the binding), it was decided that an argument marshaller/unmarshaller would be needed to handle the translation between lists of bind points and tree-structured tuples.
 
@@ -626,7 +626,7 @@ Less successful was the \texttt{First} operator. As outlined in Section \ref{sec
 
 A slightly inconvenient (if sensible) feature of C$\sharp$ is the restriction that, unlike in many other similar languages, all methods have to be called on an object or class. Whilst in Java one could import all static methods from a class and use them as though they were defined locally, in C$\sharp$ they need to be prefixed with the class name (i.e. \texttt{StaticClass.Method()}). This of course presented a slight obstacle to making arrow code concise, as chains of operators would build up into messy expressions like \texttt{Combinators.And(Combinators.Arr(f1), Combinators.First(Combinators.Arr(f2)))}. By writing all combinators to be usable as extension methods, writing utility extension methods for \texttt{Func} objects (like \texttt{Func.Arr()} to make a \texttt{Func} into an arrow) and giving the class a short name for the worst case, I was able to keep this to a minimum and so keep combinator-heavy code relatively clean. The \texttt{Op.Combinator()} syntax is still fairly clumsy, but in many cases there was no easy way around this.
 
-\subsubsection{Comparison with Haskell}
+\subsubsection{Comparison with Haskell} \label{sec:syntax_comparison_haskell}
 
 While the syntax is certainly quite concise as C$\sharp$ allows, it certainly doesn't compare to Haskell for a number of reasons. However, this is of course due to a fundamental difference between the languages.
 
@@ -801,23 +801,21 @@ Fortunately, it was found that the execution time is linear in the length of the
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Conclusion
 
-\chapter{Conclusion}
+\chapter{Conclusions}
 
-Conclusion goes here!
+As modular architectures like MVC and MVVM grow ever more popular, data binding will continue to be important in bridging the gap between disconnected sections of code. This project has been an exploration of a more functional approach to the problem which I think could work very well in future, as functional ideas like lambda expressions and type inference are rapidly becoming mainstream tools in software development. Overall I consider it a success, as despite a few syntactic issues it ultimately fulfils all I set out to do and performs reasonably well. Nonetheless, there are still several additions I may make in future to improve the framework:
 
-\section{Future work}
+\begin{description}
+	\item[Custom tuple type] The C$\sharp$ \texttt{Tuple} type, whilst very helpful initially, led to a lot of complications with many-to-many bindings (explored in Section \ref{sec:many_many_bindings}). This could have been avoided had I created my own binary-tree-structured type designed to be easily usable with the binding framework, and I could even implement conversion from standard tuples easily enough.
+	\item[Better integration with WPF] Unfortunately I was unable to completely integrate the arrows with WPF to the point where they can be used in XAML. This issue was explored and found to be very difficult to work around, so is best left to future work.
+	\item[Feedback arrows] Haskell's arrows provide some fairly useful looping functionality through arrow feedback, but due to time constraints (and to avoid scope creep) this was not fully explored. However, this would perhaps be an interesting thing to look into in future.
+	\item[Syntax enhancements] As mentioned at the end of Section \ref{sec:syntax_comparison_haskell}, Roslyn could perhaps be used to develop a more Haskell-like syntax for arrows. However, this would likely be very complicated and would need to be postponed until Roslyn is complete.
+	\item[Performance] Arrow performance is still not ideal: chaining together arrows with the combinators adds a lot of overhead as the complexity increases. A possible improvement would be to look at using C$\sharp$ \texttt{ExpressionTree} manipulations to dynamically simplify the results of arrow combinations.
+\end{description}
 
-\begin{itemize}
-	\item Performance issues - optimisations possible with dynamic expression trees?
-	\item Messiness caused by use of Tuples - would be better with a custom tree type?
-	\item Feedback arrows
-	\item Better integration with WPF
-	\item Syntax enhancements, perhaps through Roslyn
-\end{itemize}
+\section{Final words}
 
-\subsection{Performance enhancements} \label{sec:performance_enhancements}
-
-Blah
+Overall, the project clearly still has some way to go before it's usable and efficient enough to be a complete alternative to WPF. But despite this, I think it was definitely successful in its goals of bringing a largely complete arrow implementation to C$\sharp$ and providing a powerful general-purpose data binding framework built around it. The result has very minimal boilerplate code, and allows for a large range of complex functional bindings which would be very difficult to implement with plain WPF binding. I intend to continue work on the improvements suggested above, and hope to see functional programming ideas continue to become more widespread in similar areas over the coming years.
 
 \cleardoublepage
 

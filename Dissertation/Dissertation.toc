@@ -46,9 +46,8 @@
 \contentsline {subsubsection}{Simple function results}{35}
 \contentsline {subsubsection}{List function results}{36}
 \contentsline {subsubsection}{Overhead due to arrow chaining}{37}
-\contentsline {chapter}{\numberline {5}Conclusion}{39}
-\contentsline {section}{\numberline {5.1}Future work}{39}
-\contentsline {subsection}{\numberline {5.1.1}Performance enhancements}{39}
+\contentsline {chapter}{\numberline {5}Conclusions}{39}
+\contentsline {section}{\numberline {5.1}Final words}{40}
 \contentsline {chapter}{\numberline {A}Arrow laws}{41}
 \contentsline {section}{\numberline {A.1}Normal arrow laws}{41}
 \contentsline {section}{\numberline {A.2}Invertible arrow laws}{42}
