@@ -83,6 +83,7 @@ The project aimed to provide a general-purpose data binding framework for C$\sha
 
 All the original goals were met: a general-purpose data binding framework based on arrows has been implemented, and an extensive arrow implementation has been completed. As well as the standard operators, a series of more complex extra operators have also been added, and some additional arrow types have been included -- for instance, 'list arrows' which map between enumerable data types. The framework allows bindings in both directions, between multiple sources and multiple destinations, and the arrows can be used in conjunction with WPF data binding with reasonable ease.
 
+%TODO
 %Continue this?
 
 \section*{Special Difficulties}
@@ -218,6 +219,7 @@ It was therefore decided that arrows and combinators should all be statically ty
 
 A further problem was how best to allow arrows from multiple inputs to multiple outputs. Simply having a \texttt{Func} with multiple inputs would not have worked as the arrow would have had to be rewritten for every given number of inputs, and to make matters worse \texttt{Func} is limited to one output. For some time I debated writing a generic binary-tree-structured type\footnote{All arrows work on nested pairs} to handle this, but on discovering C$\sharp$'s built-in \texttt{Tuple<T1, T2>} type I felt this would be the simplest option. This ended up complicating the data binding (as I will discuss later), but was entirely sufficient for supporting the arrow implementation.
 
+%TODO
 %Maybe mention arrow intercompatibility?
 
 \subsection{Simple arrows} \label{sec:simple_arrow_implementation}
@@ -295,8 +297,6 @@ var unsplitArrow = arrowOnPairs.Unsplit((x, y) => x + y);
 An example of a fairly elaborate composite operator is \texttt{LiftA2}. This essentially performs the same function as \texttt{Fanout}, but also takes a function for recombining the two results and so is effectively a \texttt{Fanout} arrow with an \texttt{Unsplit} operation at the end.
 
 Figures~\ref{fig:arr_operator},~\ref{fig:combine_operator},~\ref{fig:first_operator} and~\ref{fig:and_operator} give a visual representation of some of the arrow operators, to make their effects more clear. A correspondence between Haskell arrow operators and the C$\sharp$ equivalents is given in Figure \ref{fig:operator_correspondence}.
-
-%Include table showing correspondence between C$\sharp$ arrow operators and Haskell ones?
 
 \begin{figure}
 \centering
@@ -382,9 +382,11 @@ var listArrow = listArrow
                    .Reverse();
 \end{lstlisting}
 
+%TODO
 %More on foldl and foldr?
 
-%\subsection{Choice arrows}
+%TODO
+%\subsection{Choice arrows}?
 
 %\begin{itemize}
 %	\item Not deeply implemented or tested but could be handy for some things, most likely convenient exception handling
@@ -401,6 +403,7 @@ To simplify various common tasks, a number of simple utility arrows were written
 	\item[Tuple reassociation arrows] The tuple operations \texttt{assoc} and \texttt{cossa}\footnote{\texttt{assoc} takes a tuple ((a, b), c) and returns (a, (b, c)), whilst \texttt{cossa} does the opposite} turn up reasonably frequently in functional programming, and feature in several of the arrow laws. As these are fairly fiddly to implement I decided it would make sense to create utility arrows for both these functions.
 \end{description}
 
+%TODO
 %\subsection{Feedback in arrows}
 
 %Discuss whether this would be useful or not, reasons for it not being there (lack of real-world use cases?) and how one might implement it.
@@ -567,6 +570,7 @@ The key requirement for an arrow type satisfying the original definition by Hugh
 
 As invertible arrows conform to a slightly different set of arrow laws (which put extra requirements on their inverses), both one-way arrows and invertible arrows had to be tested separately. List and choice arrows were not separately tested as they are entirely built upon normal one-way arrows, and so will conform to the arrow laws for free if simple arrows do.
 
+%TODO
 %Mention correctness proof by decomposition into lambda calculus?
 
 \subsection{Automated testing}
@@ -605,9 +609,10 @@ public static bool TestDoubleInversion()
 
 Including minor variations from different sources, 24 different arrow laws were tested in total, and all passed on large quantities of random input data. This gives a reasonably good indication that the arrow implementation is correct.
 
-\subsection{Correctness proof by decomposing into lambda calculus}
+%TODO
+%\subsection{Correctness proof by decomposing into lambda calculus}?
 
-Explain the technique used to translate into lambda calculus and the likely correctness of this, and give a few sample proofs for some non-trivial arrow laws.
+%Explain the technique used to translate into lambda calculus and the likely correctness of this, and give a few sample proofs for some non-trivial arrow laws.
 
 \section{Syntax evaluation}
 
@@ -623,9 +628,43 @@ A slightly inconvenient (if sensible) feature of C$\sharp$ is the restriction th
 
 \subsubsection{Comparison with Haskell}
 
-Firstly, mention difference in specifying lambdas and shizz (C sharp stunted from the start). From there, show how C sharp arrows create arrows from them (need types specified somewhere is an issue (no type inference like Haskell gets), C sharp also has a strict function calling syntax which doesn't allow Haskell's pretty currying syntax). Go on to give a few examples of complicated-ish arrows expressed in both? Also, maaaybe mention the shiny new syntax Haskell has for arrows, but the C sharp implementation can't really battle that so it's not worth going into much detail about.
+While the syntax is certainly quite concise as C$\sharp$ allows, it certainly doesn't compare to Haskell for a number of reasons. However, this is of course due to a fundamental difference between the languages.
 
-%While the syntax is reasonably concise in
+Primarily, Haskell has an incredibly complex type inference system with a lot of features C$\sharp$ lacks. The main problem on that front was not having polymorphic types, as these are vital in implementing a general-purpose identity arrow or swap arrow. The lack of polymorphic types was also the reason the \texttt{First} operator was so difficult to cleanly implement. Another issue was the fact that C$\sharp$ methods must always be called on an object or class, and have strict syntax rules meaning the arguments must be bracketed after the call (precluding neat currying syntax). Thirdly, C$\sharp$ doesn't allow the programmer to create custom operators like `\texttt{>>>}' for arrow composition.
+
+For illustration, consider a fairly elaborate arrow constructed to compute the value $2x^2$ given an input $x$. In Haskell this might be rendered as follows:
+
+\begin{lstlisting}
+(arr split) >>> (square *** square) >>> (unsplit (+))
+\end{lstlisting}
+
+(Assume that \texttt{square} is an appropriately-defined arrow, and \texttt{split} and \texttt{unsplit} are methods for duplicating an input and recombining it using a binary operator respectively.)
+
+Meanwhile, C$\sharp$ syntax leads to the following definition:
+
+\begin{lstlisting}
+Op.Split<int>().Combine(square.And(square)).Unsplit(add)
+\end{lstlisting}
+
+Now, imagine if C$\sharp$ had the ability to define polymorphic \texttt{Split} and \texttt{Unsplit} functions. This would give us:
+
+\begin{lstlisting}
+Op.Arr(Split).Combine(square.And(square)).Combine(Op.Arr(Unsplit))
+\end{lstlisting}
+
+Now assume the ability to define custom operators, such as `\texttt{a >>> b}' for `\texttt{a.Combine(b)}':
+
+\begin{lstlisting}
+Op.Arr(Split) >>> (square *** square) >>> Op.Arr(Unsplit)
+\end{lstlisting}
+
+Now just add curried function arguments and the ability to have methods not called on a class or object, and the result is very similar to the original Haskell syntax:
+
+\begin{lstlisting}
+Arr Split >>> (square *** square) >>> Arr Unsplit
+\end{lstlisting}
+
+It therefore seems reasonable to conclude that the syntax is as clean as C$\sharp$ allows without significant workarounds, and though it may not match the cleaner Haskell syntax this is largely due to the differences between the languages. One option which was considered for improving syntax was Miscrosoft's Roslyn library\footnote{http://msdn.microsoft.com/en-us/vstudio/hh500769}, which allows the programmer to modify the syntax tree of the code being compiled and thus introduce extra syntactic constructs. However, Roslyn is not yet fully functional and it was decided that the complexity involved would almost be a second project in its own right. The possibility remains for future work to attempt this direction once Roslyn is complete.
 
 \subsection{Binding syntax}
 
@@ -654,7 +693,7 @@ For creating the actual binding, it's not clear which is better. The arrow-based
 
 For a second case study, a simple `database' (a \texttt{List} of data for simplicity) containing information on orders placed for certain products was created. The objective for this was to bind this data to a list view, filtering it to only the orders with volume greater than one and mapping the result to a list of user-friendly strings describing the order (of the form ``Order from [name] in [location] for [volume] `[product]' from [supplier]''). The simple application is pictured in Figure \ref{fig:case_study_list}, and its source code is given in Appendix \ref{sec:case_study_list}.
 
-%Should sort too?
+%TODO Should sort too?
 
 \begin{figure}[!ht]
   \centering
@@ -667,9 +706,8 @@ As with the last example, the arrow syntax is a lot more concise than the value 
 
 The code for creating the binding is much simpler this time, and the arrow-based code is very short: only a single line calling the \texttt{GetBindPoint} methods of the source and destination and passing in the arrow. The WPF binding is again more verbose, requiring the programmer to create a new \texttt{Binding}; individually set the \texttt{Source}, \texttt{Path} and \texttt{Converter} properties\footnote{\texttt{Source} is the object to bind to, \texttt{Path} is the name of the property being bound and \texttt{Converter} is the \texttt{IValueConverter} used to convert the source value into the destination value} and attach it to the list view. The main advantage of arrow data binding here is the \texttt{GetBindPoint} method provided by \texttt{Bindable} objects, which simplifies specifying the bound variable to one call and means the variable name is `attached' to the object it belongs to.
 
-\subsubsection{Some other demo}
-
-Todo
+%TODO
+%\subsubsection{Some other demo}?
 
 \section{Performance testing}
 
@@ -754,9 +792,8 @@ Fortunately, it was found that the execution time is linear in the length of the
   \label{fig:arrow_chaining_overhead}
 \end{figure}
 
-\subsection{Binding performance}
-
-Todo...
+%TODO
+%\subsection{Binding performance}?
 
 \cleardoublepage
 
@@ -1146,11 +1183,7 @@ BindingsManager.CreateBinding(
 
 \cleardoublepage
 
-\section{Some other demo}
-
-Todo
-
-\cleardoublepage
+%\section{Some other demo}?
 
 
 \nocite{arrow_calculus}
