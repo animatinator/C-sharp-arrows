@@ -39,14 +39,14 @@
 \contentsline {subsection}{\numberline {4.2.1}Arrow syntax}{29}
 \contentsline {subsubsection}{Comparison with Haskell}{30}
 \contentsline {subsection}{\numberline {4.2.2}Binding syntax}{30}
-\contentsline {subsubsection}{Username two-way binding}{30}
+\contentsline {subsubsection}{Username two-way binding}{31}
 \contentsline {subsubsection}{List binding from a mock database}{32}
 \contentsline {subsubsection}{Some other demo}{33}
 \contentsline {section}{\numberline {4.3}Performance testing}{33}
 \contentsline {subsection}{\numberline {4.3.1}Arrow performance}{33}
-\contentsline {subsubsection}{Measuring technique}{33}
+\contentsline {subsubsection}{Measuring technique}{34}
 \contentsline {subsubsection}{Simple function results}{34}
-\contentsline {subsubsection}{List function results}{35}
+\contentsline {subsubsection}{List function results}{36}
 \contentsline {subsubsection}{Overhead due to arrow chaining}{36}
 \contentsline {subsection}{\numberline {4.3.2}Binding performance}{37}
 \contentsline {chapter}{\numberline {5}Conclusion}{39}

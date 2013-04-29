@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.5)  29 APR 2013 15:07
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.5)  29 APR 2013 20:39
 entering extended mode
 **Dissertation.tex
 
@@ -305,29 +305,29 @@ sertation/fig/WPFIntegrationDemo.png>] [26
 Chapter 4.
 [27
 
-] [28] [29] <fig/CaseStudyNameBinding.png, id=214, 283.0575pt x 210.7875pt>
+] [28] [29] [30]
+<fig/CaseStudyNameBinding.png, id=217, 283.0575pt x 210.7875pt>
 File: fig/CaseStudyNameBinding.png Graphic file (type png)
 
 <use fig/CaseStudyNameBinding.png>
-Package pdftex.def Info: fig/CaseStudyNameBinding.png used on input line 642.
+Package pdftex.def Info: fig/CaseStudyNameBinding.png used on input line 640.
 (pdftex.def)             Requested size: 283.0568pt x 210.78699pt.
- [30] [31 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBindin
-g/Dissertation/fig/CaseStudyNameBinding.png>] <fig/CaseStudyListBinding.png, id
-=221, 596.2275pt x 423.5825pt>
+ [31 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
+sertation/fig/CaseStudyNameBinding.png>]
+<fig/CaseStudyListBinding.png, id=221, 596.2275pt x 423.5825pt>
 File: fig/CaseStudyListBinding.png Graphic file (type png)
 
 <use fig/CaseStudyListBinding.png>
-Package pdftex.def Info: fig/CaseStudyListBinding.png used on input line 663.
+Package pdftex.def Info: fig/CaseStudyListBinding.png used on input line 661.
 (pdftex.def)             Requested size: 411.93877pt x 292.66003pt.
- [32 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
-sertation/fig/CaseStudyListBinding.png>]
-[33] [34]
+ [32] [33 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBindin
+g/Dissertation/fig/CaseStudyListBinding.png>] [34]
 <fig/SimpleFunctionPerformanceChart.pdf, id=232, 496.44887pt x 258.75552pt>
 File: fig/SimpleFunctionPerformanceChart.pdf Graphic file (type pdf)
 
 <use fig/SimpleFunctionPerformanceChart.pdf>
 Package pdftex.def Info: fig/SimpleFunctionPerformanceChart.pdf used on input l
-ine 721.
+ine 719.
 (pdftex.def)             Requested size: 411.93877pt x 214.71175pt.
  [35 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
 sertation/fig/SimpleFunctionPerformanceChart.pdf>]
@@ -336,22 +336,22 @@ File: fig/ListFunctionPerformanceChart.pdf Graphic file (type pdf)
 
 <use fig/ListFunctionPerformanceChart.pdf>
 Package pdftex.def Info: fig/ListFunctionPerformanceChart.pdf used on input lin
-e 740.
+e 738.
 (pdftex.def)             Requested size: 411.93877pt x 203.08247pt.
- [36 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
-sertation/fig/ListFunctionPerformanceChart.pdf>] <fig/IdentityChains.pdf, id=37
-4, 496.51498pt x 216.57913pt>
+ [36]
+<fig/IdentityChains.pdf, id=310, 496.51498pt x 216.57913pt>
 File: fig/IdentityChains.pdf Graphic file (type pdf)
 
 <use fig/IdentityChains.pdf>
-Package pdftex.def Info: fig/IdentityChains.pdf used on input line 754.
+Package pdftex.def Info: fig/IdentityChains.pdf used on input line 752.
 (pdftex.def)             Requested size: 411.93877pt x 179.69122pt.
  [37 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
-sertation/fig/IdentityChains.pdf>] [38
-
-]
+sertation/fig/ListFunctionPerformanceChart.pdf>]
+[38 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Diss
+ertation/fig/IdentityChains.pdf>]
 Chapter 5.
 [39
+
 
 ] [40
 
@@ -373,33 +373,33 @@ Appendix C.
 \pc@column@2=\box30
 \pc@column@width@2=\dimen120
 Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
-ne 944.
+ne 942.
 Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
-ne 944.
+ne 942.
 [45
 
 ]
 Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
-ne 999.
+ne 997.
 Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
-ne 999.
+ne 997.
  [46]
 Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
-ne 1044.
+ne 1042.
 Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
-ne 1044.
+ne 1042.
  [47] [48]
 Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
-ne 1086.
+ne 1084.
 Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
-ne 1086.
+ne 1084.
  [49
 
 ]
 Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
-ne 1128.
+ne 1126.
 Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
-ne 1128.
+ne 1126.
  [50] [51
 
 ] [52
@@ -426,11 +426,11 @@ ation\Dissertation.aux") )
 Here is how much of TeX's memory you used:
  2973 strings out of 494045
  43745 string characters out of 3148387
- 271622 words of memory out of 3000000
+ 270622 words of memory out of 3000000
  6243 multiletter control sequences out of 15000+200000
  12938 words of font info for 46 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 27i,8n,40p,1132b,1520s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,8n,40p,1429b,1520s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
 nts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
 mitt10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.p
@@ -446,7 +446,7 @@ b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb><C:/Program Files/MiKT
 eX 2.9/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on Dissertation.pdf (64 pages, 562169 bytes).
+Output written on Dissertation.pdf (64 pages, 564149 bytes).
 PDF statistics:
  625 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
