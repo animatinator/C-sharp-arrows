@@ -10,11 +10,11 @@
 \contentsline {figure}{\numberline {3.7}{\ignorespaces Marshalling a list of BindPoint sources to pass to an arrow and unmarshalling the result}}{23}
 \contentsline {figure}{\numberline {3.8}{\ignorespaces WPF integration demo}}{25}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces The username two-way binding application}}{30}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces The list binding application}}{31}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Performance of arrows, Funcs and normal functions in implementing simple functionality}}{34}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Performance of arrows, Linq queries and normal (loop-based) functions in implementing simple list functionality}}{35}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Execution times of chains of identity functions}}{36}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces The username two-way binding application}}{31}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces The list binding application}}{32}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Performance of arrows, Funcs and normal functions in implementing simple functionality}}{35}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Performance of arrows, Linq queries and normal (loop-based) functions in implementing simple list functionality}}{36}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Execution times of chains of identity functions}}{37}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

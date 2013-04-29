@@ -591,9 +591,19 @@ To reduce complexity, 'random' arrows were produced by randomly selecting a func
 
 \subsubsection{Invertible arrows}
 
-Invertible arrow laws are listed in Appendix \ref{sec:invertible_arrow_laws}, again with their C$\sharp$ equivalents. These were slightly more complicated to test than simple arrows as the laws have to hold for inverses as well.
+Invertible arrow laws are listed in Appendix \ref{sec:invertible_arrow_laws}, again with their C$\sharp$ equivalents. These were slightly more complicated to test than simple arrows as the laws have to hold for inverses as well. They also required random arrows with inverses provided as well. However, aside from being slightly longer to write the laws were generally fairly simple to test. As a small example, the test for double inversion is given below:
 
-[TBContinued]
+\begin{lstlisting}
+public static bool TestDoubleInversion()
+{
+  var arr1 = Op.Arr((int x) => x * 7, (int y) => y / 7);
+  var arr2 = arr1.Invert().Invert();
+
+  return ArrowTestUtils.AssertInvertibleArrowsGiveSameOutput(arr1, arr2);
+}
+\end{lstlisting}
+
+Including minor variations from different sources, 24 different arrow laws were tested in total, and all passed on large quantities of random input data. This gives a reasonably good indication that the arrow implementation is correct.
 
 \subsection{Correctness proof by decomposing into lambda calculus}
 
@@ -603,11 +613,19 @@ Explain the technique used to translate into lambda calculus and the likely corr
 
 \subsection{Arrow syntax}
 
-Show major operators - arrow construction (niceish), arrow combination (niceish), First operator (not ideal - perhaps show all the differently imperfect ways of applying it); discuss the lack of type parameters despite the mad type-ing skillz going on (woo mad type inference skills!).
+Syntax is a difficult thing to give an objective evaluation of without extensive user trials and a variety of different opinions, and there are many conflicting metrics which could be use to judge its quality. However, the way this project was originally set out allows for a certain degree of objective syntax evaluation: brevity was a key goal, along with removing the need for type parameters and providing syntax for all the standard arrow operators. This section will therefore evaluate the syntax of the arrow implementation in terms of these key features, and in doing so highlight how well the project's original goals were met. A comparison with Haskell's syntax is also provided, taking into account the limitations inherent in C$\sharp$ for fairness.
+
+One of the main syntactic achievements of the project was finding ways of writing all the arrow combinators such that under normal circumstances the user need never provide explicit type parameters. Given a typed lambda expression, for instance \texttt{(int x) => x + 1}, arrow construction is done with \texttt{Op.Arr((int x) => x + 1)}. From there, the type of this arrow is used to infer the types required for all the combinators -- composition, for example, is simply \texttt{arrow.Combine(otherArrow)}.
+
+Less successful was the \texttt{First} operator. As outlined in Section \ref{sec:simple_arrow_challenges}, many approaches were attempted for this, but all turned out slightly messy. The current preferred approach is \texttt{arrow.First(default(T))}, where \texttt{T} is the type parameter which cannot be inferred. However, \texttt{arrow.First<T>()} is arguably slightly better as it is clearer what it does (passing \texttt{default(T)} definitely qualifies as a `hack'), and so it is used in the arrow law listings of Appendix \ref{sec:arrow_laws} for clarity. The main problems are that it takes an extra type parameter and relies heavily on reflection, leading to slower execution.
+
+Extension methods -- handy. However, Op preceding all non-extension methods is a faff, but this is because C$\sharp$ doesn't allow methods to be used without a containing class
 
 \subsubsection{Comparison with Haskell}
 
 Firstly, mention difference in specifying lambdas and shizz (C sharp stunted from the start). From there, show how C sharp arrows create arrows from them (need types specified somewhere is an issue (no type inference like Haskell gets), C sharp also has a strict function calling syntax which doesn't allow Haskell's pretty currying syntax). Go on to give a few examples of complicated-ish arrows expressed in both? Also, maaaybe mention the shiny new syntax Haskell has for arrows, but the C sharp implementation can't really battle that so it's not worth going into much detail about.
+
+%While the syntax is reasonably concise in
 
 \subsection{Binding syntax}
 
