@@ -5,6 +5,7 @@
     <Grid>
         <TextBlock x:Name="TextBox" HorizontalAlignment="Left" Margin="23,27,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="48" Width="458"/>
         <ProgressBar x:Name="Progress" HorizontalAlignment="Left" Height="40" Margin="23,80,0,0" VerticalAlignment="Top" Width="450"/>
+        <TextBlock x:Name="TimerLabel" HorizontalAlignment="Left" Margin="43,213,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

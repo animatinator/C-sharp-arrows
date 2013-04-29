@@ -567,7 +567,7 @@ The key requirement for an arrow type satisfying the original definition by Hugh
 
 As invertible arrows conform to a slightly different set of arrow laws (which put extra requirements on their inverses), both one-way arrows and invertible arrows had to be tested separately. List and choice arrows were not separately tested as they are entirely built upon normal one-way arrows, and so will conform to the arrow laws for free if simple arrows do.
 
-[Mention correctness proof by decomposition into lambda calculus?]
+%Mention correctness proof by decomposition into lambda calculus?
 
 \subsection{Automated testing}
 
@@ -789,6 +789,8 @@ first_f = new Func<Tuple<T, T>, Tuple<T, T>>(
 
 This defines a \texttt{Func} which invokes a function 'f' on the first element of a tuple.
 
+The relation `$\approx$' is used throughout to relate effectively equivalent C$\sharp$ expressions.
+
 \section{Normal arrow laws} \label{sec:simle_arrow_laws}
 
 \begin{samepage}
@@ -827,7 +829,45 @@ f .First<T>() .First<T>() .Combine( new AssocArrow<T>() ) $\approx$ new AssocArr
 
 \section{Invertible arrow laws} \label{sec:invertible_arrow_laws}
 
-Todo
+\begin{samepage}
+\begin{lstlisting}[mathescape]
+Composition associativity
+f >>> (g >>> h) = (f >>> g) >>> h
+f.Combine(g.Combine(h)) $\approx$ (f.Combine(g)).Combine(h)
+
+Composition distributivity
+f1 $\leftrightarrow$ g2 >>> g1 $\leftrightarrow$ f2 = (f1 >>> g1) $\leftrightarrow$ (f2 >>> g2)
+f1.Arr(g2).Combine(g1.Arr(f2)) $\approx$ Op.Arr(x => g1(f1(x)), y => g2(f2(x)))
+
+Composition with identity
+idA >>> f = f = f >>> idA  (where idA = id $\leftrightarrow$ id)
+new IDArrow<T>().Combine(f) $\approx$ f $\approx$ f.Combine(new IDArrow<T>())
+
+`First' operator distributivity
+first (f >>> g) = first f >>> first g
+(f.Combine(g)).First<T>() $\approx$ first_f.Combine(first_g)
+
+`First' operator commutativity
+first (f $\leftrightarrow$ g) = (f * id) $\leftrightarrow$ (g * id)
+(f.Arr(g)).First<T>() $\approx$ f.Mult(id).Arr(g.Mult(id))
+
+Double inversion
+inv (inv f) = f
+f.Invert().Invert() $\approx$ f
+
+Distributivity of inversion
+inf (f >>> g) = inv g >>> inv f
+f.Combine(g).Invert() $\approx$ g.Invert().Combine(f.Invert())
+
+Inversion correctness
+inv (f $\leftrightarrow$ g) = g $\leftrightarrow$ f
+f.Arr(g).Invert() $\approx$ g.Arr(f)
+
+`First' operator under inversion
+inv (first f) = first (inv f)
+f.First<T>().Invert() $\approx$ f.Invert().First<T>()
+\end{lstlisting}
+\end{samepage}
 
 \cleardoublepage
 

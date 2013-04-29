@@ -1,4 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Symbols xmlns="http://schemas.postsharp.org/2.0/symbols">
-  <Class Class="#1=T:[ArrowDataBinding]ArrowDataBinding.Bindings.BindableAttribute" LimitedLicense="true" />
+  <Class Class="#1=T:[ArrowDataBinding]ArrowDataBinding.Bindings.BindableAttribute">
+    <Instance Declaration="#2=P:[WPFIntegrationDemo]WPFIntegrationDemo.Time::CurrentTime()" Id="7b87e4ac773b7c8c">
+      <Target>
+        <JoinPoint Advised="#3=M:[WPFIntegrationDemo]WPFIntegrationDemo.Time::get_CurrentTime()" Advising="#1" Description="#4=Intercepted by advice OnGetValue" Semantic="Getter" />
+        <JoinPoint Advised="#5=M:[WPFIntegrationDemo]WPFIntegrationDemo.Time::set_CurrentTime(System.Int32)" Advising="#1" Description="#6=Intercepted by advice OnSetValue" Semantic="Setter" />
+      </Target>
+    </Instance>
+  </Class>
 </Symbols>

@@ -50,6 +50,7 @@ namespace WPFIntegrationDemo
         {
             InitialiseTextBinding();
             InitialiseProgressBarBinding();
+            InitialiseTimerBinding();
         }
 
         public void InitialiseTextBinding()
@@ -70,6 +71,15 @@ namespace WPFIntegrationDemo
             binding.Path = new PropertyPath("CurrentTime");
             binding.Converter = new ArrowValueConverter(progressArrow);
             Progress.SetBinding(ProgressBar.ValueProperty, binding);
+        }
+
+        public void InitialiseTimerBinding()
+        {
+            Binding binding = new Binding();
+            binding.Source = time;
+            binding.Mode = BindingMode.OneWay;
+            binding.Path = new PropertyPath("CurrentTime");
+            TimerLabel.SetBinding(TextBlock.TextProperty, binding);
         }
     }
 
