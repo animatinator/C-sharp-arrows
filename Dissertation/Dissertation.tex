@@ -81,7 +81,7 @@ The project aimed to provide a general-purpose data binding framework for C$\sha
 
 \section*{Work Completed}
 
-All the original goals were met: a general-purpose data binding framework based on arrows has been implemented, and an extensive arrow implementation has been completed. As well as the standard operators, a series of more complex extra operators have also been added, and some additional arrow types have been included -- for instance, 'list arrows' which map between enumerable data types. The framework allows bindings in both directions, between multiple sources and multiple destinations, and the arrows can be used in conjunction with WPF data binding with reasonable ease.
+All the original goals were met: a general-purpose data binding framework based on arrows has been implemented, and an extensive arrow implementation has been completed. As well as the standard operators, a series of more complex extra operators have also been added, and some additional arrow types have been included -- for instance, `list arrows' which map between enumerable data types. The framework allows bindings in both directions, between multiple sources and multiple destinations, and the arrows can be used in conjunction with WPF data binding with reasonable ease.
 
 %TODO
 %Continue this?
@@ -99,6 +99,9 @@ and the work described in it are my own work, unaided except as may
 be specified below, and that the dissertation does not contain
 material that has already been used to any substantial extent for a
 comparable purpose.
+
+I give permission for my dissertation to be made available in the archive
+area of the Laboratory's website.
 
 \bigskip
 \leftline{Signed}
@@ -136,13 +139,13 @@ It has become a firmly established practice when writing applications to separat
 
 Data binding presents a mechanism for bridging the gap between the separated layers by allowing the developer to specify that some value in the user interface code should be bound to a property of the model. This usually simply means that whenever the value in the model changes, the data binding framework will ensure that the value in the user interface is also updated to the same value. However, bindings can often be more complex: for instance, there could be a text box in the user interface which reflects backend data but can also be used to change it (two-way binding). Alternatively, there might be a user interface component whose value is determined by some function of a variable in the model - consider a list view which displays a filtered and sorted version of a list stored in the model. There could even be values which depend on multiple sources, or more complex many-to-many bindings.
 
-Many current languages and frameworks provide data binding features with varying levels of complexity. Java has a variety of extension libraries [examples] which allow the programmer to use data binding with Swing. Javascript too has a variety of possibilities, with a prominent example being the backbone.js MVC framework. Unfortunately, many of these are quite limited and difficult to use - backbone.js, for example, only provides one-way binding and requires a lot of boilerplate code from the programmer.
+Many current languages and frameworks provide data binding features with varying levels of complexity. Java has a variety of extension libraries which allow the programmer to use data binding with Swing. Javascript too offers a number of possibilities, with a prominent example being the backbone.js MVC framework. Unfortunately, many of these are quite limited and difficult to use - backbone.js, for example, only provides one-way binding and requires a lot of boilerplate code from the programmer.
 
 \section{Data binding in .NET}
 
-Microsoft’s .NET framework offers a particularly powerful example of data binding through Windows Presentation Foundation (WPF). Based on the MVVM architecture, it has many features to allow things like two-way binding, binding through functions and bindings based on list operations. One of its key advantages is that the user interface can be defined entirely in XAML \footnote{Extensible Application Markup Language, an XML-based markup language for defining user interfaces and simple behaviour} with bindings being specified through XAML parameters. The view logic is then specified in the ViewModel which in turn communicates with the model. This means user interface designers can work purely in XAML without concern for the logic or binding mechanisms in place behind the scenes.
+Microsoft’s .NET framework offers a particularly powerful example of data binding through Windows Presentation Foundation (WPF). Based on the MVVM architecture, it has many features to allow things like two-way binding, binding through functions and bindings based on list operations. One of its key advantages is that the user interface can be defined entirely in XAML\footnote{Extensible Application Markup Language, an XML-based markup language for defining user interfaces and simple behaviour} with bindings being specified through XAML parameters. The view logic is then specified in the ViewModel which in turn communicates with the model. This means user interface designers can work purely in XAML without concern for the logic or binding mechanisms in place behind the scenes.
 
-However, WPF suffers from a similar problem to many other data binding frameworks: advanced data bindings can be very complex and difficult to manage, and setting up bindings in the first place requires quite a lot of boilerplate code in the model and view. Furthermore, binding through functions requires special `value converter’ classes to be written. This is essentially an application of the Template pattern, and the value converters are not type safe - they take objects as input and return objects as output (and bindings with multiple inputs will simply take arrays of objects with no guarantee that the right number of values has been passed). Clearly a more simple and general binding framework would definitely make application development simpler.
+However, WPF suffers from a similar problem to many other data binding frameworks: advanced data bindings can be very complex and difficult to manage, and setting up bindings in the first place requires quite a lot of boilerplate code in the model and view. Furthermore, binding through functions requires special `value converter' classes to be written. This is essentially an application of the Template pattern, and the value converters are not type safe - they take objects as input and return objects as output (and bindings with multiple inputs will simply take arrays of objects with no guarantee that the right number of values has been passed). Clearly a more simple and general binding framework would definitely make application development simpler.
 %TODO Maybe more disadvantages?
 
 \section{Project inspirations}
@@ -227,10 +230,10 @@ A further problem was how best to allow arrows from multiple inputs to multiple 
 
 The first objective in implementing arrows was to get the simple function-based arrow working, as all the others derive from this. As mentioned earlier, it was implemented using the C$\sharp$ \texttt{Func<A, B>} class to hold its function. An \texttt{Invoke} method is then exposed for using the arrow.
 
-Whilst arrows can be constructed using \texttt{new Arrow<A, B>(function)}, a simpler syntax is provided by an extension method:
+Whilst arrows can be constructed using \texttt{new Arrow<A, B>(function)}\footnote{\texttt{function} is a \texttt{Func<A, B>} here}, a simpler syntax is provided by an extension method:
 
 \begin{lstlisting}[language={[Sharp]C}]
-var increment = ((int x) => x + 1).Arr();
+var increment = function.Arr();
 \end{lstlisting}
 
 \begin{figure}[!ht]
@@ -272,7 +275,7 @@ var firstArrow = Op.First(arrow, default(T))
   \label{fig:first_operator}
 \end{figure}
 
-The above syntax may not immediately make sense. Essentially, the \texttt{default(T)} passes in null if \texttt{T} is a reference type and some sensible default if it is a null type. The only purpose for this parameter is to allow the compiler to infer the type of the second argument to the resulting arrow, and so any value of the appropriate type would work -- \texttt{default(T)} is used for simplicity. This is the one syntax `glitch' which I was unable to remove, and is explained in more detail at the end of this subsection.
+The above syntax may not immediately make sense. Essentially, the \texttt{default(T)} passes in null if \texttt{T} is a reference type and some sensible default if it is a value type. The only purpose for this parameter is to allow the compiler to infer the type of the second argument to the resulting arrow, and so any value of the appropriate type would work -- \texttt{default(T)} is used for simplicity. This is the one syntax `glitch' which I was unable to remove, and is explained in more detail at the end of this subsection.
 
 Going beyond the basic operators, many composite operators were also implemented based on these simple combinators. For instance, \texttt{Second} was implemented in terms of \texttt{First}. The standard parallel combinator was also implemented as \texttt{And}:
 
@@ -341,7 +344,7 @@ Another problem which was discovered was implementing standard polymorphic arrow
 
 At the time of writing the proposal, I was still unsure of the best way of implementing invertible arrows. There were two main strategies I was considering: simply requiring the user to supply an arrow for each direction, or providing a basic set of invertible functions and allowing the user to compose these together to build up more complex functions. The former wouldn't have worked very well as part of the advantage of using arrows in data binding is that simple ones can be re-used in building up multiple different bindings, and having to build up two arrows independently would be very messy and prone to error. The latter also has several problems. For instance, what functions should be made available to prevent the system being too restrictive? Also, if the functions were too simple then many would need to be combined in most cases, and this can cause a lot of unnecessary overhead (as explored in Section~\ref{sec:arrow_chaining_overhead}).
 
-Ultimately, a solution roughly combining the two approaches was found. This was largely inspired by [REF], and is based on an \texttt{Arr} operator which takes \textit{two} functions rather than one -- one function for each direction. The arrows can then be combined using all the same combinators as are available for simple arrows (bar those which don't have inverses, such as \texttt{Unsplit}). As a result, it gives the same flexibility as allowing the user to simply define two arrows, but saves time by retaining the composability that makes arrows useful. An example of how an invertible arrow can be constructed using the \texttt{Arr} extension method is given below:
+Ultimately, a solution roughly combining the two approaches was found. This was largely inspired by \cite{invertible_arrows}, and is based on an \texttt{Arr} operator which takes \textit{two} functions rather than one -- one function for each direction. The arrows can then be combined using all the same combinators as are available for simple arrows (bar those which don't have inverses, such as \texttt{Unsplit}). As a result, it gives the same flexibility as allowing the user to simply define two arrows, but saves time by retaining the composability that makes arrows useful. An example of how an invertible arrow can be constructed using the \texttt{Arr} extension method is given below:
 
 \begin{lstlisting}[language={[Sharp]C}]
 var invertibleIncrement = new Func((int x) => x + 1)
@@ -354,7 +357,7 @@ To make implementation simpler and reduce code duplication, many of the invertib
 
 \subsection{List arrows}
 
-Whilst exploring existing uses of data binding in WPF applications, it was discovered that a fairly common use case involves binding some form of list display to an enumerable data structure in the model. WPF provides support for this already, but trying to do it with arrows would be syntactically clunky -- for one thing, the arrow types would all be of the form \texttt{Arrow<IEnumerable<T1>, IEnumerable<T2>>}. To simplify this I decided it would make sense to implement an 'arrow on lists' abstracting away the actual list processing details and exposing a simple set of common list operators.
+Whilst exploring existing uses of data binding in WPF applications, it was discovered that a fairly common use case involves binding some form of list display to an enumerable data structure in the model. WPF provides support for this already, but trying to do it with arrows would be syntactically clunky -- for one thing, the arrow types would all be of the form \texttt{Arrow<IEnumerable<T1>, IEnumerable<T2>>}. To simplify this I decided it would make sense to implement an `arrow on lists' abstracting away the actual list processing details and exposing a simple set of common list operators.
 
 The result is a set of simple arrows implementing SQL-like functionality on enumerable data sources. List arrows are all of the type \texttt{ListArrow<T1, T2>}, which extends \texttt{Arrow<IEnumerable<T1>, IEnumerable<T2>>} for compatibility with existing arrows. There are a variety of simple list arrows which can be combined to build up complex functionality:
 
@@ -414,7 +417,7 @@ To simplify various common tasks, a number of simple utility arrows were written
 
 \subsection{Overall architecture}
 
-The basis for the data binding system is a publish/subscribe network, where bound values publish events when they are updated and bindings update on receiving these events. A couple of alternatives were considered for this: the first idea was to have binding sources hold a reference to their target and a copy of the arrow associated with the binding, allowing them to simply update the referenced value via the arrow when needed. However, C$\sharp$ lacks the ability to hold references as member variables in this way. The simple approach of simply periodically polling all bound variables to check for updates was also considered, but this was clearly no good: polling is system-intensive and wasteful with many bindings using the same source, a binding target's value would potentially be 'invalid' between polling updates, and the bindings manager would need to store a copy of every bound variable.
+The basis for the data binding system is a publish/subscribe network, where bound values publish events when they are updated and bindings update on receiving these events. A couple of alternatives were considered for this: the first idea was to have binding sources hold a reference to their target and a copy of the arrow associated with the binding, allowing them to simply update the referenced value via the arrow when needed. However, C$\sharp$ lacks the ability to hold references as member variables in this way. The simple approach of simply periodically polling all bound variables to check for updates was also considered, but this was clearly no good: polling is system-intensive and wasteful with many bindings using the same source, a binding target's value would potentially be `invalid' between polling updates, and the bindings manager would need to store a copy of every bound variable.
 
 Conveniently, C$\sharp$ provides simple syntax for event-based programming. Events can be created for a class and thrown with a method call, and other objects can subscribe and unsubscribe simply by adding or removing their handler methods from the event. The clearest approach was therefore to attach events to bindable objects and have them trigger whenever a bound variable is updated. The bindings manager, when creating a binding, need only tell the binding to subscribe to the source object's event and it will then be notified of all updates to variables. Information stored in the event arguments is used to filter out events from variables the binding is not watching, and the updated value is passed through the binding's arrow and then assigned to the destination variable. This approach is shown in Figure \ref{fig:binding_framework}.
 
@@ -447,11 +450,11 @@ public class DataSource : Bindable
 
 \subsubsection*{PostSharp}
 
-PostSharp is a C$\sharp$ extension which provides aspect-oriented programming (AOP) functionality. Essentially, AOP is a means of separating cross-cutting concerns from the code they affect, allowing 'aspects' to be written providing this common functionality. Markers can then be placed in the appropriate points, and the aspects will generate and inject their code into these locations at compile time.
+PostSharp is a C$\sharp$ extension which provides aspect-oriented programming (AOP) functionality. Essentially, AOP is a means of separating cross-cutting concerns from the code they affect, allowing `aspects' to be written providing this common functionality. Markers can then be placed in the appropriate points, and the aspects will generate and inject their code into these locations at compile time.
 
 In this case, the \texttt{Bindable} aspect will intercept the setter of any property or member variable it is placed above and insert code to check whether the value has changed and throw appropriate events if it has. This does not interfere with any setters the programmer may already have specified, as it defers to the programmer's setter before throwing the event for the value changing (thus ensuring the event is only thrown once all values are updated and any side-effects have occurred). The technique for doing this was inspired by~\cite{postsharp_propertychanged} and~\cite{postsharp_locationinterception}.
 
-Unfortunately, the project budget only extended as far as the free version of PostSharp. Syntax for bindings could likely have been improved even further using the method and property introduction features provided by the full version, as this would have removed the need to extend Bindable. The unfortunate side-effect of the Bindable base class is that the class can no longer extend any other base class, as C$\sharp$ does not allow multiple class inheritance. However, in working with the binding framework it was found that this rarely caused problems that couldn't be worked around, and in any case patterns exist to overcome the lack of multiple inheritance in the general case\footnote{The 'composition over inheritance' pattern is one such technique which uses a shared base interface and a proxy object to 'inherit' from a class without using actual inheritance}.
+Unfortunately, the project budget only extended as far as the free version of PostSharp. Syntax for bindings could likely have been improved even further using the method and property introduction features provided by the full version, as this would have removed the need to extend Bindable. The unfortunate side-effect of the Bindable base class is that the class can no longer extend any other base class, as C$\sharp$ does not allow multiple class inheritance. However, in working with the binding framework it was found that this rarely caused problems that couldn't be worked around, and in any case patterns exist to overcome the lack of multiple inheritance in the general case\footnote{The `composition over inheritance' pattern is one such technique which uses a shared base interface and a proxy object to `inherit' from a class without using actual inheritance}.
 
 \subsection{Creating bindings}
 
@@ -459,7 +462,7 @@ It was decided that it would make sense to manage all bindings in a given projec
 
 \subsubsection{Syntax and usage}
 
-In order to abstract away details like types and specific object references, the bindings manager operates on 'bind points' -- essentially, structures containing a reference to the \texttt{Bindable} source and a string representation of the property or member variable being bound. An extension method was written to make creating these simpler, as calling the constructor with the object and variable name turned out to make the overall syntax fairly cluttered. The standard way of making a bind point for an object 'obj' with property 'value' is thus \texttt{obj.GetBindPoint("value")}, which is a lot simpler to write.
+In order to abstract away details like types and specific object references, the bindings manager operates on `bind points' -- essentially, structures containing a reference to the \texttt{Bindable} source and a string representation of the property or member variable being bound. An extension method was written to make creating these simpler, as calling the constructor with the object and variable name turned out to make the overall syntax fairly cluttered. The standard way of making a bind point for an object `obj' with property `value' is thus \texttt{obj.GetBindPoint("value")}, which is a lot simpler to write.
 
 Basic bindings (that is, from one source to one destination in one direction) can be set up by passing in a source bind point, and arrow to use for the binding and a destination bind point. An example of this is given in Listing~\ref{lst:creating_simple_binding}.
 
@@ -502,14 +505,14 @@ for each node in the graph:
 
 function checkCycles(node, seen)
   if node in seen:
-    return 'cycle'
+    return `cycle'
   else:
     add node to seen
     for each child node:
       checkCycles(child, seen)
 \end{lstlisting}
 
-Further to detecting these situations, another issue which had to be resolved was what action to take on finding a problem. Were the programmer to create a new binding between two objects which were already bound, a possible response would be to simply overwrite the old binding. This would prevent errors from the framework disrupting the user, and is also a fairly reasonable behaviour to expect. However, it was decided that this made the binding process too opaque and could lead to confusing behaviour if the programmer had accidentally overwritten a binding -- for instance, by mistyping the name of one of the objects they intended to bind. Therefore, whenever the programmer attempts to create a binding which would lead to a cycle or conflict, the framework throws an exception explaining the error. The behaviour of 'overwriting' an old binding is still possible as the \texttt{BindingsManager} provides a method for removing specific bindings, but now the programmer has to do the overwriting explicitly.
+Further to detecting these situations, another issue which had to be resolved was what action to take on finding a problem. Were the programmer to create a new binding between two objects which were already bound, a possible response would be to simply overwrite the old binding. This would prevent errors from the framework disrupting the user, and is also a fairly reasonable behaviour to expect. However, it was decided that this made the binding process too opaque and could lead to confusing behaviour if the programmer had accidentally overwritten a binding -- for instance, by mistyping the name of one of the objects they intended to bind. Therefore, whenever the programmer attempts to create a binding which would lead to a cycle or conflict, the framework throws an exception explaining the error. The behaviour of `overwriting' an old binding is still possible as the \texttt{BindingsManager} provides a method for removing specific bindings, but now the programmer has to do the overwriting explicitly.
 
 \subsubsection{Many-to-many bindings} \label{sec:many_many_bindings}
 
@@ -522,7 +525,7 @@ Many-to-many bindings presented an additional challenge for the binding system. 
   \label{fig:argument_marshalling}
 \end{figure}
 
-By using reflection on the type of the arrow, I was able to convert a list of bind points to a binary-tree-structured Tuple. The code essentially does a recursive depth-first search through the input type of the arrow (obtained via reflection), simultaneously constructing a Tuple of the same structure and inserting values from the bind points wherever a 'leaf' is encountered in the type being searched. At the other end, a similar process is used to extract the values from the returned tuple and put them into a list which is then used to assign to the destination bind points. The process is illustrated in Figure~\ref{fig:argument_marshalling}, where a set of inputs of types A, B and C are being passed into an arrow from type \texttt{Tuple<Tuple<A, B>, C>} to type \texttt{Tuple<A, Tuple<B, C>>}.
+By using reflection on the type of the arrow, I was able to convert a list of bind points to a binary-tree-structured Tuple. The code essentially does a recursive depth-first search through the input type of the arrow (obtained via reflection), simultaneously constructing a Tuple of the same structure and inserting values from the bind points wherever a `leaf' is encountered in the type being searched. At the other end, a similar process is used to extract the values from the returned tuple and put them into a list which is then used to assign to the destination bind points. The process is illustrated in Figure~\ref{fig:argument_marshalling}, where a set of inputs of types A, B and C are being passed into an arrow from type \texttt{Tuple<Tuple<A, B>, C>} to type \texttt{Tuple<A, Tuple<B, C>>}.
 
 \subsubsection{Problems encountered}
 
@@ -567,7 +570,7 @@ To demonstrate the WPF integration, a simple demo application was made in which 
 
 \section{Correctness of arrow implementations}
 
-The key requirement for an arrow type satisfying the original definition by Hughes is that it conforms to a set of 'arrow laws' defining how the various basic combinators should work. While there are numerous variations on the set of arrow laws, the standard ones used by Haskell are given in [REF]. These are listed in Appendix \ref{sec:arrow_laws}, along with their equivalent definitions using the C$\sharp$ syntax.
+The key requirement for an arrow type satisfying the original definition by Hughes is that it conforms to a set of 'arrow laws' defining how the various basic combinators should work. While there are numerous variations on the set of arrow laws, the standard ones used by Haskell are given in~\cite{haskell_wiki_arrows}. These are listed in Appendix \ref{sec:arrow_laws}, along with their equivalent definitions using the C$\sharp$ syntax.
 
 As invertible arrows conform to a slightly different set of arrow laws (which put extra requirements on their inverses), both one-way arrows and invertible arrows had to be tested separately. List and choice arrows were not separately tested as they are entirely built upon normal one-way arrows, and so will conform to the arrow laws for free if simple arrows do.
 
@@ -592,7 +595,7 @@ new IDArrow<T>() $\approx$ id
 
 This differs from the other laws because it has to be proven true over all \textit{types} rather than simply for all inputs. As such, the test proceeds by obtaining a representative list of types and using reflection to build an identity arrow for each, then uses the standard technique of firing lots or random inputs at it and asserting that the arrow does indeed represent the identity function. The set of types used was just the set of primitive types, obtained by querying the current assembly for all available types and filtering the non-primitive ones (as non-primitive types would have to be initialised to null, which defeats the purpose of testing correctness over all types).
 
-To reduce complexity, 'random' arrows were produced by randomly selecting a function from a set of pre-defined functions and constructing an arrow with it. It seems reasonable to assume that if an arrow law were to hold for some combination of these functions, but fail on another, then the problem is more likely with the C$\sharp$ compiler than with the arrow implementation.
+To reduce complexity, `random' arrows were produced by randomly selecting a function from a set of pre-defined functions and constructing an arrow with it. It seems reasonable to assume that if an arrow law were to hold for some combination of these functions, but fail on another, then the problem is more likely with the C$\sharp$ compiler than with the arrow implementation.
 
 \subsubsection{Invertible arrows}
 

@@ -9,7 +9,7 @@ Reza Ahmadi.
 \bibitem{invertible_arrows}
 {Artem Alimarine and Sjaak Smetsers and Arjen Weelden and Marko Eekelen and
   Rinus Plasmeijer}.
-\newblock There and back again: arrows for invertible programming.
+\newblock There and back again: Arrows for invertible programming.
 \newblock In {\em In Proceedings of the 2005 ACM SIGPLAN workshop on Haskell},
   pages 86--97. ACM Press, 2006.
 
@@ -112,6 +112,12 @@ Zhanyong Wan and Paul Hudak.
 \newblock {Functional Reactive Programming from First Principles}.
 \newblock In {\em In ACM SIGPLAN Conference on Programming Language Design and
   Implementation}, pages 242--252, 2000.
+
+\bibitem{haskell_wiki_arrows}
+Haskell Wiki.
+\newblock Control.arrow.
+\newblock
+  http://www.haskell.org/ghc/docs/latest/html/libraries/base/Control-Arrow.html.
 
 \bibitem{monads}
 Haskell Wiki.

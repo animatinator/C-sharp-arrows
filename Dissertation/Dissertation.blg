@@ -1,10 +1,18 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: Dissertation.aux
 The style file: plain.bst
-Illegal, another \bibstyle command---line 154 of file Dissertation.aux
+Illegal, another \bibstyle command---line 133 of file Dissertation.aux
  : \bibstyle
  :          {plain}
 I'm skipping whatever remains of this command
 Database file #1: Bibliography.bib
+Warning--I didn't find a database entry for "javabinding"
+Warning--I didn't find a database entry for "netbinding"
+Warning--I didn't find a database entry for "elliott98"
+Warning--I didn't find a database entry for "haskellarrows"
+Warning--I didn't find a database entry for "paterson03"
+Warning--I didn't find a database entry for "notifypropertychanged"
+Warning--I didn't find a database entry for "hughes98"
+Warning--I didn't find a database entry for "lindley08"
 Warning--empty journal in hughes_arrows
 Warning--empty journal in arrow_calculus
 (There was 1 error message)
