@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.5)  29 APR 2013 22:04
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.5)  1 MAY 2013 13:57
 entering extended mode
 **Dissertation.tex
 
@@ -124,7 +124,11 @@ Package: processkv 2004/08/09 v1.0.1 process key=value lists
 \pc@everypar=\toks18
 )
 ("C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\Dissert
-ation\Dissertation.aux")
+ation\Dissertation.aux"
+
+LaTeX Warning: Label `postsharp' multiply defined.
+
+)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
 LaTeX Font Info:    ... okay on input line 28.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
@@ -137,8 +141,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
 LaTeX Font Info:    ... okay on input line 28.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
 LaTeX Font Info:    ... okay on input line 28.
-
-("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
+ ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count99
 \scratchdimen=\dimen117
@@ -213,9 +216,6 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 143.
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
-Missing character: There is no ˜ in font cmr12!
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
  [2] [3] [4
 
@@ -229,146 +229,219 @@ Chapter 3.
 
 
 ]
-LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <8> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 232.
- <fig/ArrOperator.pdf, id=72, 259.19409pt x 106.89937pt>
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 233.
+ <fig/ArrOperator.pdf, id=71, 259.19409pt x 106.89937pt>
 File: fig/ArrOperator.pdf Graphic file (type pdf)
 
 <use fig/ArrOperator.pdf>
-Package pdftex.def Info: fig/ArrOperator.pdf used on input line 237.
+Package pdftex.def Info: fig/ArrOperator.pdf used on input line 238.
 (pdftex.def)             Requested size: 142.26378pt x 58.67412pt.
 
-<fig/CompositionOperator.pdf, id=73, 349.81836pt x 107.12521pt>
+<fig/CompositionOperator.pdf, id=72, 349.81836pt x 107.12521pt>
 File: fig/CompositionOperator.pdf Graphic file (type pdf)
 
 <use fig/CompositionOperator.pdf>
-Package pdftex.def Info: fig/CompositionOperator.pdf used on input line 250.
+Package pdftex.def Info: fig/CompositionOperator.pdf used on input line 251.
 (pdftex.def)             Requested size: 142.26378pt x 43.56526pt.
  [10]
-<fig/FirstOperator.pdf, id=78, 262.49013pt x 219.44516pt>
+<fig/FirstOperator.pdf, id=76, 262.49013pt x 219.44516pt>
 File: fig/FirstOperator.pdf Graphic file (type pdf)
 
 <use fig/FirstOperator.pdf>
-Package pdftex.def Info: fig/FirstOperator.pdf used on input line 269.
+Package pdftex.def Info: fig/FirstOperator.pdf used on input line 270.
 (pdftex.def)             Requested size: 142.26378pt x 118.93391pt.
  [11 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
 sertation/fig/ArrOperator.pdf> <C:/Users/David/Documents/Visual Studio 2010/Pro
 jects/ArrowDataBinding/Dissertation/fig/CompositionOperator.pdf> <C:/Users/Davi
 d/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dissertation/fig/First
 Operator.pdf>]
-<fig/AndOperator.pdf, id=107, 565.02242pt x 248.2334pt>
+<fig/AndOperator.pdf, id=106, 565.02242pt x 248.2334pt>
 File: fig/AndOperator.pdf Graphic file (type pdf)
 
 <use fig/AndOperator.pdf>
-Package pdftex.def Info: fig/AndOperator.pdf used on input line 284.
+Package pdftex.def Info: fig/AndOperator.pdf used on input line 285.
 (pdftex.def)             Requested size: 142.26378pt x 62.50134pt.
  [12 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
-sertation/fig/AndOperator.pdf>] [13] [14]
-LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 361.
- [15]
-[16] <fig/BindingFramework.pdf, id=134, 568.86269pt x 261.31383pt>
+sertation/fig/AndOperator.pdf>] [13] [14] [15]
+[16] <fig/BindingFramework.pdf, id=133, 568.86269pt x 261.31383pt>
 File: fig/BindingFramework.pdf Graphic file (type pdf)
 
 <use fig/BindingFramework.pdf>
-Package pdftex.def Info: fig/BindingFramework.pdf used on input line 422.
+Package pdftex.def Info: fig/BindingFramework.pdf used on input line 423.
 (pdftex.def)             Requested size: 411.93877pt x 189.23434pt.
- [17 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
-sertation/fig/BindingFramework.pdf>] [18]
+ [17] [18 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBindin
+g/Dissertation/fig/BindingFramework.pdf>]
 [19] [20]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 487.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 488.
 
  ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 487.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 488.
  [21]
-[22] <fig/ArgumentMarshalling.pdf, id=179, 511.24123pt x 147.77261pt>
+[22] <fig/ArgumentMarshalling.pdf, id=178, 511.24123pt x 147.77261pt>
 File: fig/ArgumentMarshalling.pdf Graphic file (type pdf)
 
 <use fig/ArgumentMarshalling.pdf>
-Package pdftex.def Info: fig/ArgumentMarshalling.pdf used on input line 519.
+Package pdftex.def Info: fig/ArgumentMarshalling.pdf used on input line 520.
 (pdftex.def)             Requested size: 411.93877pt x 119.07281pt.
  [23 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
 sertation/fig/ArgumentMarshalling.pdf>]
-[24] <fig/WPFIntegrationDemo.png, id=196, 571.13374pt x 203.76125pt>
+[24] <fig/WPFIntegrationDemo.png, id=195, 571.13374pt x 203.76125pt>
 File: fig/WPFIntegrationDemo.png Graphic file (type png)
 
 <use fig/WPFIntegrationDemo.png>
-Package pdftex.def Info: fig/WPFIntegrationDemo.png used on input line 554.
+Package pdftex.def Info: fig/WPFIntegrationDemo.png used on input line 555.
 (pdftex.def)             Requested size: 411.93877pt x 146.96603pt.
- [25 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
-sertation/fig/WPFIntegrationDemo.png>] [26
-
-]
+ [25] [26 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBindin
+g/Dissertation/fig/WPFIntegrationDemo.png>]
 Chapter 4.
 [27
 
-] [28] [29] [30]
-<fig/CaseStudyNameBinding.png, id=217, 283.0575pt x 210.7875pt>
+
+] [28] [29] [30] [31]
+<fig/CaseStudyNameBinding.png, id=218, 283.0575pt x 210.7875pt>
 File: fig/CaseStudyNameBinding.png Graphic file (type png)
 
 <use fig/CaseStudyNameBinding.png>
-Package pdftex.def Info: fig/CaseStudyNameBinding.png used on input line 679.
+Package pdftex.def Info: fig/CaseStudyNameBinding.png used on input line 680.
 (pdftex.def)             Requested size: 283.0568pt x 210.78699pt.
- [31] [32 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBindin
-g/Dissertation/fig/CaseStudyNameBinding.png>] <fig/CaseStudyListBinding.png, id
-=224, 596.2275pt x 423.5825pt>
+ [32 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
+sertation/fig/CaseStudyNameBinding.png>]
+<fig/CaseStudyListBinding.png, id=222, 596.2275pt x 423.5825pt>
 File: fig/CaseStudyListBinding.png Graphic file (type png)
 
 <use fig/CaseStudyListBinding.png>
-Package pdftex.def Info: fig/CaseStudyListBinding.png used on input line 700.
+Package pdftex.def Info: fig/CaseStudyListBinding.png used on input line 701.
 (pdftex.def)             Requested size: 411.93877pt x 292.66003pt.
- [33 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
-sertation/fig/CaseStudyListBinding.png>]
-[34]
+ [33] [34 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBindin
+g/Dissertation/fig/CaseStudyListBinding.png>] [35]
 
-LaTeX Warning: Reference `sec:performance_enhancements' on page 35 undefined on
- input line 753.
+LaTeX Warning: Reference `sec:performance_enhancements' on page 36 undefined on
+ input line 754.
 
-[35]
-<fig/SimpleFunctionPerformanceChart.pdf, id=235, 496.44887pt x 258.75552pt>
+<fig/SimpleFunctionPerformanceChart.pdf, id=233, 496.44887pt x 258.75552pt>
 File: fig/SimpleFunctionPerformanceChart.pdf Graphic file (type pdf)
 
 <use fig/SimpleFunctionPerformanceChart.pdf>
 Package pdftex.def Info: fig/SimpleFunctionPerformanceChart.pdf used on input l
-ine 757.
+ine 758.
 (pdftex.def)             Requested size: 411.93877pt x 214.71175pt.
- [36 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
-sertation/fig/SimpleFunctionPerformanceChart.pdf>]
-<fig/ListFunctionPerformanceChart.pdf, id=309, 496.4172pt x 244.72725pt>
+ [36]
+<fig/ListFunctionPerformanceChart.pdf, id=237, 496.4172pt x 244.72725pt>
 File: fig/ListFunctionPerformanceChart.pdf Graphic file (type pdf)
 
 <use fig/ListFunctionPerformanceChart.pdf>
 Package pdftex.def Info: fig/ListFunctionPerformanceChart.pdf used on input lin
-e 776.
+e 777.
 (pdftex.def)             Requested size: 411.93877pt x 203.08247pt.
  [37 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
-sertation/fig/ListFunctionPerformanceChart.pdf>] <fig/IdentityChains.pdf, id=37
-7, 496.51498pt x 216.57913pt>
+sertation/fig/SimpleFunctionPerformanceChart.pdf>] <fig/IdentityChains.pdf, id=
+311, 496.51498pt x 216.57913pt>
 File: fig/IdentityChains.pdf Graphic file (type pdf)
 
 <use fig/IdentityChains.pdf>
-Package pdftex.def Info: fig/IdentityChains.pdf used on input line 790.
+Package pdftex.def Info: fig/IdentityChains.pdf used on input line 791.
 (pdftex.def)             Requested size: 411.93877pt x 179.69122pt.
  [38 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
-sertation/fig/IdentityChains.pdf>]
+sertation/fig/ListFunctionPerformanceChart.pdf>]
+[39 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Diss
+ertation/fig/IdentityChains.pdf>] [40
+
+]
 Chapter 5.
-[39
-
-
-] [40]
-Appendix A.
 [41
 
+] [42] [43] [44
 
-] [42]
+]
+("C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\Dissert
+ation\Dissertation.bbl"
+Underfull \hbox (badness 1509) in paragraph at lines 4--8
+[]\OT1/cmr/m/n/12 Reza Ah-madi.  As-pect Ori-ented Pro-gram-ming Us-ing C$\OML/
+cmm/m/it/12 ]$ \OT1/cmr/m/n/12 and Post-
+ []
+
+
+Underfull \hbox (badness 3919) in paragraph at lines 4--8
+\OT1/cmr/m/n/12 Sharp.  http://www.codeproject.com/Articles/337564/Aspect-Orien
+ted-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 28--33
+[]\OT1/cmr/m/n/12 PostSharp Doc-u-men-ta-tion.  Lo-ca-tion-In-ter-cep-tionAspec
+t Class.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 28--33
+\OT1/cmr/m/n/12 http://doc.postsharp.net//postsharp-2.1/Default.aspx##PostSharp
+-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 28--33
+\OT1/cmr/m/n/12 2.1.chm/html/T[]PostSharp[]Aspects[]LocationInterceptionAspect.
+htm
+ []
+
+[45
+
+]
+Underfull \hbox (badness 4072) in paragraph at lines 70--74
+[]\OT1/cmr/m/n/12 MSDN.  Data Bind-ing Overview.  http://msdn.microsoft.com/en-
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 76--80
+[]\OT1/cmr/m/n/12 MSDN.  Ex-ten-sion Meth-ods.  http://msdn.microsoft.com/en-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 82--87
+[]\OT1/cmr/m/n/12 MSDN.  Pro-ces-sor.TotalProcessorTime Prop-erty.
+ []
+
+
+Overfull \hbox (88.86714pt too wide) in paragraph at lines 82--87
+\OT1/cmr/m/n/12 http://msdn.microsoft.com/en-us/library/system.diagnostics.proc
+ess.totalprocessortime.aspx
+ []
+
+
+Underfull \hbox (badness 4765) in paragraph at lines 89--92
+[]\OT1/cmr/m/n/12 Ross Pa-ter-son.  Ar-rows: A Gen-eral In-ter-face to Com-pu-t
+a-tion.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 117--121
+[]\OT1/cmr/m/n/12 Haskell Wiki.  Mon-ads as Com-pu-ta-tion.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 117--121
+\OT1/cmr/m/n/12 http://www.haskell.org/haskellwiki/Monads[]as[]computation (ac-
+cessed
+ []
+
+) [46]
+Appendix A.
+[47
+
+] [48] [49] [50
+
+]
 Appendix B.
-[43
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <8> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 974.
+[51
 
-
-] [44
+] [52
 
 ]
 Appendix C.
@@ -377,65 +450,69 @@ Appendix C.
 \pc@column@2=\box30
 \pc@column@width@2=\dimen120
 Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
-ne 977.
+ne 1018.
 Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
-ne 977.
-[45
+ne 1018.
+[53
 
 ]
 Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
-ne 1032.
+ne 1073.
 Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
-ne 1032.
- [46]
+ne 1073.
+ [54]
 Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
-ne 1077.
+ne 1118.
 Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
-ne 1077.
- [47] [48]
+ne 1118.
+ [55] [56]
 Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
-ne 1119.
+ne 1160.
 Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
-ne 1119.
- [49
+ne 1160.
+ [57
 
 ]
 Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
-ne 1161.
+ne 1202.
 Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
-ne 1161.
- [50]
+ne 1202.
+ [58]
+Appendix D.
+
 ("C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\Dissert
-ation\Dissertation.bbl"
-Underfull \hbox (badness 5417) in paragraph at lines 46--50
-[]\OT1/cmr/m/n/12 MSDN.  Data bind-ing overview.  http://msdn.microsoft.com/en-
-
- []
+ation\Proposal.tex" [59
 
 
-Underfull \hbox (badness 6461) in paragraph at lines 52--55
-[]\OT1/cmr/m/n/12 Ross Pa-ter-son.  Ar-rows: A gen-eral in-ter-face to com-pu-t
-a-tion.
- []
+] [60] <Binding.png, id=591, 502.87875pt x 192.72pt>
+File: Binding.png Graphic file (type png)
 
-[51
+<use Binding.png>
+Package pdftex.def Info: Binding.png used on input line 61.
+(pdftex.def)             Requested size: 352.01273pt x 134.90306pt.
+ [61 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
+sertation/Binding.png>] [62] [63] [64] [65] [66] [67])
+[68
 
 
-]) [52]
+]
 ("C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\Dissert
 ation\Dissertation.aux")
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: There were multiply-defined labels.
+
  ) 
 Here is how much of TeX's memory you used:
- 2978 strings out of 494045
- 43833 string characters out of 3148387
- 271622 words of memory out of 3000000
- 6248 multiletter control sequences out of 15000+200000
- 12938 words of font info for 46 fonts, out of 3000000 for 9000
+ 3004 strings out of 494045
+ 44385 string characters out of 3148387
+ 245619 words of memory out of 3000000
+ 6270 multiletter control sequences out of 15000+200000
+ 13106 words of font info for 47 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 27i,8n,40p,1429b,1520s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,8n,40p,1429b,1506s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmitt10.pfb><C:/Program F
 iles/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiK
@@ -446,14 +523,13 @@ e1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
 /cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.p
 fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsl12.pfb><C:/P
 rogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program F
-iles/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKT
-eX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Program Files/MiKTeX 2.9/f
-onts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
-e1/public/amsfonts/cm/cmtt12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
-c/amsfonts/cm/cmtt8.pfb>
-Output written on Dissertation.pdf (62 pages, 568993 bytes).
+iles/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Program Files/MiK
+TeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files/MiKTeX 2.9/
+fonts/type1/public/amsfonts/cm/cmtt12.pfb><C:/Program Files/MiKTeX 2.9/fonts/ty
+pe1/public/amsfonts/cm/cmtt8.pfb>
+Output written on Dissertation.pdf (78 pages, 596173 bytes).
 PDF statistics:
- 619 PDF objects out of 1000 (max. 8388607)
+ 667 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 61 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 66 words of extra memory for PDF output out of 10000 (max. 10000000)
 

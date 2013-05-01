@@ -1,74 +1,122 @@
 \begin{thebibliography}{10}
 
+\bibitem{postsharp}
+Reza Ahmadi.
+\newblock {Aspect Oriented Programming Using C$\sharp$ and PostSharp}.
+\newblock
+  http://www.codeproject.com/Articles/337564/Aspect-Oriented-Programming-Using-Csharp-and-PostS.
+
 \bibitem{invertible_arrows}
-Artem Alimarine, Sjaak Smetsers, Arjen Weelden, Marko Eekelen, and Rinus
-  Plasmeijer.
+{Artem Alimarine and Sjaak Smetsers and Arjen Weelden and Marko Eekelen and
+  Rinus Plasmeijer}.
 \newblock There and back again: arrows for invertible programming.
 \newblock In {\em In Proceedings of the 2005 ACM SIGPLAN workshop on Haskell},
   pages 86--97. ACM Press, 2006.
 
+\bibitem{bitbucket}
+BitBucket.
+\newblock {BitBucket}.
+\newblock http://www.bitbucket.org (accessed on 30/04/2013).
+
+\bibitem{postsharp_propertychanged}
+PostSharp Documentation.
+\newblock {Automatically Implementing INotifyPropertyChanged}.
+\newblock http://www.postsharp.net/model/inotifypropertychanged (accessed on
+  30/04/2013).
+
+\bibitem{postsharp_locationinterception}
+PostSharp Documentation.
+\newblock {LocationInterceptionAspect Class}.
+\newblock
+  http://doc.postsharp.net//postsharp-2.1/Default.aspx\#\#PostSharp-2.1.chm/html/T\_PostSharp\_Aspects\_LocationInterceptionAspect.htm
+  (accessed on 30/04/2013).
+
 \bibitem{composing_reactive_animations}
 Conal Elliott.
-\newblock Composing reactive animations.
+\newblock {Composing Reactive Animations}.
 \newblock {\em Dr. Dobb's Journal}, 1998.
 \newblock Also in expanded animated form at http://conal.net/fran/tutorial.htm.
 
 \bibitem{functional_reactive_programming}
 Paul Hudak.
-\newblock Functional reactive programming.
+\newblock {Functional Reactive Programming}.
 \newblock In S.Doaitse Swierstra, editor, {\em Programming Languages and
   Systems}, volume 1576 of {\em Lecture Notes in Computer Science}, pages 1--1.
   Springer Berlin Heidelberg, 1999.
 
 \bibitem{arrows_robots_frp}
 Paul Hudak, Antony Courtney, Henrik Nilsson, and John Peterson.
-\newblock Arrows, robots, and functional reactive programming.
+\newblock {Arrows, Robots, and Functional Reactive Programming}.
 \newblock In {\em Advanced Functional Programming, 4th International School,
   volume 2638 of LNCS}, pages 159--187. Springer-Verlag, 2002.
 
 \bibitem{hughes_arrows}
 John Hughes.
-\newblock Generalising monads to arrows.
+\newblock {Generalising Monads to Arrows}.
 \newblock 1998.
 
 \bibitem{hughes_programming_with_arrows}
 John Hughes.
-\newblock Programming with arrows.
+\newblock {Programming with arrows}.
 \newblock In {\em Advanced Functional Programming}, pages 73--129. Springer,
   2005.
 
 \bibitem{arrow_calculus}
 Sam Lindley, Philip Wadler, and Jeremy Yallop.
-\newblock The arrow calculus (functional pearl).
+\newblock {The Arrow Calculus (Functional Pearl)}.
 \newblock 2008.
 
 \bibitem{wpf_data_binding_overview}
 MSDN.
-\newblock Data binding overview.
+\newblock {Data Binding Overview}.
 \newblock http://msdn.microsoft.com/en-us/library/ms752347.aspx (accessed on
   24/04/2013).
 
+\bibitem{extension_methods}
+MSDN.
+\newblock {Extension Methods}.
+\newblock http://msdn.microsoft.com/en-us/library/vstudio/bb383977.aspx
+  (accessed on 30/04/2013).
+
+\bibitem{total_processor_time}
+MSDN.
+\newblock {Processor.TotalProcessorTime Property}.
+\newblock
+  http://msdn.microsoft.com/en-us/library/system.diagnostics.process.totalprocessortime.aspx
+  (accessed on 30/04/2013).
+
 \bibitem{haskell_arrows}
 Ross Paterson.
-\newblock Arrows: A general interface to computation.
+\newblock {Arrows: A General Interface to Computation}.
 \newblock http://www.haskell.org/arrows (accessed on 24/04/2013).
 
 \bibitem{arrow_notation}
 Ross Paterson.
-\newblock A new notation for arrows.
+\newblock {A New Notation for Arrows}.
 \newblock In {\em International Conference on Functional Programming}, pages
   229--240. ACM Press, September 2001.
 
 \bibitem{arrows_and_computation}
 Ross Paterson.
-\newblock Arrows and computation.
+\newblock {Arrows and Computation}.
 \newblock In Jeremy Gibbons and Oege de~Moor, editors, {\em The Fun of
   Programming}, pages 201--222. Palgrave, 2003.
 
+\bibitem{fogbugz}
+FogCreek Software.
+\newblock {FogBugz}.
+\newblock http://www.fogcreek.com/fogbugz (accessed on 30/04/2013).
+
 \bibitem{frp_first_principles}
 Zhanyong Wan and Paul Hudak.
-\newblock Functional reactive programming from first principles.
+\newblock {Functional Reactive Programming from First Principles}.
 \newblock In {\em In ACM SIGPLAN Conference on Programming Language Design and
   Implementation}, pages 242--252, 2000.
+
+\bibitem{monads}
+Haskell Wiki.
+\newblock {Monads as Computation}.
+\newblock http://www.haskell.org/haskellwiki/Monads\_as\_computation (accessed
+  on 30/04/2013).
 
 \end{thebibliography}

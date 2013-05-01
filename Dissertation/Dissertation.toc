@@ -13,22 +13,22 @@
 \contentsline {section}{\numberline {3.2}Arrows}{9}
 \contentsline {subsection}{\numberline {3.2.1}Overview}{9}
 \contentsline {subsection}{\numberline {3.2.2}Simple arrows}{10}
-\contentsline {subsubsection}{Challenges encountered}{12}
+\contentsline {subsubsection}{Challenges encountered}{13}
 \contentsline {subsection}{\numberline {3.2.3}Invertible arrows}{14}
 \contentsline {subsection}{\numberline {3.2.4}List arrows}{15}
 \contentsline {subsection}{\numberline {3.2.5}Further utility arrows}{16}
-\contentsline {section}{\numberline {3.3}Data binding}{16}
-\contentsline {subsection}{\numberline {3.3.1}Overall architecture}{16}
-\contentsline {subsection}{\numberline {3.3.2}Creating bindable sources and destinations}{18}
+\contentsline {section}{\numberline {3.3}Data binding}{17}
+\contentsline {subsection}{\numberline {3.3.1}Overall architecture}{17}
+\contentsline {subsection}{\numberline {3.3.2}Creating bindable sources and destinations}{17}
 \contentsline {subsection}{\numberline {3.3.3}Creating bindings}{19}
 \contentsline {subsubsection}{Syntax and usage}{20}
-\contentsline {subsubsection}{Two-way binding}{20}
+\contentsline {subsubsection}{Two-way binding}{21}
 \contentsline {subsubsection}{Cycle and conflict detection}{21}
-\contentsline {subsubsection}{Many-to-many bindings}{22}
-\contentsline {subsubsection}{Problems encountered}{23}
-\contentsline {paragraph}{Type safety}{23}
+\contentsline {subsubsection}{Many-to-many bindings}{23}
+\contentsline {subsubsection}{Problems encountered}{24}
+\contentsline {paragraph}{Type safety}{24}
 \contentsline {paragraph}{Binding to lists}{24}
-\contentsline {subsection}{\numberline {3.3.4}Integration work with WPF}{24}
+\contentsline {subsection}{\numberline {3.3.4}Integration work with WPF}{25}
 \contentsline {chapter}{\numberline {4}Evaluation}{27}
 \contentsline {section}{\numberline {4.1}Correctness of arrow implementations}{27}
 \contentsline {subsection}{\numberline {4.1.1}Automated testing}{27}
@@ -38,29 +38,36 @@
 \contentsline {subsection}{\numberline {4.2.1}Arrow syntax}{29}
 \contentsline {subsubsection}{Comparison with Haskell}{30}
 \contentsline {subsection}{\numberline {4.2.2}Binding syntax}{31}
-\contentsline {subsubsection}{Username two-way binding}{31}
+\contentsline {subsubsection}{Username two-way binding}{32}
 \contentsline {subsubsection}{List binding from a mock database}{33}
 \contentsline {section}{\numberline {4.3}Performance testing}{34}
 \contentsline {subsection}{\numberline {4.3.1}Arrow performance}{34}
-\contentsline {subsubsection}{Measuring technique}{34}
+\contentsline {subsubsection}{Measuring technique}{35}
 \contentsline {subsubsection}{Simple function results}{35}
 \contentsline {subsubsection}{List function results}{36}
 \contentsline {subsubsection}{Overhead due to arrow chaining}{37}
-\contentsline {chapter}{\numberline {5}Conclusions}{39}
-\contentsline {section}{\numberline {5.1}Final words}{40}
-\contentsline {chapter}{\numberline {A}Arrow laws}{41}
-\contentsline {section}{\numberline {A.1}Normal arrow laws}{41}
-\contentsline {section}{\numberline {A.2}Invertible arrow laws}{42}
-\contentsline {chapter}{\numberline {B}WPF integration demo -- code listings}{43}
-\contentsline {section}{\numberline {B.1}Creating the bindable source}{43}
-\contentsline {section}{\numberline {B.2}The binding arrow}{43}
-\contentsline {section}{\numberline {B.3}Doing the binding}{43}
-\contentsline {chapter}{\numberline {C}Code samples for case studies}{45}
-\contentsline {section}{\numberline {C.1}Username two-way binding}{45}
-\contentsline {subsection}{\numberline {C.1.1}Creating the bindable data source}{45}
-\contentsline {subsection}{\numberline {C.1.2}Creating the functionality for splitting the name}{46}
-\contentsline {subsection}{\numberline {C.1.3}Creating the binding}{47}
-\contentsline {section}{\numberline {C.2}List binding from a mock database}{49}
-\contentsline {subsection}{\numberline {C.2.1}Creating the bindable `database'}{49}
-\contentsline {subsection}{\numberline {C.2.2}Filtering and mapping the list}{49}
-\contentsline {subsection}{\numberline {C.2.3}Creating the binding}{50}
+\contentsline {chapter}{\numberline {5}Conclusions}{41}
+\contentsline {section}{\numberline {5.1}Future work}{41}
+\contentsline {subsection}{\numberline {5.1.1}Custom tuple type}{41}
+\contentsline {subsection}{\numberline {5.1.2}Better integration with WPF}{41}
+\contentsline {subsection}{\numberline {5.1.3}Feedback arrows}{42}
+\contentsline {subsection}{\numberline {5.1.4}Syntax enhancements}{42}
+\contentsline {subsection}{\numberline {5.1.5}Performance}{42}
+\contentsline {section}{\numberline {5.2}Final words}{42}
+\contentsline {chapter}{\numberline {A}Arrow laws}{47}
+\contentsline {section}{\numberline {A.1}Normal arrow laws}{47}
+\contentsline {section}{\numberline {A.2}Invertible arrow laws}{48}
+\contentsline {chapter}{\numberline {B}WPF integration demo -- code listings}{51}
+\contentsline {section}{\numberline {B.1}Creating the bindable source}{51}
+\contentsline {section}{\numberline {B.2}The binding arrow}{51}
+\contentsline {section}{\numberline {B.3}Doing the binding}{51}
+\contentsline {chapter}{\numberline {C}Code samples for case studies}{53}
+\contentsline {section}{\numberline {C.1}Username two-way binding}{53}
+\contentsline {subsection}{\numberline {C.1.1}Creating the bindable data source}{53}
+\contentsline {subsection}{\numberline {C.1.2}Creating the functionality for splitting the name}{54}
+\contentsline {subsection}{\numberline {C.1.3}Creating the binding}{55}
+\contentsline {section}{\numberline {C.2}List binding from a mock database}{57}
+\contentsline {subsection}{\numberline {C.2.1}Creating the bindable `database'}{57}
+\contentsline {subsection}{\numberline {C.2.2}Filtering and mapping the list}{57}
+\contentsline {subsection}{\numberline {C.2.3}Creating the binding}{58}
+\contentsline {chapter}{\numberline {D}Project Proposal}{59}

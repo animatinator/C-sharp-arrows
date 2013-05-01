@@ -7,7 +7,7 @@
 \usepackage[pdftex]{graphicx}
 
 \usepackage{listings}
-\lstset{basicstyle=\scriptsize\ttfamily,breaklines=true,language={[Sharp]C}}
+\lstset{basicstyle=\ttfamily,breaklines=true,language={[Sharp]C}} %\scriptsize
 
 \raggedbottom                           % try to avoid widows and orphans
 \sloppy
@@ -142,13 +142,14 @@ Many current languages and frameworks provide data binding features with varying
 
 Microsoft’s .NET framework offers a particularly powerful example of data binding through Windows Presentation Foundation (WPF). Based on the MVVM architecture, it has many features to allow things like two-way binding, binding through functions and bindings based on list operations. One of its key advantages is that the user interface can be defined entirely in XAML \footnote{Extensible Application Markup Language, an XML-based markup language for defining user interfaces and simple behaviour} with bindings being specified through XAML parameters. The view logic is then specified in the ViewModel which in turn communicates with the model. This means user interface designers can work purely in XAML without concern for the logic or binding mechanisms in place behind the scenes.
 
-However, WPF suffers from a similar problem to many other data binding frameworks: advanced data bindings can be very complex and difficult to manage, and setting up bindings in the first place requires quite a lot of boilerplate code in the model and view. Furthermore, binding through functions requires special ‘value converter’ classes to be written. This is essentially an application of the Template pattern, and the value converters are not type safe - they take objects as input and return objects as output (and bindings with multiple inputs will simply take arrays of objects with no guarantee that the right number of values has been passed). [Maybe more disadvantages?] Clearly a more simple and general binding framework would definitely make application development simpler.
+However, WPF suffers from a similar problem to many other data binding frameworks: advanced data bindings can be very complex and difficult to manage, and setting up bindings in the first place requires quite a lot of boilerplate code in the model and view. Furthermore, binding through functions requires special `value converter’ classes to be written. This is essentially an application of the Template pattern, and the value converters are not type safe - they take objects as input and return objects as output (and bindings with multiple inputs will simply take arrays of objects with no guarantee that the right number of values has been passed). Clearly a more simple and general binding framework would definitely make application development simpler.
+%TODO Maybe more disadvantages?
 
 \section{Project inspirations}
 
 Many useful ideas for data binding come from the area of functional programming. Functional reactive programming (FRP), for example, is a paradigm which nicely models the concept of data binding in a general way. Another useful concept is that of the `arrows' implemented in Haskell. An `arrow from type A to type B' essentially represents a process taking an input of type A and returning something of type B, and these can be arbitrarily combined in interesting ways to build up complex functions. More detail on both will be given in the next chapter.
 
-The FRP paradigm was the inspiration for the project, which sought to implement a general-purpose data binding framework in C$\sharp$ using concepts derived from functional programming. I successfully implemented a framework which provides data binding in both directions, through arbitrary functions with arbitrary numbers of inputs and outputs, all with a simple syntax based on lambda expressions. Minimal boilerplate code is required to set up bindable properties - the containing class should extend \texttt{Bindable}, and from there marking arbitrary member variables and properties with the \texttt{[Bindable]} tag will make it possible to create bindings to and from them with a single function call. I also implemented a large variety of arrow types and arrow operators along with a number of utility functions to make creating and combining them simple.
+The FRP paradigm was the inspiration for the project, which sought to implement a general-purpose data binding framework in C$\sharp$ using concepts derived from functional programming. I successfully implemented a framework which provides data binding in both directions, through arbitrary functions with arbitrary numbers of inputs and outputs, all with a simple syntax based on lambda expressions. Minimal boilerplate code is required to set up bindable properties -- the containing class should extend \texttt{Bindable}, and from there marking arbitrary member variables and properties with the \texttt{[Bindable]} tag will make it possible to create bindings to and from them with a single function call. I also implemented a large variety of arrow types and arrow operators along with a number of utility functions to make creating and combining them simple.
 
 \cleardoublepage
 
@@ -162,13 +163,13 @@ The FRP paradigm was the inspiration for the project, which sought to implement 
 
 \subsection{Functional reactive programming}
 
-Functional reactive programming (FRP) was one of the initial inspirations for the project. A good introduction is given by [http://conal.net/fran/tutorial.htm], which demonstrates how the principles can be applied to animation. In essence, functional reactive programming is a declarative way of specifying the relationships between different values. 'Signals' which change over time are created and passed around as first-class values, and other values can then be defined as functions of these signals.
+Functional reactive programming (FRP) was one of the initial inspirations for the project. A good introduction is given by~\cite{composing_reactive_animations}, which demonstrates how the principles can be applied to animation. In essence, functional reactive programming is a declarative way of specifying the relationships between different values. 'Signals' which change over time are created and passed around as first-class values, and other values can then be defined as functions of these signals.
 
 One of the main advantages of FRP is that it removes the need for explicitly defining how values are to be kept consistent and writing code to make this so. This is clearly solving a very similar problem to data binding, and so inspired the idea of making data binding more like FRP.
 
 \subsection{Arrows}
 
-Arrows were introduced by Hughes as a generalisation of \texttt{monads}. A monad takes the form \texttt{m a}, representing some computation which will give a result of type \texttt{a}. These are often useful in representing sequences of operations and those which involve side-effects. The basic monad type interface provides an identity function, which gives a monad returning whatever its input was, and a means of chaining monadic functions together. One way of viewing these is as a way of letting the programmer chain together functions in a way controlled by the monad -- for instance, the monad could be written to ensure that some form of global state is passed through along with the function results, or it could be used to handle error conditions without the programmer needing to write extra code for this. In all cases it is essentially handling some side-effect or background operation for the programmer, allowing them to chain various operations together without explicitly handling the side-effects.
+Arrows were introduced by Hughes as a generalisation of `monads' in~\cite{hughes_arrows}. A monad takes the form \texttt{m a}, representing some computation which will give a result of type \texttt{a}~\cite{monads}. These are often useful in representing sequences of operations and those which involve side-effects. The basic monad type interface provides an identity function, which gives a monad returning whatever its input was, and a means of chaining monadic functions together. One way of viewing these is as a way of letting the programmer chain together functions in a way controlled by the monad -- for instance, the monad could be written to ensure that some form of global state is passed through along with the function results, or it could be used to handle error conditions without the programmer needing to write extra code for this. In all cases it is essentially handling some side-effect or background operation for the programmer, allowing them to chain various operations together without explicitly handling the side-effects.
 
 Arrows represent a generalisation of monads, in the sense that any monad can be equivalently implemented as an arrow. However, an arrow is of the form \texttt{arrow b c}, taking an input of type \texttt{b} and transforming it into an output of type \texttt{c}. The basic operators are similar: an \texttt{arr} operator takes a function as an argument and returns the arrow representing that function, and the \texttt{>>>} operator chains two arrows together such that the output of the first is passed through the second. Further to these, the \texttt{first} operator takes an \texttt{arrow b c} and returns an \texttt{arrow (b, d) (c, d)} -- an arrow taking a pair and applying the original arrow only to the first element of the pair. With these basic operators, a number of more complex standard operators can be built up. These are discussed in Section \ref{sec:simple_arrow_implementation} on the implementation of arrows.
 
@@ -190,9 +191,9 @@ For the arrows, the requirements were taken from the existing, successful implem
 
 The implementation work was roughly done in two phases. In the early stages, a spiral model was used as it was unclear what the best way of implementing the arrows and binding framework would be. The first iteration was completed before the beginning of the project, and featured a very limited arrow class which worked on integers and supported only the basic combinators, and a binding framework which couldn't yet use arrows and required the sources and destinations to be special \texttt{BindingSource} and \texttt{BindingDestination} objects. Over several iterations the approach was refined until I found a suitable general and extensible implementation.
 
-From there, development was issue-driven Agile with sprints defined to be the work packages designated at the start of the project (though many of these work packages were altered and expanded slightly). The FogBugz\footnote{\texttt{www.fogcreek.com/fogbugz}} issue tracker was used to manage this and keep track of the various milestones. The project was tested throughout development with a series of unit tests, and I frequently tried implementing complex data bindings to ensure that new features being added were compatible with what was already there and the syntax was still reasonably clean.
+From there, development was issue-driven Agile with sprints defined to be the work packages designated at the start of the project (though many of these work packages were altered and expanded slightly). The FogBugz~\cite{fogbugz} issue tracker was used to manage this and keep track of the various milestones. The project was tested throughout development with a series of unit tests, and I frequently tried implementing complex data bindings to ensure that new features being added were compatible with what was already there and the syntax was still reasonably clean.
 
-The entire project (dissertation included) was stored in a Git repository which was backed up on external storage and online with BitBucket\footnote{\texttt{www.bitbucket.org}}.
+The entire project (dissertation included) was stored in a Git repository which was backed up on external storage and online with BitBucket~\cite{bitbucket}.
 
 \cleardoublepage
 
@@ -215,7 +216,7 @@ Implementing the highly functional idea of an arrow in C$\sharp$ posed an intere
 
 Tackling the type system was particularly difficult. I initially took the approach of writing arrow combinator functions so that they required no type parameters and instead inferred all their types by reflection. This made the syntax far neater and, using some run-time type checking, could plausibly be made type safe (though the compiler would have no way of enforcing it). However, after some experimenting it became clear that writing new operators and arrow types would be incredibly difficult using this approach, and the resulting code was very complicated and difficult to understand.
 
-It was therefore decided that arrows and combinators should all be statically typed, as this would allow the compiler to do type checking and lead to much cleaner code. However, this meant the issue of the programmer having to provide long lists of type parameters to every combinator was still there. I was eventually able to solve this problem by writing the combinators in such a way that the compiler could always infer types from the arguments without the programmer needing to supply them. Several more situations were fixed by including static extension methods which would use the source object to infer some parameters, and a series of static helper methods were included in the class \texttt{Op} to help fill in the gaps. This was easier said than done in several cases (which will be discussed later), but ultimately I managed to eliminate type parameters completely from the syntax.
+It was therefore decided that arrows and combinators should all be statically typed, as this would allow the compiler to do type checking and lead to much cleaner code. However, this meant the issue of the programmer having to provide long lists of type parameters to every combinator was still there. I was eventually able to solve this problem by writing the combinators in such a way that the compiler could always infer types from the arguments without the programmer needing to supply them. Several more situations were fixed by including static extension methods\footnote{Extension methods essentially allow you to define methods which act as though they belong to the object being passed in to them -- see~\cite{extension_methods} for a full explanation} which would use the source object to infer some parameters, and a series of static helper methods were included in the class \texttt{Op} to help fill in the gaps. This was easier said than done in several cases (which will be discussed later), but ultimately I managed to eliminate type parameters completely from the syntax.
 
 A further problem was how best to allow arrows from multiple inputs to multiple outputs. Simply having a \texttt{Func} with multiple inputs would not have worked as the arrow would have had to be rewritten for every given number of inputs, and to make matters worse \texttt{Func} is limited to one output. For some time I debated writing a generic binary-tree-structured type\footnote{All arrows work on nested pairs} to handle this, but on discovering C$\sharp$'s built-in \texttt{Tuple<T1, T2>} type I felt this would be the simplest option. This ended up complicating the data binding (as I will discuss later), but was entirely sufficient for supporting the arrow implementation.
 
@@ -448,7 +449,7 @@ public class DataSource : Bindable
 
 PostSharp is a C$\sharp$ extension which provides aspect-oriented programming (AOP) functionality. Essentially, AOP is a means of separating cross-cutting concerns from the code they affect, allowing 'aspects' to be written providing this common functionality. Markers can then be placed in the appropriate points, and the aspects will generate and inject their code into these locations at compile time.
 
-In this case, the \texttt{Bindable} aspect will intercept the setter of any property or member variable it is placed above and insert code to check whether the value has changed and throw appropriate events if it has. This does not interfere with any setters the programmer may already have specified, as it defers to the programmer's setter before throwing the event for the value changing (thus ensuring the event is only thrown once all values are updated and any side-effects have occurred).
+In this case, the \texttt{Bindable} aspect will intercept the setter of any property or member variable it is placed above and insert code to check whether the value has changed and throw appropriate events if it has. This does not interfere with any setters the programmer may already have specified, as it defers to the programmer's setter before throwing the event for the value changing (thus ensuring the event is only thrown once all values are updated and any side-effects have occurred). The technique for doing this was inspired by~\cite{postsharp_propertychanged} and~\cite{postsharp_locationinterception}.
 
 Unfortunately, the project budget only extended as far as the free version of PostSharp. Syntax for bindings could likely have been improved even further using the method and property introduction features provided by the full version, as this would have removed the need to extend Bindable. The unfortunate side-effect of the Bindable base class is that the class can no longer extend any other base class, as C$\sharp$ does not allow multiple class inheritance. However, in working with the binding framework it was found that this rarely caused problems that couldn't be worked around, and in any case patterns exist to overcome the lack of multiple inheritance in the general case\footnote{The 'composition over inheritance' pattern is one such technique which uses a shared base interface and a proxy object to 'inherit' from a class without using actual inheritance}.
 
@@ -717,7 +718,7 @@ Naturally, the C$\sharp$ arrow implementation comes with some overhead. Being bu
 
 \subsubsection{Measuring technique}
 
-A modular test framework was set up in which performance tests could be added by simply extending a base class and implementing methods for creating the arrow, the \texttt{Func} and the normal method. Timing was done by taking measurements of the total CPU time utilised by the current process, as follows:
+A modular test framework was set up in which performance tests could be added by simply extending a base class and implementing methods for creating the arrow, the \texttt{Func} and the normal method. Timing was done by taking measurements of the total CPU time utilised by the current process (see~\cite{total_processor_time}), as follows:
 
 \begin{lstlisting}[language={[sharp]C}]
 TimeSpan start = Process.GetCurrentProcess().TotalProcessorTime;
@@ -803,21 +804,58 @@ Fortunately, it was found that the execution time is linear in the length of the
 
 \chapter{Conclusions}
 
-As modular architectures like MVC and MVVM grow ever more popular, data binding will continue to be important in bridging the gap between disconnected sections of code. This project has been an exploration of a more functional approach to the problem which I think could work very well in future, as functional ideas like lambda expressions and type inference are rapidly becoming mainstream tools in software development. Overall I consider it a success, as despite a few syntactic issues it ultimately fulfils all I set out to do and performs reasonably well. Nonetheless, there are still several additions I may make in future to improve the framework:
+As modular architectures like MVC and MVVM grow ever more popular, data binding will continue to be important in bridging the gap between disconnected sections of code. This project has been an exploration of a more functional approach to the problem, which I think could work very well in future as functional ideas like lambda expressions and type inference are rapidly becoming mainstream tools in software development. Overall, I consider it a success, as despite a few syntactic issues it ultimately fulfils all I set out to do and performs reasonably well. Nonetheless, there are still several additions I may make in future to improve the framework. These improvements are outlined in the next section.
 
-\begin{description}
-	\item[Custom tuple type] The C$\sharp$ \texttt{Tuple} type, whilst very helpful initially, led to a lot of complications with many-to-many bindings (explored in Section \ref{sec:many_many_bindings}). This could have been avoided had I created my own binary-tree-structured type designed to be easily usable with the binding framework, and I could even implement conversion from standard tuples easily enough.
-	\item[Better integration with WPF] Unfortunately I was unable to completely integrate the arrows with WPF to the point where they can be used in XAML. This issue was explored and found to be very difficult to work around, so is best left to future work.
-	\item[Feedback arrows] Haskell's arrows provide some fairly useful looping functionality through arrow feedback, but due to time constraints (and to avoid scope creep) this was not fully explored. However, this would perhaps be an interesting thing to look into in future.
-	\item[Syntax enhancements] As mentioned at the end of Section \ref{sec:syntax_comparison_haskell}, Roslyn could perhaps be used to develop a more Haskell-like syntax for arrows. However, this would likely be very complicated and would need to be postponed until Roslyn is complete.
-	\item[Performance] Arrow performance is still not ideal: chaining together arrows with the combinators adds a lot of overhead as the complexity increases. A possible improvement would be to look at using C$\sharp$ \texttt{ExpressionTree} manipulations to dynamically simplify the results of arrow combinations.
-\end{description}
+\section{Future work}
+
+\subsection{Custom tuple type}
+
+The C$\sharp$ \texttt{Tuple} type, whilst very helpful initially, led to a lot of complications with many-to-many bindings (explored in Section \ref{sec:many_many_bindings}). This could have been avoided had I created my own binary-tree-structured type designed to be easily usable with the binding framework, and I could even implement conversion from standard tuples easily enough.
+
+\subsection{Better integration with WPF}
+
+Unfortunately I was unable to completely integrate the arrows with WPF to the point where they can be used in XAML. This issue was explored and found to be very difficult to work around, so is best left to future work.
+
+\subsection{Feedback arrows}
+
+Haskell's arrows provide some fairly useful looping functionality through arrow feedback, but due to time constraints (and to avoid scope creep) this was not fully explored. However, this would perhaps be an interesting thing to look into in future.
+
+\subsection{Syntax enhancements}
+
+As mentioned at the end of Section \ref{sec:syntax_comparison_haskell}, Roslyn could perhaps be used to develop a more Haskell-like syntax for arrows. However, this would likely be very complicated and would need to be postponed until Roslyn is complete.
+
+\subsection{Performance}
+
+Arrow performance is still not especially good: chaining together arrows with the combinators adds a lot of overhead as the complexity increases. A possible improvement would be to look at using C$\sharp$ \texttt{ExpressionTree} manipulations to dynamically simplify the results of arrow combinations. For instance, the chain of identity functions developed in Section \ref{sec:arrow_chaining_overhead} could theoretically be simplified to a single identity function if arrow functions were substituted into each other on combination.
 
 \section{Final words}
 
-Overall, the project clearly still has some way to go before it's usable and efficient enough to be a complete alternative to WPF. But despite this, I think it was definitely successful in its goals of bringing a largely complete arrow implementation to C$\sharp$ and providing a powerful general-purpose data binding framework built around it. The result has very minimal boilerplate code, and allows for a large range of complex functional bindings which would be very difficult to implement with plain WPF binding. I intend to continue work on the improvements suggested above, and hope to see functional programming ideas continue to become more widespread in similar areas over the coming years.
+Overall, the project clearly still has some way to go before it's usable and efficient enough to be a complete alternative to WPF. But despite this, I think it was definitely successful in its goals of bringing a largely complete arrow implementation to C$\sharp$ and providing a powerful general-purpose data binding framework. The result has very minimal boilerplate code and allows for a large range of complex functional bindings, which would be very difficult to implement with plain WPF binding.
+
+In general, it's not clear how well a FRP-based system would fit in with traditional OOP principles. The system implemented requires a lot of dynamic typing and type inference, which are very rarely found in current OOP languages like Java or C++. The solution of using reflection is also not particularly safe and is prone to error. However, recent versions of the .NET framework have featured increasing amounts of type inference -- for instance, the \texttt{var} keyword which tells the compiler to infer the correct type, and the \texttt{dynamic} keyword which allows for dynamic typing (both of these were invaluable to this project). Meanwhile, Java 8 now includes lambda expressions, and Scala is a language which is both OOP and functional, so it is clear that functional language features are gaining popularity in mainstream languages. I intend to continue work on the improvements suggested above, and hope to see functional programming ideas continue to become more widespread in similar areas over the coming years.
 
 \cleardoublepage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography
+
+\nocite{arrow_calculus}
+\nocite{hughes_arrows}
+\nocite{arrows_robots_frp}
+\nocite{frp_first_principles}
+\nocite{composing_reactive_animations}
+\nocite{haskell_arrows}
+\nocite{arrows_and_computation}
+\nocite{hughes_programming_with_arrows}
+\nocite{wpf_data_binding_overview}
+\nocite{functional_reactive_programming}
+\nocite{invertible_arrows}
+\nocite{arrow_notation}
+\nocite{postsharp}
+
+\bibliographystyle{plain}
+\bibliography{Bibliography}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -924,6 +962,9 @@ f.First<T>().Invert() $\approx$ f.Invert().First<T>()
 
 \cleardoublepage
 
+
+%Set code size to small from here on so things fit in
+\lstset{basicstyle=\ttfamily\scriptsize,breaklines=true,language={[Sharp]C}}
 
 \chapter{WPF integration demo -- code listings}  \label{sec:wpf_integration_code}
 
@@ -1183,21 +1224,8 @@ BindingsManager.CreateBinding(
 
 %\section{Some other demo}?
 
+\chapter{Project Proposal}
 
-\nocite{arrow_calculus}
-\nocite{hughes_arrows}
-\nocite{arrows_robots_frp}
-\nocite{frp_first_principles}
-\nocite{composing_reactive_animations}
-\nocite{haskell_arrows}
-\nocite{arrows_and_computation}
-\nocite{hughes_programming_with_arrows}
-\nocite{wpf_data_binding_overview}
-\nocite{functional_reactive_programming}
-\nocite{invertible_arrows}
-\nocite{arrow_notation}
-
-\bibliographystyle{plain}
-\bibliography{Bibliography}
+\input{Proposal}
 
 \end{document}
