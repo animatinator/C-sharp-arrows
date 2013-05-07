@@ -40,12 +40,12 @@
 \contentsline {subsection}{\numberline {4.2.2}Binding syntax}{31}
 \contentsline {subsubsection}{Username two-way binding}{32}
 \contentsline {subsubsection}{List binding from a mock database}{33}
-\contentsline {section}{\numberline {4.3}Performance testing}{34}
-\contentsline {subsection}{\numberline {4.3.1}Arrow performance}{34}
+\contentsline {section}{\numberline {4.3}Performance testing}{35}
+\contentsline {subsection}{\numberline {4.3.1}Arrow performance}{35}
 \contentsline {subsubsection}{Measuring technique}{35}
 \contentsline {subsubsection}{Simple function results}{35}
 \contentsline {subsubsection}{List function results}{36}
-\contentsline {subsubsection}{Overhead due to arrow chaining}{37}
+\contentsline {subsubsection}{Overhead due to arrow chaining}{38}
 \contentsline {chapter}{\numberline {5}Conclusions}{41}
 \contentsline {section}{\numberline {5.1}Future work}{41}
 \contentsline {subsection}{\numberline {5.1.1}Custom tuple type}{41}

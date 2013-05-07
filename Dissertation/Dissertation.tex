@@ -81,7 +81,7 @@ The project aimed to provide a general-purpose data binding framework for C$\sha
 
 \section*{Work Completed}
 
-All the original goals were met: a general-purpose data binding framework based on arrows has been implemented, and an extensive arrow implementation has been completed. As well as the standard operators, a series of more complex extra operators have also been added, and some additional arrow types have been included -- for instance, `list arrows' which map between enumerable data types. The framework allows bindings in both directions, between multiple sources and multiple destinations, and the arrows can be used in conjunction with WPF data binding with reasonable ease.
+All the original goals were met: a general-purpose data binding framework based on arrows has been implemented, and an extensive arrow implementation has been completed. As well as the standard operators, a series of more complex extra operators has also been added, and some additional arrow types have been included -- for instance, `list arrows' which map between enumerable data types. The framework allows bindings in both directions, between multiple sources and multiple destinations, and the arrows can be used in conjunction with WPF data binding with reasonable ease.
 
 %TODO
 %Continue this?
@@ -143,7 +143,7 @@ Many current languages and frameworks provide data binding features with varying
 
 \section{Data binding in .NET}
 
-Microsoft’s .NET framework offers a particularly powerful example of data binding through Windows Presentation Foundation (WPF). Based on the MVVM architecture, it has many features to allow things like two-way binding, binding through functions and bindings based on list operations. One of its key advantages is that the user interface can be defined entirely in XAML\footnote{Extensible Application Markup Language, an XML-based markup language for defining user interfaces and simple behaviour} with bindings being specified through XAML parameters. The view logic is then specified in the ViewModel which in turn communicates with the model. This means user interface designers can work purely in XAML without concern for the logic or binding mechanisms in place behind the scenes.
+Microsoft's .NET framework offers a particularly powerful example of data binding through Windows Presentation Foundation (WPF). Based on the MVVM architecture, it has many features to allow things like two-way binding, binding through functions and bindings based on list operations. One of its key advantages is that the user interface can be defined entirely in XAML\footnote{Extensible Application Markup Language, an XML-based markup language for defining user interfaces and simple behaviour} with bindings being specified through XAML parameters. The view logic is then specified in the ViewModel which in turn communicates with the model. This means user interface designers can work purely in XAML without concern for the logic or binding mechanisms in place behind the scenes.
 
 However, WPF suffers from a similar problem to many other data binding frameworks: advanced data bindings can be very complex and difficult to manage, and setting up bindings in the first place requires quite a lot of boilerplate code in the model and view. Furthermore, binding through functions requires special `value converter' classes to be written. This is essentially an application of the Template pattern, and the value converters are not type safe - they take objects as input and return objects as output (and bindings with multiple inputs will simply take arrays of objects with no guarantee that the right number of values has been passed). Clearly a more simple and general binding framework would definitely make application development simpler.
 %TODO Maybe more disadvantages?
@@ -166,7 +166,7 @@ The FRP paradigm was the inspiration for the project, which sought to implement 
 
 \subsection{Functional reactive programming}
 
-Functional reactive programming (FRP) was one of the initial inspirations for the project. A good introduction is given by~\cite{composing_reactive_animations}, which demonstrates how the principles can be applied to animation. In essence, functional reactive programming is a declarative way of specifying the relationships between different values. 'Signals' which change over time are created and passed around as first-class values, and other values can then be defined as functions of these signals.
+Functional reactive programming (FRP) was one of the initial inspirations for the project. A good introduction is given by~\cite{composing_reactive_animations}, which demonstrates how the principles can be applied to animation. In essence, functional reactive programming is a declarative way of specifying the relationships between different values. `Signals' which change over time are created and passed around as first-class values, and other values can then be defined as functions of these signals.
 
 One of the main advantages of FRP is that it removes the need for explicitly defining how values are to be kept consistent and writing code to make this so. This is clearly solving a very similar problem to data binding, and so inspired the idea of making data binding more like FRP.
 
@@ -192,7 +192,7 @@ For the arrows, the requirements were taken from the existing, successful implem
 
 \section{Software engineering approach}
 
-The implementation work was roughly done in two phases. In the early stages, a spiral model was used as it was unclear what the best way of implementing the arrows and binding framework would be. The first iteration was completed before the beginning of the project, and featured a very limited arrow class which worked on integers and supported only the basic combinators, and a binding framework which couldn't yet use arrows and required the sources and destinations to be special \texttt{BindingSource} and \texttt{BindingDestination} objects. Over several iterations the approach was refined until I found a suitable general and extensible implementation.
+The implementation work was roughly done in two phases. In the early stages, a spiral model was used as it was unclear what the best way of implementing the arrows and binding framework would be. The first iteration was completed whilst the project proposal was being written, and featured a very limited arrow class which worked on integers and supported only the basic combinators, and a binding framework which couldn't yet use arrows and required the sources and destinations to be special \texttt{BindingSource} and \texttt{BindingDestination} objects. Over several iterations the approach was refined until I found a suitable general and extensible implementation.
 
 From there, development was issue-driven Agile with sprints defined to be the work packages designated at the start of the project (though many of these work packages were altered and expanded slightly). The FogBugz~\cite{fogbugz} issue tracker was used to manage this and keep track of the various milestones. The project was tested throughout development with a series of unit tests, and I frequently tried implementing complex data bindings to ensure that new features being added were compatible with what was already there and the syntax was still reasonably clean.
 
@@ -208,7 +208,7 @@ The entire project (dissertation included) was stored in a Git repository which 
 
 \section{Overview}
 
-The implementation work consisted of two main parts: the arrows and the binding framework. As mentioned, these were both initially developed through repeated iterations as different strategies were being investigated and new options discovered. This chapter describes the main development work and highlights the various difficulties encountered along the way.
+The implementation work consisted of two main parts: the arrows and the binding framework. As mentioned above, these were both initially developed through repeated iterations as different strategies were being investigated and new options discovered. This chapter describes the main development work and highlights the various difficulties encountered along the way.
 
 
 \section{Arrows}
@@ -217,7 +217,7 @@ The implementation work consisted of two main parts: the arrows and the binding 
 
 Implementing the highly functional idea of an arrow in C$\sharp$ posed an interesting challenge. Fundamentally, there were two main obstacles to overcome: C$\sharp$'s syntax, which is far clunkier than Haskell's; and the type system, which is far more restrictive and relies on static analysis at compile time. It was decided early on that arrows would be built on lambda expressions as these seemed the most natural way of expressing the desired functionality. C$\sharp$'s generic \texttt{Func<T1, T2>} type provided a good way of handling arbitrary lambda expressions between arbitrary types, and so this became the basis for the arrow type.
 
-Tackling the type system was particularly difficult. I initially took the approach of writing arrow combinator functions so that they required no type parameters and instead inferred all their types by reflection. This made the syntax far neater and, using some run-time type checking, could plausibly be made type safe (though the compiler would have no way of enforcing it). However, after some experimenting it became clear that writing new operators and arrow types would be incredibly difficult using this approach, and the resulting code was very complicated and difficult to understand.
+Tackling the type system was particularly difficult. I initially took the approach of writing arrow combinator functions so that they required no type parameters and instead inferred all their types by reflection. This made the syntax far neater and, using some run-time type checking, could plausibly be made type safe (though the compiler would have no way of enforcing it). However, after some experimenting it became clear that writing new operators and arrow types would be particularly difficult using this approach, and the resulting code was very complicated and difficult to understand.
 
 It was therefore decided that arrows and combinators should all be statically typed, as this would allow the compiler to do type checking and lead to much cleaner code. However, this meant the issue of the programmer having to provide long lists of type parameters to every combinator was still there. I was eventually able to solve this problem by writing the combinators in such a way that the compiler could always infer types from the arguments without the programmer needing to supply them. Several more situations were fixed by including static extension methods\footnote{Extension methods essentially allow you to define methods which act as though they belong to the object being passed in to them -- see~\cite{extension_methods} for a full explanation} which would use the source object to infer some parameters, and a series of static helper methods were included in the class \texttt{Op} to help fill in the gaps. This was easier said than done in several cases (which will be discussed later), but ultimately I managed to eliminate type parameters completely from the syntax.
 
@@ -230,7 +230,7 @@ A further problem was how best to allow arrows from multiple inputs to multiple 
 
 The first objective in implementing arrows was to get the simple function-based arrow working, as all the others derive from this. As mentioned earlier, it was implemented using the C$\sharp$ \texttt{Func<A, B>} class to hold its function. An \texttt{Invoke} method is then exposed for using the arrow.
 
-Whilst arrows can be constructed using \texttt{new Arrow<A, B>(function)}\footnote{\texttt{function} is a \texttt{Func<A, B>} here}, a simpler syntax is provided by an extension method:
+While arrows can be constructed using \texttt{new Arrow<A, B>(function)}\footnote{\texttt{function} is a \texttt{Func<A, B>} here}, a simpler syntax is provided by an extension method:
 
 \begin{lstlisting}[language={[Sharp]C}]
 var increment = function.Arr();
@@ -334,7 +334,7 @@ var firstArrow = originalArrow
                          .First<Tuple<A, B>, Tuple<C, D>, int>();
 \end{lstlisting}
 
-It was decided that this was too cumbersome to be used in practice. The next attempt used a supplementary \texttt{First} method taking only the one unknown parameter, and using reflection to get the type of the arrow and invoke the original \texttt{First} method with its type. This works reasonably well and so was kept in the final version, but the code is incredibly messy due to all the reflection.
+It was decided that this was too cumbersome to be used in practice. The next attempt used a supplementary \texttt{First} method taking only the one unknown parameter, and using reflection to get the type of the arrow and invoke the original \texttt{First} method with its type. This works reasonably well and so was kept in the final version, but the code is messy due to all the reflection.
 
 The final version was a modification of the first which allowed the compiler to infer the third type parameter by requiring that the user pass in a value of that type (hence the syntax shown in the last section). Although this isn't perfect, it is by far the cleanest workaround.
 
@@ -342,7 +342,7 @@ Another problem which was discovered was implementing standard polymorphic arrow
 
 \subsection{Invertible arrows}
 
-At the time of writing the proposal, I was still unsure of the best way of implementing invertible arrows. There were two main strategies I was considering: simply requiring the user to supply an arrow for each direction, or providing a basic set of invertible functions and allowing the user to compose these together to build up more complex functions. The former wouldn't have worked very well as part of the advantage of using arrows in data binding is that simple ones can be re-used in building up multiple different bindings, and having to build up two arrows independently would be very messy and prone to error. The latter also has several problems. For instance, what functions should be made available to prevent the system being too restrictive? Also, if the functions were too simple then many would need to be combined in most cases, and this can cause a lot of unnecessary overhead (as explored in Section~\ref{sec:arrow_chaining_overhead}).
+At the time of writing the proposal, I was still unsure of the best way of implementing invertible arrows. There were two main strategies I was considering: simply requiring the user to supply an arrow for each direction, or providing a basic set of invertible functions and allowing the user to compose these together to build up more complex functions. The former wouldn't have worked very well as part of the advantage of using arrows in data binding is that simple ones can be re-used in building up multiple different bindings, and having to build up two arrows independently would be untidy and prone to error. The latter also has several problems. For instance, what functions should be made available to prevent the system being too restrictive? Also, if the functions were too simple then many would need to be combined in most cases, and this can cause a lot of unnecessary overhead (as explored in Section~\ref{sec:arrow_chaining_overhead}).
 
 Ultimately, a solution roughly combining the two approaches was found. This was largely inspired by \cite{invertible_arrows}, and is based on an \texttt{Arr} operator which takes \textit{two} functions rather than one -- one function for each direction. The arrows can then be combined using all the same combinators as are available for simple arrows (bar those which don't have inverses, such as \texttt{Unsplit}). As a result, it gives the same flexibility as allowing the user to simply define two arrows, but saves time by retaining the composability that makes arrows useful. An example of how an invertible arrow can be constructed using the \texttt{Arr} extension method is given below:
 
@@ -353,13 +353,13 @@ var invertibleIncrement = new Func((int x) => x + 1)
 
 An invertible arrow can be used in the other direction by calling \texttt{Invert()} to get a new invertible arrow which is the original one reversed.
 
-To make implementation simpler and reduce code duplication, many of the invertible arrow combinators make use of the standard arrow combinators in their implementations. The basic operators, \texttt{Arr}, \texttt{Combine} and \texttt{First}, are all overloaded so that any composite operators which use them will work for invertible arrows for free.
+To make implementation simpler and reduce code duplication, many of the invertible arrow combinators make use of the standard arrow combinators in their implementations. The basic operators, \texttt{Arr}, \texttt{Combine} and \texttt{First}, are all overloaded so that any composite operators that use them will work for invertible arrows for free.
 
 \subsection{List arrows}
 
 Whilst exploring existing uses of data binding in WPF applications, it was discovered that a fairly common use case involves binding some form of list display to an enumerable data structure in the model. WPF provides support for this already, but trying to do it with arrows would be syntactically clunky -- for one thing, the arrow types would all be of the form \texttt{Arrow<IEnumerable<T1>, IEnumerable<T2>>}. To simplify this I decided it would make sense to implement an `arrow on lists' abstracting away the actual list processing details and exposing a simple set of common list operators.
 
-The result is a set of simple arrows implementing SQL-like functionality on enumerable data sources. List arrows are all of the type \texttt{ListArrow<T1, T2>}, which extends \texttt{Arrow<IEnumerable<T1>, IEnumerable<T2>>} for compatibility with existing arrows. There are a variety of simple list arrows which can be combined to build up complex functionality:
+The result is a set of simple arrows implementing SQL-like functionality on enumerable data sources. List arrows are all of the type \texttt{ListArrow<T1, T2>}, which extends \texttt{Arrow<IEnumerable<T1>, IEnumerable<T2>>} for compatibility with existing arrows. There is a variety of simple list arrows which can be combined to build up complex functionality:
 
 \begin{description}
 	\item[\texttt{FilterArrow<A>}] Accepts a function from \texttt{A} to \texttt{bool}, which it uses to filter the list to those matching the predicate
@@ -399,12 +399,12 @@ var listArrow = listArrow
 
 \subsection{Further utility arrows} \label{sec:further_utility_arrows}
 
-To simplify various common tasks, a number of simple utility arrows were written. These simply inherited from an arrow on the appropriate types, and initialised the arrow to some particular function in the constructor.
+To simplify various common tasks, several simple utility arrows were written. These simply inherited from an arrow on the appropriate types, and initialised the arrow to some particular function in the constructor.
 
 \begin{description}
 	\item[Identity arrows] The identity arrow, though very rarely used in practice, plays a key part in several of the arrow laws. Creating it from a \texttt{Func} every time made the tests a lot messier, so a simple \texttt{IDArrow<T>} class was written which takes a type parameter and returns an identity arrow on that type. An invertible version of this was also written for the invertible arrow laws.
 	\item[Swap arrow] This fulfilled a need which came up surprisingly often: given two types \texttt{A} and \texttt{B}, create an arrow on a \texttt{Tuple<A, B>} which swaps them around and outputs a \texttt{Tuple<B, A>}.
-	\item[Tuple reassociation arrows] The tuple operations \texttt{assoc} and \texttt{cossa}\footnote{\texttt{assoc} takes a tuple ((a, b), c) and returns (a, (b, c)), whilst \texttt{cossa} does the opposite} turn up reasonably frequently in functional programming, and feature in several of the arrow laws. As these are fairly fiddly to implement I decided it would make sense to create utility arrows for both these functions.
+	\item[Tuple reassociation arrows] The tuple operations \texttt{assoc} and \texttt{cossa}\footnote{\texttt{assoc} takes a tuple ((a, b), c) and returns (a, (b, c)), whilst \texttt{cossa} does the opposite} turn up reasonably frequently in functional programming, and feature in several of the arrow laws. As these are both awkward to implement I decided it would make sense to create utility arrows for both these functions.
 \end{description}
 
 %TODO
@@ -417,7 +417,7 @@ To simplify various common tasks, a number of simple utility arrows were written
 
 \subsection{Overall architecture}
 
-The basis for the data binding system is a publish/subscribe network, where bound values publish events when they are updated and bindings update on receiving these events. A couple of alternatives were considered for this: the first idea was to have binding sources hold a reference to their target and a copy of the arrow associated with the binding, allowing them to simply update the referenced value via the arrow when needed. However, C$\sharp$ lacks the ability to hold references as member variables in this way. The simple approach of simply periodically polling all bound variables to check for updates was also considered, but this was clearly no good: polling is system-intensive and wasteful with many bindings using the same source, a binding target's value would potentially be `invalid' between polling updates, and the bindings manager would need to store a copy of every bound variable.
+The basis for the data binding system is a publish/subscribe network, where bound values publish events when they are updated and bindings update on receiving these events. A couple of alternatives were considered for this: the first idea was to have binding sources hold a reference to their target and a copy of the arrow associated with the binding, allowing them to simply update the referenced value via the arrow when needed. However, C$\sharp$ lacks the ability to hold references as member variables in this way. The simple approach of periodically polling all bound variables to check for updates was also considered, but this was clearly no good: polling is system-intensive, and potentially wasteful when a number of variables bind to the same source. Furthermore, a binding target's value would potentially be `invalid' between polling updates, and the bindings manager would need to store a copy of every bound variable.
 
 Conveniently, C$\sharp$ provides simple syntax for event-based programming. Events can be created for a class and thrown with a method call, and other objects can subscribe and unsubscribe simply by adding or removing their handler methods from the event. The clearest approach was therefore to attach events to bindable objects and have them trigger whenever a bound variable is updated. The bindings manager, when creating a binding, need only tell the binding to subscribe to the source object's event and it will then be notified of all updates to variables. Information stored in the event arguments is used to filter out events from variables the binding is not watching, and the updated value is passed through the binding's arrow and then assigned to the destination variable. This approach is shown in Figure \ref{fig:binding_framework}.
 
@@ -432,11 +432,11 @@ An advantage of this technique is that sources and destinations can be treated i
 
 \subsection{Creating bindable sources and destinations}
 
-One of the main problems with WPF data binding is the complexity of making sources 'bindable'. This usually requires that the programmer manually implement the \texttt{INotifyPropertyChanged} interface, creating appropriate events and overriding the set methods of all their properties such that they throw the right events. This often becomes a case of copying and pasting the code used for other data sources as it is almost always identical and includes boilerplate tasks like ensuring a variable's new value is different from its old one before throwing the event, and checking that the event isn't null.
+One of the main problems with WPF data binding is the complexity of making sources `bindable'. This usually requires that the programmer manually implement the \texttt{INotifyPropertyChanged} interface, creating appropriate events and overriding the set methods of all their properties such that they throw the right events. This often becomes a case of copying and pasting the code used for other data sources as it is almost always identical and includes boilerplate tasks like ensuring a variable's new value is different from its old one before throwing the event, and checking that the event isn't null.
 
 For this project I decided to abstract these details away into a base class, called \texttt{Bindable}. This provides events for binding and a set of methods used by binding classes to manage data binding, many of which will be discussed later in this section. The most important are those which allow getting and setting of arbitrary variables by name using reflection, as these are the main interface used by the bindings manager. These have been designed to be dynamically type safe (that is, throwing exceptions at run time where type errors are encountered), to ensure the properties being accessed exist and to abstract away the differences between properties and simple public member variables\footnote{WPF does not allow binding to member variables, but for this project I decided there was no obvious need to distinguish between the two}.
 
-The result of this is that instead of writing all the boilerplate code one would usually write, the programmer need only make their sources and destinations extend Bindable and all the usual things will be handled elsewhere leading to considerably less code clutter. A representative example of the final syntax is given in Listing \ref{lst:bindable_source_class}.
+The result of this is that instead of writing all the boilerplate code one would usually write, the programmer need only make their sources and destinations extend \texttt{Bindable} and all the usual things will be handled elsewhere leading to considerably less code clutter. A representative example of the final syntax is given in Listing \ref{lst:bindable_source_class}.
 
 Another addition that can be seen in the listing is the \texttt{[Bindable]} attribute which has been used above the \texttt{value} property. This uses a PostSharp aspect, explained in the next section, to intercept the setter for throwing events and so relieve the programmer of having to do this themselves.
 
@@ -454,7 +454,7 @@ PostSharp is a C$\sharp$ extension which provides aspect-oriented programming (A
 
 In this case, the \texttt{Bindable} aspect will intercept the setter of any property or member variable it is placed above and insert code to check whether the value has changed and throw appropriate events if it has. This does not interfere with any setters the programmer may already have specified, as it defers to the programmer's setter before throwing the event for the value changing (thus ensuring the event is only thrown once all values are updated and any side-effects have occurred). The technique for doing this was inspired by~\cite{postsharp_propertychanged} and~\cite{postsharp_locationinterception}.
 
-Unfortunately, the project budget only extended as far as the free version of PostSharp. Syntax for bindings could likely have been improved even further using the method and property introduction features provided by the full version, as this would have removed the need to extend Bindable. The unfortunate side-effect of the Bindable base class is that the class can no longer extend any other base class, as C$\sharp$ does not allow multiple class inheritance. However, in working with the binding framework it was found that this rarely caused problems that couldn't be worked around, and in any case patterns exist to overcome the lack of multiple inheritance in the general case\footnote{The `composition over inheritance' pattern is one such technique which uses a shared base interface and a proxy object to `inherit' from a class without using actual inheritance}.
+Unfortunately, the project budget only extended as far as the free version of PostSharp. Syntax for bindings could likely have been improved even further using the method and property introduction features provided by the full version, as this would have removed the need to extend \texttt{Bindable}. The unfortunate side-effect of the \texttt{Bindable} base class is that the class can no longer extend any other base class, as C$\sharp$ does not allow multiple class inheritance. However, in working with the binding framework it was found that this rarely caused problems that couldn't be worked around, and in any case patterns exist to overcome the lack of multiple inheritance in the general case\footnote{The `composition over inheritance' pattern is one such technique which uses a shared base interface and a proxy object to `inherit' from a class without using actual inheritance}.
 
 \subsection{Creating bindings}
 
@@ -547,11 +547,11 @@ This can be overcome by using an \texttt{ObservableCollection} instead of a list
 
 \subsection{Integration work with WPF}
 
-As the standard WPF binding method is fairly widely-used and naturally compatible with WPF, it was decided that arrows should be made compatible with it. WPF's standard approach to binding through a function is by creating a class extending the \texttt{IValueConverter} interface which implements the desired functionality through its \texttt{Convert} and \texttt{ConvertBack} methods. It was therefore reasonably simple to implement a value converter which allowed an arrow to be used for the conversion. However, this cannot be used when defining bindings in XAML as it does not allow constructor parameters to be passed in (it is possible to \textit{set} parameters in XAML, but this is a clunky workaround and the application would crash if the arrow was left unset). Creating WPF bindings with arrows is therefore limited to the code-behind.
+As the standard WPF binding method is fairly widely used and naturally compatible with WPF, it was decided that arrows should be made compatible with it. WPF's standard approach to binding through a function is by creating a class extending the \texttt{IValueConverter} interface which implements the desired functionality through its \texttt{Convert} and \texttt{ConvertBack} methods. It was therefore reasonably simple to implement a value converter which allowed an arrow to be used for the conversion. However, this cannot be used when defining bindings in XAML as it does not allow constructor parameters to be passed in (it is possible to \textit{set} parameters in XAML, but this is an awkward workaround and the application would crash if the arrow was left unset). Creating WPF bindings with arrows is therefore limited to the code-behind.
 
 One area where WPF integration went particularly well is in removing the boilerplate usually required to make a source bindable. In general, the programmer has to set up an event to be triggered when the bound variable changes and override the setters of all bound variables so that they throw this event. The method throwing the event also has to pass in the name of the variable triggering it (for disambiguation) and ensure that the event is not null (which occurs when it has no subscribers). This is usually combined with a method which stores variables' old values and checks that they have actually changed to avoid redundant updates. I was able to extract all this functionality into the \texttt{Bindable} base class and the PostSharp aspect, thus removing all the standard boilerplate. Variables can now be made bindable simply by making their class extend \texttt{Bindable} and placing the \texttt{[Bindable]} tag above them.
 
-To demonstrate the WPF integration, a simple demo application was made in which a constantly incrementing 'time' variable is bound through a sin function to a progress bar. This is pictured in Figure \ref{fig:wpf_integration_demo}, and the main source code listings can be found in Appendix \ref{sec:wpf_integration_code}.
+To demonstrate the WPF integration, a simple demo application was made in which a constantly incrementing `time' variable is bound through a sine function to a progress bar. This is pictured in Figure \ref{fig:wpf_integration_demo}, and the main source code listings can be found in Appendix \ref{sec:wpf_integration_code}.
 
 \begin{figure}[!ht]
   \centering
@@ -570,9 +570,9 @@ To demonstrate the WPF integration, a simple demo application was made in which 
 
 \section{Correctness of arrow implementations}
 
-The key requirement for an arrow type satisfying the original definition by Hughes is that it conforms to a set of 'arrow laws' defining how the various basic combinators should work. While there are numerous variations on the set of arrow laws, the standard ones used by Haskell are given in~\cite{haskell_wiki_arrows}. These are listed in Appendix \ref{sec:arrow_laws}, along with their equivalent definitions using the C$\sharp$ syntax.
+The key requirement for an arrow type satisfying the original definition by Hughes is that it conforms to a set of `arrow laws' defining how the various basic combinators should work. While there are numerous variations on the set of arrow laws, the standard ones used by Haskell are given in~\cite{haskell_wiki_arrows}. These are listed in Appendix \ref{sec:arrow_laws}, along with their equivalent definitions using the C$\sharp$ syntax.
 
-As invertible arrows conform to a slightly different set of arrow laws (which put extra requirements on their inverses), both one-way arrows and invertible arrows had to be tested separately. List and choice arrows were not separately tested as they are entirely built upon normal one-way arrows, and so will conform to the arrow laws for free if simple arrows do.
+As invertible arrows conform to a slightly different set of arrow laws (which put extra requirements on their inverses), one-way arrows and invertible arrows had to be tested separately. List and choice arrows were not separately tested as they are entirely built upon normal one-way arrows, and so will conform to the arrow laws by construction if simple arrows do.
 
 %TODO
 %Mention correctness proof by decomposition into lambda calculus?
@@ -593,13 +593,13 @@ One interesting case was the identity law -- in C$\sharp$ notation:
 new IDArrow<T>() $\approx$ id
 \end{lstlisting}
 
-This differs from the other laws because it has to be proven true over all \textit{types} rather than simply for all inputs. As such, the test proceeds by obtaining a representative list of types and using reflection to build an identity arrow for each, then uses the standard technique of firing lots or random inputs at it and asserting that the arrow does indeed represent the identity function. The set of types used was just the set of primitive types, obtained by querying the current assembly for all available types and filtering the non-primitive ones (as non-primitive types would have to be initialised to null, which defeats the purpose of testing correctness over all types).
+This differs from the other laws because it has to be proven true over all \textit{types} rather than simply for all inputs. As such, the test proceeds by obtaining a representative list of types and using reflection to build an identity arrow for each, then uses the standard technique of firing lots of random inputs at it and determining whether the arrow does indeed represent the identity function. The set of types used was just the set of primitive types, obtained by querying the current assembly for all available types and filtering the non-primitive ones (as non-primitive types would have to be initialised to null, which defeats the purpose of testing correctness over all types).
 
 To reduce complexity, `random' arrows were produced by randomly selecting a function from a set of pre-defined functions and constructing an arrow with it. It seems reasonable to assume that if an arrow law were to hold for some combination of these functions, but fail on another, then the problem is more likely with the C$\sharp$ compiler than with the arrow implementation.
 
 \subsubsection{Invertible arrows}
 
-Invertible arrow laws are listed in Appendix \ref{sec:invertible_arrow_laws}, again with their C$\sharp$ equivalents. These were slightly more complicated to test than simple arrows as the laws have to hold for inverses as well. They also required random arrows with inverses provided as well. However, aside from being slightly longer to write the laws were generally fairly simple to test. As a small example, the test for double inversion is given below:
+Invertible arrow laws are listed in Appendix \ref{sec:invertible_arrow_laws}, again with their C$\sharp$ equivalents. These were slightly more complicated to test than simple arrows as the laws have to hold for inverses as well. They also required the random arrows to have their inverses provided. However, aside from being slightly longer to write, the laws were generally fairly simple to test. As a small example, the test for double inversion is given below:
 
 \begin{lstlisting}
 public static bool TestDoubleInversion()
@@ -611,7 +611,7 @@ public static bool TestDoubleInversion()
 }
 \end{lstlisting}
 
-Including minor variations from different sources, 24 different arrow laws were tested in total, and all passed on large quantities of random input data. This gives a reasonably good indication that the arrow implementation is correct.
+Including minor variations from different sources, 24 different arrow laws were tested in total, and all passed on large quantities of random input data\footnote{1000 randomly-generated inputs were used for each pair of arrows being compared}. This gives a reasonably good indication that the arrow implementation is correct.
 
 %TODO
 %\subsection{Correctness proof by decomposing into lambda calculus}?
@@ -622,24 +622,24 @@ Including minor variations from different sources, 24 different arrow laws were 
 
 \subsection{Arrow syntax}
 
-Syntax is a difficult thing to give an objective evaluation of without extensive user trials and a variety of different opinions, and there are many conflicting metrics which could be use to judge its quality. However, the way this project was originally set out allows for a certain degree of objective syntax evaluation: brevity was a key goal, along with removing the need for type parameters and providing syntax for all the standard arrow operators. This section will therefore evaluate the syntax of the arrow implementation in terms of these key features, and in doing so highlight how well the project's original goals were met. A comparison with Haskell's syntax is also provided, taking into account the limitations inherent in C$\sharp$ for fairness.
+Syntax is a difficult thing to give an objective evaluation of without running extensive user trials and gathering a variety of different opinions, and there are many conflicting metrics which could be use to judge its quality. However, the way this project was originally set out allows for a certain degree of objective syntax evaluation: brevity was a key goal, along with removing the need for type parameters and providing syntax for all the standard arrow operators. This section will therefore evaluate the syntax of the arrow implementation in terms of these key features, and in doing so highlight how well the project's original goals were met. A comparison with Haskell's syntax is also provided, taking into account the limitations inherent in C$\sharp$ for fairness.
 
 One of the main syntactic achievements of the project was finding ways of writing all the arrow combinators such that under normal circumstances the user need never provide explicit type parameters. Given a typed lambda expression, for instance \texttt{(int x) => x + 1}, arrow construction is done with \texttt{Op.Arr((int x) => x + 1)}. From there, the type of this arrow is used to infer the types required for all the combinators -- composition, for example, is simply \texttt{arrow.Combine(otherArrow)}.
 
-Less successful was the \texttt{First} operator. As outlined in Section \ref{sec:simple_arrow_challenges}, many approaches were attempted for this, but all turned out slightly messy. The current preferred approach is \texttt{arrow.First(default(T))}, where \texttt{T} is the type parameter which cannot be inferred. However, \texttt{arrow.First<T>()} is arguably slightly better as it is clearer what it does (passing \texttt{default(T)} definitely qualifies as a `hack'), and so it is used in the arrow law listings of Appendix \ref{sec:arrow_laws} for clarity. The main problems are that it takes an extra type parameter and relies heavily on reflection, leading to slower execution. This unfortunately leaves the \texttt{First} operator very inconvenient to use (so much so that the arrow law listings define an abbreviation for it). However, this was fortunately the only bad example and could probably be improved by using a slightly different operator in place of it\footnote{For instance, consider an operator \texttt{FirstThrough} which takes the arrow and then an arrow on pairs to pass the result through. The type of the arrow on pairs could be used by the compiler to infer the type missing from the \texttt{First} arrow preceding it, and the programmer could easily just supply an identity arrow of the appropriate type if they wanted a pure \texttt{First} operator}.
+Less successful was the \texttt{First} operator. As outlined in Section \ref{sec:simple_arrow_challenges}, many approaches were attempted for this, but all turned out slightly messy. The current preferred approach is \texttt{arrow.First(default(T))}, where \texttt{T} is the type parameter which cannot be inferred. However, \texttt{arrow.First<T>()} is arguably slightly better as it is clearer what it does (passing \texttt{default(T)} definitely qualifies as a `hack'), and so it is used in the arrow law listings of Appendix \ref{sec:arrow_laws} for clarity. The main problems are that it takes an extra type parameter and relies heavily on reflection, leading to slower execution. This unfortunately leaves the \texttt{First} operator inconvenient to use (so much so that the arrow law listings define an abbreviation for it). However, this was fortunately the only bad example and could probably be improved by using a slightly different operator in place of it\footnote{For instance, consider an operator \texttt{FirstThrough} which takes the arrow and then an arrow on pairs to pass the result through. The type of the arrow on pairs could be used by the compiler to infer the type missing from the \texttt{First} arrow preceding it, and the programmer could easily just supply an identity arrow of the appropriate type if they wanted a pure \texttt{First} operator}.
 
 A slightly inconvenient (if sensible) feature of C$\sharp$ is the restriction that, unlike in many other similar languages, all methods have to be called on an object or class. Whilst in Java one could import all static methods from a class and use them as though they were defined locally, in C$\sharp$ they need to be prefixed with the class name (i.e. \texttt{StaticClass.Method()}). This of course presented a slight obstacle to making arrow code concise, as chains of operators would build up into messy expressions like \texttt{Combinators.And(Combinators.Arr(f1), Combinators.First(Combinators.Arr(f2)))}. By writing all combinators to be usable as extension methods, writing utility extension methods for \texttt{Func} objects (like \texttt{Func.Arr()} to make a \texttt{Func} into an arrow) and giving the class a short name for the worst case, I was able to keep this to a minimum and so keep combinator-heavy code relatively clean. The \texttt{Op.Combinator()} syntax is still fairly clumsy, but in many cases there was no easy way around this.
 
 \subsubsection{Comparison with Haskell} \label{sec:syntax_comparison_haskell}
 
-While the syntax is certainly quite concise as C$\sharp$ allows, it certainly doesn't compare to Haskell for a number of reasons. However, this is of course due to a fundamental difference between the languages.
+While the syntax is as concise as C$\sharp$ allows, it doesn't quite compare to Haskell for a number of reasons. However, this is due to a fundamental difference between the languages themselves.
 
-Primarily, Haskell has an incredibly complex type inference system with a lot of features C$\sharp$ lacks. The main problem on that front was not having polymorphic types, as these are vital in implementing a general-purpose identity arrow or swap arrow. The lack of polymorphic types was also the reason the \texttt{First} operator was so difficult to cleanly implement. Another issue was the fact that C$\sharp$ methods must always be called on an object or class, and have strict syntax rules meaning the arguments must be bracketed after the call (precluding neat currying syntax). Thirdly, C$\sharp$ doesn't allow the programmer to create custom operators like `\texttt{>>>}' for arrow composition.
+Primarily, Haskell has a complex type inference system with a lot of features C$\sharp$ lacks. The main problem on that front was not having polymorphic types, as these are vital in implementing a general-purpose identity arrow or swap arrow. The lack of polymorphic types was also the reason the \texttt{First} operator was so difficult to implement cleanly. Another issue was the fact that C$\sharp$ methods must always be called on an object or class, and have strict syntax rules meaning the arguments must be bracketed after the call (precluding neat currying syntax). Thirdly, C$\sharp$ doesn't allow the programmer to create custom operators like `\texttt{>>>}' for arrow composition.
 
 For illustration, consider a fairly elaborate arrow constructed to compute the value $2x^2$ given an input $x$. In Haskell this might be rendered as follows:
 
 \begin{lstlisting}
-(arr split) >>> (square *** square) >>> (unsplit (+))
+(arr split) >>> (square *** square) >>> arr (unsplit (+))
 \end{lstlisting}
 
 (Assume that \texttt{square} is an appropriately-defined arrow, and \texttt{split} and \texttt{unsplit} are methods for duplicating an input and recombining it using a binary operator respectively.)
@@ -653,22 +653,22 @@ Op.Split<int>().Combine(square.And(square)).Unsplit(add)
 Now, imagine if C$\sharp$ had the ability to define polymorphic \texttt{Split} and \texttt{Unsplit} functions. This would give us:
 
 \begin{lstlisting}
-Op.Arr(Split).Combine(square.And(square)).Combine(Op.Arr(Unsplit))
+Op.Arr(Split).Combine(square.And(square)).Combine(Op.Arr(Unsplit(add)))
 \end{lstlisting}
 
 Now assume the ability to define custom operators, such as `\texttt{a >>> b}' for `\texttt{a.Combine(b)}':
 
 \begin{lstlisting}
-Op.Arr(Split) >>> (square *** square) >>> Op.Arr(Unsplit)
+Op.Arr(Split) >>> (square *** square) >>> Op.Arr(Unsplit(add))
 \end{lstlisting}
 
 Now just add curried function arguments and the ability to have methods not called on a class or object, and the result is very similar to the original Haskell syntax:
 
 \begin{lstlisting}
-Arr Split >>> (square *** square) >>> Arr Unsplit
+Arr Split >>> (square *** square) >>> Arr Unsplit(add)
 \end{lstlisting}
 
-It therefore seems reasonable to conclude that the syntax is as clean as C$\sharp$ allows without significant workarounds, and though it may not match the cleaner Haskell syntax this is largely due to the differences between the languages. One option which was considered for improving syntax was Miscrosoft's Roslyn library\footnote{http://msdn.microsoft.com/en-us/vstudio/hh500769}, which allows the programmer to modify the syntax tree of the code being compiled and thus introduce extra syntactic constructs. However, Roslyn is not yet fully functional and it was decided that the complexity involved would almost be a second project in its own right. The possibility remains for future work to attempt this direction once Roslyn is complete.
+It therefore seems reasonable to conclude that the syntax is as clean as C$\sharp$ allows without significant workarounds, and though it may not match the cleaner Haskell syntax this is largely due to the differences between the languages. One option that was considered for improving the syntax was Miscrosoft's Roslyn library\footnote{http://msdn.microsoft.com/en-us/vstudio/hh500769}, which allows the programmer to modify the syntax tree of the code being compiled and thus introduce extra syntactic constructs. However, Roslyn is not yet fully functional and it was decided that the complexity involved would almost be a second project in its own right. The possibility remains for future work to attempt this direction once Roslyn is complete.
 
 \subsection{Binding syntax}
 
@@ -691,11 +691,11 @@ Looking at the code for creating the data source, it is clear that the arrow-bas
 
 Setting up the arrow is then a simple method call with two lambda functions defining the function either way, whilst the WPF version has two large \texttt{ValueConverter} classes for the forename and the surname. The arrow syntax is denser, however, which may make it harder to read -- it would perhaps be beneficial to allow invertible arrows to be constructed from two normal arrows so that the code can be more neatly separated.
 
-For creating the actual binding, it's not clear which is better. The arrow-based code is shorter, but also more complicated due to the need to construct arrays of sources and destinations. However, the comparison is not entirely fair -- the WPF code is simply creating two one-to-one bindings, and if the same was being done with the arrow code it would be a lot neater than it is as the bind points wouldn't need to be put into arrays.
+For creating the binding itself, it's not clear which is better. The arrow-based code is shorter, but also more complicated due to the need to construct arrays of sources and destinations. However, the comparison is not entirely fair -- the WPF code is simply creating two one-to-one bindings, and if the same was being done with the arrow code it would be a lot neater than it is as the bind points wouldn't need to be put into arrays.
 
 \subsubsection{List binding from a mock database}
 
-For a second case study, a simple `database' (a \texttt{List} of data for simplicity) containing information on orders placed for certain products was created. The objective for this was to bind this data to a list view, filtering it to only the orders with volume greater than one and mapping the result to a list of user-friendly strings describing the order (of the form ``Order from [name] in [location] for [volume] `[product]' from [supplier]''). The simple application is pictured in Figure \ref{fig:case_study_list}, and its source code is given in Appendix \ref{sec:case_study_list}.
+For a second case study, a simple `database' was created (actually a \texttt{List} of data for simplicity) containing information on orders placed for certain products. The objective for this was to bind this data to a list view, filtering it to only the orders with volume greater than one and mapping the result to a list of user-friendly strings describing the order (of the form ``Order from [name] in [location] for [volume] [product]s from [supplier]''). The simple application is pictured in Figure \ref{fig:case_study_list}, and its source code is given in Appendix \ref{sec:case_study_list}.
 
 %TODO Should sort too?
 
@@ -717,11 +717,11 @@ The code for creating the binding is much simpler this time, and the arrow-based
 
 \subsection{Arrow performance}
 
-Naturally, the C$\sharp$ arrow implementation comes with some overhead. Being built on \texttt{Func} objects, arrows are slower than normal functions and slightly slower than plain \texttt{Func} objects. However, the difference isn't very large in most cases -- depending on how arrows are constructed, their performance is often very similar to using a plain \texttt{Func}. A number of performance tests were conducted to explore how using arrows affects performance, and the results are given in the next few sub-sections.
+Naturally, the C$\sharp$ arrow implementation comes with some overhead. Being built on \texttt{Func} objects, arrows are slower than normal functions and slightly slower than plain \texttt{Func} objects. However, as we will see below, the difference isn't very large in most cases -- depending on how arrows are constructed, their performance is often very similar to using a plain \texttt{Func}. A number of performance tests were conducted to explore how using arrows affects performance, and the results are given in the next few sub-sections.
 
 \subsubsection{Measuring technique}
 
-A modular test framework was set up in which performance tests could be added by simply extending a base class and implementing methods for creating the arrow, the \texttt{Func} and the normal method. Timing was done by taking measurements of the total CPU time utilised by the current process (see~\cite{total_processor_time}), as follows:
+A modular test framework was set up in which performance tests could be added by simply extending a base class and implementing methods for creating the arrow, the \texttt{Func} and the normal method. Timing was done by taking measurements of the total CPU time used by the current process (see~\cite{total_processor_time}), as follows:
 
 \begin{lstlisting}[language={[sharp]C}]
 TimeSpan start = Process.GetCurrentProcess().TotalProcessorTime;
@@ -785,9 +785,9 @@ The results can be seen in Figure \ref{fig:list_function_performance}. Interesti
 \subsubsection{Overhead due to arrow chaining}
 \label{sec:arrow_chaining_overhead}
 
-As was discovered earlier on, complex arrow chaining imposes a performance overhead. To establish how severe the effects of this are, a test was set up in which the execution times of chains of identity arrows were compared. In an ideal world, fifty identity arrows chained end-to-end would run in the same time as a single one, but in reality the implementation leads to longer chains taking considerably longer to execute. A set of identity chains with lengths ranging from one to twenty was created, and each one was timed over 1,000,000 executions.
+As discussed earlier, complex arrow chaining imposes a performance overhead. To establish how severe the effects of this are, a test was set up in which the execution times of chains of identity arrows were compared. In an ideal world, fifty identity arrows chained end-to-end would run in the same time as a single one, but in reality the implementation leads to longer chains taking considerably longer to execute. A set of identity chains with lengths ranging from one to twenty was created, and each one was timed over 1,000,000 executions.
 
-Fortunately, it was found that the execution time is linear in the length of the chain -- that is, each arrow combination adds only a constant extra overhead. The results can be seen in Figure \ref{fig:arrow_chaining_overhead}. Aside from small random variations, the timings clearly follow a linear trend. As noted earlier on, the overhead is far less pronounced when the function implemented is more complex than identity or incrementing, and so it is likely that for the majority of use cases combination overhead won't be significant enough to noticeably harm performance.
+Fortunately, it was found that the execution time is linear in the length of the chain -- that is, each arrow combination adds only a constant extra overhead. The results can be seen in Figure \ref{fig:arrow_chaining_overhead}. Aside from small random variations, the timings clearly follow a linear trend. As noted earlier, the overhead is far less pronounced when the function implemented is more complex than identity or incrementing, and so it is likely that for the majority of use cases combination overhead won't be significant enough to noticeably harm performance.
 
 \begin{figure}[!ht]
   \centering
@@ -807,13 +807,13 @@ Fortunately, it was found that the execution time is linear in the length of the
 
 \chapter{Conclusions}
 
-As modular architectures like MVC and MVVM grow ever more popular, data binding will continue to be important in bridging the gap between disconnected sections of code. This project has been an exploration of a more functional approach to the problem, which I think could work very well in future as functional ideas like lambda expressions and type inference are rapidly becoming mainstream tools in software development. Overall, I consider it a success, as despite a few syntactic issues it ultimately fulfils all I set out to do and performs reasonably well. Nonetheless, there are still several additions I may make in future to improve the framework. These improvements are outlined in the next section.
+As modular architectures like MVC and MVVM grow ever more popular, data binding will continue to be important in bridging the gap between disconnected sections of code. This project has been an exploration of a more functional approach to the problem, which I think could work well in future as functional ideas like lambda expressions and type inference are rapidly becoming mainstream tools in software development. Overall, I consider it a success, as despite a few syntactic issues it ultimately fulfils all I set out to do and performs reasonably well. Nonetheless, there are still several additions I may make in future to improve the framework. These improvements are outlined in the next section.
 
 \section{Future work}
 
 \subsection{Custom tuple type}
 
-The C$\sharp$ \texttt{Tuple} type, whilst very helpful initially, led to a lot of complications with many-to-many bindings (explored in Section \ref{sec:many_many_bindings}). This could have been avoided had I created my own binary-tree-structured type designed to be easily usable with the binding framework, and I could even implement conversion from standard tuples easily enough.
+The C$\sharp$ \texttt{Tuple} type, while very helpful initially, led to a lot of complications with many-to-many bindings (explored in Section \ref{sec:many_many_bindings}). This could have been avoided had I created my own binary-tree-structured type designed to be easily usable with the binding framework, and I could even implement conversion from standard tuples easily enough.
 
 \subsection{Better integration with WPF}
 
@@ -825,9 +825,9 @@ Haskell's arrows provide some fairly useful looping functionality through arrow 
 
 \subsection{Syntax enhancements}
 
-As mentioned at the end of Section \ref{sec:syntax_comparison_haskell}, Roslyn could perhaps be used to develop a more Haskell-like syntax for arrows. However, this would likely be very complicated and would need to be postponed until Roslyn is complete.
+As mentioned at the end of Section \ref{sec:syntax_comparison_haskell}, Roslyn could perhaps be used to develop a more Haskell-like syntax for arrows. However, this would likely be complicated and would need to be postponed until Roslyn is complete.
 
-\subsection{Performance}
+\subsection{Performance} \label{sec:performance_enhancements}
 
 Arrow performance is still not especially good: chaining together arrows with the combinators adds a lot of overhead as the complexity increases. A possible improvement would be to look at using C$\sharp$ \texttt{ExpressionTree} manipulations to dynamically simplify the results of arrow combinations. For instance, the chain of identity functions developed in Section \ref{sec:arrow_chaining_overhead} could theoretically be simplified to a single identity function if arrow functions were substituted into each other on combination.
 
@@ -835,7 +835,7 @@ Arrow performance is still not especially good: chaining together arrows with th
 
 Overall, the project clearly still has some way to go before it's usable and efficient enough to be a complete alternative to WPF. But despite this, I think it was definitely successful in its goals of bringing a largely complete arrow implementation to C$\sharp$ and providing a powerful general-purpose data binding framework. The result has very minimal boilerplate code and allows for a large range of complex functional bindings, which would be very difficult to implement with plain WPF binding.
 
-In general, it's not clear how well a FRP-based system would fit in with traditional OOP principles. The system implemented requires a lot of dynamic typing and type inference, which are very rarely found in current OOP languages like Java or C++. The solution of using reflection is also not particularly safe and is prone to error. However, recent versions of the .NET framework have featured increasing amounts of type inference -- for instance, the \texttt{var} keyword which tells the compiler to infer the correct type, and the \texttt{dynamic} keyword which allows for dynamic typing (both of these were invaluable to this project). Meanwhile, Java 8 now includes lambda expressions, and Scala is a language which is both OOP and functional, so it is clear that functional language features are gaining popularity in mainstream languages. I intend to continue work on the improvements suggested above, and hope to see functional programming ideas continue to become more widespread in similar areas over the coming years.
+In general, it's not clear how well a FRP-based system would fit in with traditional OOP principles. The system implemented requires a lot of dynamic typing and type inference, which are very rarely found in current OOP languages like Java or C++. The solution of using reflection is also not type-safe and is prone to error. However, recent versions of the .NET framework have featured increasing amounts of type inference -- for instance, the \texttt{var} keyword which tells the compiler to infer the correct type, and the \texttt{dynamic} keyword which allows for dynamic typing (both of these were invaluable to this project). Meanwhile, Java 8 now includes lambda expressions, and Scala is a language which is both OOP and functional, so it is clear that functional language features are gaining popularity in mainstream languages. I intend to continue work on the improvements suggested above, and hope to see functional programming ideas continue to become more widespread in similar areas over the coming years.
 
 \cleardoublepage
 
