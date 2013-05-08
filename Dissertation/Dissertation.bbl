@@ -4,7 +4,7 @@
 Reza Ahmadi.
 \newblock {Aspect Oriented Programming Using C$\sharp$ and PostSharp}.
 \newblock
-  http://www.codeproject.com/Articles/337564/Aspect-Oriented-Programming-Using-Csharp-and-PostS.
+  \\http://www.codeproject.com/Articles/337564/Aspect-Oriented-Programming-Using-Csharp-and-PostS.
 
 \bibitem{invertible_arrows}
 {Artem Alimarine and Sjaak Smetsers and Arjen Weelden and Marko Eekelen and
@@ -16,26 +16,27 @@ Reza Ahmadi.
 \bibitem{bitbucket}
 BitBucket.
 \newblock {BitBucket}.
-\newblock http://www.bitbucket.org (accessed on 30/04/2013).
+\newblock \url{http://www.bitbucket.org} (accessed on 30/04/2013).
 
 \bibitem{postsharp_propertychanged}
 PostSharp Documentation.
 \newblock {Automatically Implementing INotifyPropertyChanged}.
-\newblock http://www.postsharp.net/model/inotifypropertychanged (accessed on
-  30/04/2013).
+\newblock \url{http://www.postsharp.net/model/inotifypropertychanged} (accessed
+  on 30/04/2013).
 
 \bibitem{postsharp_locationinterception}
 PostSharp Documentation.
 \newblock {LocationInterceptionAspect Class}.
 \newblock
-  http://doc.postsharp.net//postsharp-2.1/Default.aspx\#\#PostSharp-2.1.chm/html/T\_PostSharp\_Aspects\_LocationInterceptionAspect.htm
-  (accessed on 30/04/2013).
+  \url{http://doc.postsharp.net//postsharp-2.1/Default.aspx##PostSharp-2.1.chm/html/T_PostSharp_Aspects_LocationInterceptionAspect.htm
+  (accessed on 30/04/2013)}.
 
 \bibitem{composing_reactive_animations}
 Conal Elliott.
 \newblock {Composing Reactive Animations}.
 \newblock {\em Dr. Dobb's Journal}, 1998.
-\newblock Also in expanded animated form at http://conal.net/fran/tutorial.htm.
+\newblock Also in expanded animated form at
+  \url{http://conal.net/fran/tutorial.htm}.
 
 \bibitem{functional_reactive_programming}
 Paul Hudak.
@@ -69,26 +70,26 @@ Sam Lindley, Philip Wadler, and Jeremy Yallop.
 \bibitem{wpf_data_binding_overview}
 MSDN.
 \newblock {Data Binding Overview}.
-\newblock http://msdn.microsoft.com/en-us/library/ms752347.aspx (accessed on
-  24/04/2013).
+\newblock \url{http://msdn.microsoft.com/en-us/library/ms752347.aspx} (accessed
+  on 24/04/2013).
 
 \bibitem{extension_methods}
 MSDN.
 \newblock {Extension Methods}.
-\newblock http://msdn.microsoft.com/en-us/library/vstudio/bb383977.aspx
+\newblock \url{http://msdn.microsoft.com/en-us/library/vstudio/bb383977.aspx}
   (accessed on 30/04/2013).
 
 \bibitem{total_processor_time}
 MSDN.
 \newblock {Processor.TotalProcessorTime Property}.
 \newblock
-  http://msdn.microsoft.com/en-us/library/system.diagnostics.process.totalprocessortime.aspx
+  \url{http://msdn.microsoft.com/en-us/library/system.diagnostics.process.totalprocessortime.aspx}
   (accessed on 30/04/2013).
 
 \bibitem{haskell_arrows}
 Ross Paterson.
 \newblock {Arrows: A General Interface to Computation}.
-\newblock http://www.haskell.org/arrows (accessed on 24/04/2013).
+\newblock \url{http://www.haskell.org/arrows} (accessed on 24/04/2013).
 
 \bibitem{arrow_notation}
 Ross Paterson.
@@ -102,10 +103,15 @@ Ross Paterson.
 \newblock In Jeremy Gibbons and Oege de~Moor, editors, {\em The Fun of
   Programming}, pages 201--222. Palgrave, 2003.
 
+\bibitem{mvvm}
+Josh Smith.
+\newblock {WPF Apps With The Model-View-ViewModel Design Pattern}.
+\newblock \\http://msdn.microsoft.com/en-us/magazine/dd419663.aspx.
+
 \bibitem{fogbugz}
 FogCreek Software.
 \newblock {FogBugz}.
-\newblock http://www.fogcreek.com/fogbugz (accessed on 30/04/2013).
+\newblock \url{http://www.fogcreek.com/fogbugz} (accessed on 30/04/2013).
 
 \bibitem{frp_first_principles}
 Zhanyong Wan and Paul Hudak.
@@ -115,14 +121,14 @@ Zhanyong Wan and Paul Hudak.
 
 \bibitem{haskell_wiki_arrows}
 Haskell Wiki.
-\newblock Control.arrow.
+\newblock {Control.Arrow}.
 \newblock
-  http://www.haskell.org/ghc/docs/latest/html/libraries/base/Control-Arrow.html.
+  \\http://www.haskell.org/ghc/docs/latest/html/libraries/base/Control-Arrow.html.
 
 \bibitem{monads}
 Haskell Wiki.
 \newblock {Monads as Computation}.
-\newblock http://www.haskell.org/haskellwiki/Monads\_as\_computation (accessed
-  on 30/04/2013).
+\newblock \url{http://www.haskell.org/haskellwiki/Monads_as_computation}
+  (accessed on 30/04/2013).
 
 \end{thebibliography}
