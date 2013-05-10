@@ -4,13 +4,13 @@
 Reza Ahmadi.
 \newblock {Aspect Oriented Programming Using C$\sharp$ and PostSharp}.
 \newblock
-  \\http://www.codeproject.com/Articles/337564/Aspect-Oriented-Programming-Using-Csharp-and-PostS.
+  \url{http://www.codeproject.com/Articles/337564/Aspect-Oriented-Programming-Using-Csharp-and-PostS}.
 
 \bibitem{invertible_arrows}
-{Artem Alimarine and Sjaak Smetsers and Arjen Weelden and Marko Eekelen and
-  Rinus Plasmeijer}.
+{Artem Alimarine, Sjaak Smetsers, Arjen Weelden, Marko Eekelen, and Rinus
+  Plasmeijer}.
 \newblock There and back again: Arrows for invertible programming.
-\newblock In {\em In Proceedings of the 2005 ACM SIGPLAN workshop on Haskell},
+\newblock In {\em Proceedings of the 2005 ACM SIGPLAN workshop on Haskell},
   pages 86--97. ACM Press, 2006.
 
 \bibitem{bitbucket}
@@ -42,8 +42,8 @@ Conal Elliott.
 Paul Hudak.
 \newblock {Functional Reactive Programming}.
 \newblock In S.Doaitse Swierstra, editor, {\em Programming Languages and
-  Systems}, volume 1576 of {\em Lecture Notes in Computer Science}, pages 1--1.
-  Springer Berlin Heidelberg, 1999.
+  Systems}, volume 1576 of {\em Lecture Notes in Computer Science}. Springer
+  Berlin Heidelberg, 1999.
 
 \bibitem{arrows_robots_frp}
 Paul Hudak, Antony Courtney, Henrik Nilsson, and John Peterson.
@@ -86,6 +86,12 @@ MSDN.
   \url{http://msdn.microsoft.com/en-us/library/system.diagnostics.process.totalprocessortime.aspx}
   (accessed on 30/04/2013).
 
+\bibitem{roslyn}
+{MSDN}.
+\newblock {The Roslyn Project}.
+\newblock \url{http://msdn.microsoft.com/en-us/vstudio/hh500769} (accessed on
+  09/05/2013).
+
 \bibitem{haskell_arrows}
 Ross Paterson.
 \newblock {Arrows: A General Interface to Computation}.
@@ -106,7 +112,7 @@ Ross Paterson.
 \bibitem{mvvm}
 Josh Smith.
 \newblock {WPF Apps With The Model-View-ViewModel Design Pattern}.
-\newblock \\http://msdn.microsoft.com/en-us/magazine/dd419663.aspx.
+\newblock \url{http://msdn.microsoft.com/en-us/magazine/dd419663.aspx}.
 
 \bibitem{fogbugz}
 FogCreek Software.
@@ -116,14 +122,14 @@ FogCreek Software.
 \bibitem{frp_first_principles}
 Zhanyong Wan and Paul Hudak.
 \newblock {Functional Reactive Programming from First Principles}.
-\newblock In {\em In ACM SIGPLAN Conference on Programming Language Design and
+\newblock In {\em ACM SIGPLAN Conference on Programming Language Design and
   Implementation}, pages 242--252, 2000.
 
 \bibitem{haskell_wiki_arrows}
 Haskell Wiki.
 \newblock {Control.Arrow}.
 \newblock
-  \\http://www.haskell.org/ghc/docs/latest/html/libraries/base/Control-Arrow.html.
+  \url{http://www.haskell.org/ghc/docs/latest/html/libraries/base/Control-Arrow.html}.
 
 \bibitem{monads}
 Haskell Wiki.

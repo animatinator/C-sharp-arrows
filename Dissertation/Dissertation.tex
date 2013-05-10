@@ -166,7 +166,7 @@ The FRP paradigm was the inspiration for the project, which sought to implement 
 
 \subsection{Functional reactive programming}
 
-Functional reactive programming (FRP) was one of the initial inspirations for the project. A good introduction is given by~\cite{composing_reactive_animations}, which demonstrates how the principles can be applied to animation. In essence, functional reactive programming is a declarative way of specifying the relationships between different values. `Signals' which change over time are created and passed around as first-class values, and other values can then be defined as functions of these signals.
+Functional reactive programming (FRP) was one of the initial inspirations for the project. A good introduction is given by~\cite{composing_reactive_animations}, which demonstrates how the principles can be applied to animation. In essence, functional reactive programming is a declarative way of specifying the relationships between different values. `Signals' which change over time are created and passed around as first-class values, and other values can then be defined as functions of these signals. `Events', meanwhile, are discrete occurrences which the program can respond to.
 
 One of the main advantages of FRP is that it removes the need for explicitly defining how values are to be kept consistent and writing code to make this so. This is clearly solving a very similar problem to data binding, and so inspired the idea of making data binding more like FRP.
 
@@ -174,9 +174,9 @@ One of the main advantages of FRP is that it removes the need for explicitly def
 
 Arrows were introduced by Hughes as a generalisation of `monads' in~\cite{hughes_arrows}. A monad takes the form \texttt{m a}, representing some computation which will give a result of type \texttt{a}~\cite{monads}. These are often useful in representing sequences of operations and those which involve side-effects. The basic monad type interface provides an identity function, which gives a monad returning whatever its input was, and a means of chaining monadic functions together. One way of viewing these is as a way of letting the programmer chain together functions in a way controlled by the monad -- for instance, the monad could be written to ensure that some form of global state is passed through along with the function results, or it could be used to handle error conditions without the programmer needing to write extra code for this. In all cases it is essentially handling some side-effect or background operation for the programmer, allowing them to chain various operations together without explicitly handling the side-effects.
 
-Arrows represent a generalisation of monads, in the sense that any monad can be equivalently implemented as an arrow. However, an arrow is of the form \texttt{arrow b c}, taking an input of type \texttt{b} and transforming it into an output of type \texttt{c}. The basic operators are similar: an \texttt{arr} operator takes a function as an argument and returns the arrow representing that function, and the \texttt{>>>} operator chains two arrows together such that the output of the first is passed through the second. Further to these, the \texttt{first} operator takes an \texttt{arrow b c} and returns an \texttt{arrow (b, d) (c, d)} -- an arrow taking a pair and applying the original arrow only to the first element of the pair. With these basic operators, a number of more complex standard operators can be built up. These are discussed in Section \ref{sec:simple_arrow_implementation} on the implementation of arrows.
+Arrows represent a generalisation of monads, in the sense that any monad can be equivalently implemented as an arrow. However, an arrow is of the form \texttt{arrow b c}, taking an input of type \texttt{b} and transforming it into an output of type \texttt{c}. The basic operators are similar: an \texttt{arr} operator takes a function as an argument and returns the arrow representing that function, and the \texttt{>>>} operator chains two arrows together such that the output of the first is passed through the second. Further to these, the \texttt{first} operator can be used to turn an arrow into an arrow on pairs by applying it to only the first element of the pair -- that is, taking an input \texttt{(a, b)} and giving \texttt{(f(a), b)} as output. This effectively creates a second `channel' through the arrow which is unaffected by it, and is used for constructing arrows which apply different functions to each element of a tuple. With these basic operators, a number of more complex standard operators can be built up. These are discussed in Section \ref{sec:simple_arrow_implementation} on the implementation of arrows.
 
-Arrows were selected for this project as the semantic nature of an \texttt{arrow a b} is simply a transformation from an input of type \texttt{a} to an output of type \texttt{b}, an interpretation which works well as a generalised model of the nature of data binding.
+Arrows were selected for this project as the semantic nature of an \texttt{arrow a b} is simply a transformation from an input of type \texttt{a} to an output of type \texttt{b}, an interpretation which works well as a generalised model of the nature of data binding. As all arrow combinators are implemented using the basic operators, the abstraction can be re-used for special arrows which implement extra functionality (for instance, stream processing or static analysis) simply by re-implementing the basic functions. This generality and re-usability came in handy in implementing invertible and list arrows later in the project (see Section \ref{sec:arrows}).
 
 \section{Requirements analysis}
 
@@ -211,7 +211,7 @@ The entire project (dissertation included) was stored in a Git repository which 
 The implementation work consisted of two main parts: the arrows and the binding framework. As mentioned above, these were both initially developed through repeated iterations as different strategies were being investigated and new options discovered. This chapter describes the main development work and highlights the various difficulties encountered along the way.
 
 
-\section{Arrows}
+\section{Arrows} \label{sec:arrows}
 
 \subsection{Overview} \label{sec:arrows_overview}
 
@@ -221,7 +221,7 @@ Tackling the type system was particularly difficult. I initially took the approa
 
 It was therefore decided that arrows and combinators should all be statically typed, as this would allow the compiler to do type checking and lead to much cleaner code. However, this meant the issue of the programmer having to provide long lists of type parameters to every combinator was still there. I was eventually able to solve this problem by writing the combinators in such a way that the compiler could always infer types from the arguments without the programmer needing to supply them. Several more situations were fixed by including static extension methods\footnote{Extension methods essentially allow you to define methods which act as though they belong to the object being passed in to them -- see~\cite{extension_methods} for a full explanation} which would use the source object to infer some parameters, and a series of static helper methods were included in the class \texttt{Op} to help fill in the gaps. This was easier said than done in several cases (which will be discussed later), but ultimately I managed to eliminate type parameters completely from the syntax. The resulting syntax for simple arrows is detailed in Section \ref{sec:simple_arrow_implementation}.
 
-A further problem was how best to allow arrows from multiple inputs to multiple outputs. Simply having a \texttt{Func} with multiple inputs would not have worked as the arrow would have had to be rewritten for every given number of inputs, and to make matters worse \texttt{Func} is limited to one output. For some time I debated writing a generic binary-tree-structured type\footnote{All arrows work on nested pairs} to handle this, but on discovering C$\sharp$'s built-in \texttt{Tuple<T1, T2>} type I felt this would be the simplest option. This ended up complicating the data binding (as I will discuss later), but was entirely sufficient for supporting the arrow implementation.
+A further problem was how best to allow arrows from multiple inputs to multiple outputs. Simply having a \texttt{Func} with multiple inputs would not have worked as \texttt{Func} objects with differing numbers of arguments are actually different types, so the arrow class would have had to be rewritten for every given number of inputs. To make matters worse, \texttt{Func} is also limited to one output. For some time I debated writing a generic binary-tree-structured type\footnote{All arrows work on nested pairs} to handle this, but on discovering C$\sharp$'s built-in \texttt{Tuple<T1, T2>} type I felt this would be the simplest option. This ended up complicating the data binding (as I will discuss later), but was entirely sufficient for supporting the arrow implementation.
 
 \subsection{Simple arrows} \label{sec:simple_arrow_implementation}
 
@@ -236,7 +236,7 @@ var increment = function.Arr();
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=50mm]{fig/ArrOperator.pdf}
-  \caption{The Arr operator}
+  \caption[The Arr operator]{The Arr operator. The circled \texttt{f} is the function it performs, and the box around it indicates that it is boxed as an arrow with inputs on the left and outputs on the right.}
   \label{fig:arr_operator}
 \end{figure}
 
@@ -249,7 +249,7 @@ var combinedArrow = arrow.Combine(anotherArrow);
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=50mm]{fig/CompositionOperator.pdf}
-  \caption{The Combine operator}
+  \caption[The Combine operator]{The Combine operator. The path of data through the functions is indicated by arrows.}
   \label{fig:combine_operator}
 \end{figure}
 
@@ -268,7 +268,7 @@ var firstArrow = Op.First(arrow, default(T))
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=50mm]{fig/FirstOperator.pdf}
-  \caption{The First operator}
+  \caption[The First operator]{The First operator. Here there is a second input to the arrow which is unaffected by the original arrow's function.}
   \label{fig:first_operator}
 \end{figure}
 
@@ -279,6 +279,8 @@ Going beyond the basic operators, many composite operators were also implemented
 \begin{lstlisting}[language={[Sharp]C}]
 var parallelArrow = leftArrow.And(rightArrow);
 \end{lstlisting}
+
+This is commonly thought of as combining leftArrow and rightArrow side-by-side by calling \texttt{first leftArrow} and passing its output into \texttt{second rightArrow}. Figure \ref{fig:and_operator} illustrates this, where the arrows are implementing functions \texttt{f} and \texttt{g}.
 
 \begin{figure}[!ht]
   \centering
@@ -493,7 +495,7 @@ The first scenario is especially problematic for this binding framework as bindi
 
 To tackle this problem, I implemented a \texttt{BindingGraph} class which is used by the \texttt{BindingsManager} and keeps track of the topology of all the existing bindings (leaving the details of actual bind points to the bindings manager). Whenever a new binding is added or an old binding is removed, the binding graph is notified and it updates its map of the bindings appropriately. It then provides methods which allow the bindings manager to query whether a new binding will introduce a cycle or conflict, and if so the bindings manager will know to abort the binding with an exception.
 
-Both cycles and conflicts can be reduced to the same question: for each node in the binding graph, is there another node which is reachable from it via more than one path? Both situations are therefore handled by the same algorithm, which proceeds by depth-first searching from each node and maintaining a set of nodes which have been seen along the way. Rough pseudocode for this method is given in Listing~\ref{lst:cycle_conflict_pseudocode}.
+Both cycles and conflicts can be reduced to the same question: for each node in the binding graph, is there another node which is reachable from it via more than one path? (This covers cycles as any node in the cycle can be reached by traversing the cycle any number of times.) Both situations are therefore handled by the same algorithm, which proceeds by depth-first searching from each node and maintaining a set of nodes which have been seen along the way. Rough pseudocode for this method is given in Listing~\ref{lst:cycle_conflict_pseudocode}.
 
 \begin{lstlisting}[caption={Pseudocode for cycle and conflict detection}, label=lst:cycle_conflict_pseudocode]
 for each node in the graph:
@@ -513,7 +515,7 @@ Further to detecting these situations, another issue which had to be resolved wa
 
 \subsubsection{Many-to-many bindings} \label{sec:many_many_bindings}
 
-Many-to-many bindings presented an additional challenge for the binding system. It was decided that the best approach in terms of syntax would be to have the user pass in a list of source bind points, an arrow and a list of destination bind points, so as to mirror the syntax used in simple bindings. However, this simple approach is out of step with the way parameters are passed to arrows: by construction, all arrows taking multiple inputs will take them in the form of a binary-tree-structured Tuple\footnote{This can be verified by looking at the implementations of the operators; for instance, And converts two arrows (which may be on tuples) into an arrow on two-tuples containing the types of the original arrows, thus building up a binary tree structure}. As there didn't appear to be any C$\sharp$ syntax allowing the user to pass in binding sources in a similar fashion (such that the structure could be understood by the binding), it was decided that an argument marshaller/unmarshaller would be needed to handle the translation between lists of bind points and tree-structured tuples.
+Many-to-many bindings occur where multiple sources have effects on multiple destinations -- for example, a display showing the sum of several variables, or a series of components which are bound to a shared data structure. For flexibility, the framework allows arbitrarily many destinations to be bound to arbitrarily many destinations. It was decided that the best approach in terms of syntax would be to have the user pass in a list of source bind points, an arrow and a list of destination bind points, so as to mirror the syntax used in simple bindings. However, this simple approach is out of step with the way parameters are passed to arrows: by construction, all arrows taking multiple inputs will take them in the form of a binary-tree-structured Tuple\footnote{This can be verified by looking at the implementations of the operators; for instance, And converts two arrows (which may be on tuples) into an arrow on two-tuples containing the types of the original arrows, thus building up a binary tree structure}. As there didn't appear to be any C$\sharp$ syntax allowing the user to pass in binding sources in a similar fashion (such that the structure could be understood by the binding), it was decided that an argument marshaller/unmarshaller would be needed to handle the translation between lists of bind points and tree-structured tuples.
 
 \begin{figure}[!ht]
   \centering
@@ -665,7 +667,7 @@ Now just add curried function arguments and the ability to have methods not call
 Arr Split >>> (square *** square) >>> Arr Unsplit(add)
 \end{lstlisting}
 
-It therefore seems reasonable to conclude that the syntax is as clean as C$\sharp$ allows without significant workarounds, and though it may not match the cleaner Haskell syntax this is largely due to the differences between the languages. One option that was considered for improving the syntax was Miscrosoft's Roslyn library\footnote{http://msdn.microsoft.com/en-us/vstudio/hh500769}, which allows the programmer to modify the syntax tree of the code being compiled and thus introduce extra syntactic constructs. However, Roslyn is not yet fully functional and it was decided that the complexity involved would almost be a second project in its own right. The possibility remains for future work to attempt this direction once Roslyn is complete.
+It therefore seems reasonable to conclude that the syntax is as clean as C$\sharp$ allows without significant workarounds, and though it may not match the cleaner Haskell syntax this is largely due to the differences between the languages. One option that was considered for improving the syntax was Microsoft's Roslyn library\cite{roslyn}, which allows the programmer to modify the syntax tree of the code being compiled and thus introduce extra syntactic constructs. However, Roslyn is not yet fully functional and it was decided that the complexity involved would almost be a second project in its own right. The possibility remains for future work to attempt this direction once Roslyn is complete.
 
 \subsection{Binding syntax}
 

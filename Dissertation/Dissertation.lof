@@ -7,7 +7,7 @@
 \contentsline {figure}{\numberline {3.4}{\ignorespaces The And operator}}{12}
 \contentsline {figure}{\numberline {3.5}{\ignorespaces Correspondence between Haskell and C$\sharp $ arrow operators}}{13}
 \contentsline {figure}{\numberline {3.6}{\ignorespaces Overview of the binding method}}{18}
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Marshalling a list of BindPoint sources to pass to an arrow and unmarshalling the result}}{23}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Marshalling a list of BindPoint sources to pass to an arrow and unmarshalling the result}}{24}
 \contentsline {figure}{\numberline {3.8}{\ignorespaces WPF integration demo}}{26}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces The username two-way binding application}}{32}

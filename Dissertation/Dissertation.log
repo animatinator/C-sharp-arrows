@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.5)  8 MAY 2013 17:53
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.5)  10 MAY 2013 11:56
 entering extended mode
 **Dissertation.tex
 
@@ -232,14 +232,13 @@ File: fig/ArrOperator.pdf Graphic file (type pdf)
 <use fig/ArrOperator.pdf>
 Package pdftex.def Info: fig/ArrOperator.pdf used on input line 238.
 (pdftex.def)             Requested size: 142.26378pt x 58.67412pt.
-
-<fig/CompositionOperator.pdf, id=72, 349.81836pt x 107.12521pt>
+ [10]
+<fig/CompositionOperator.pdf, id=76, 349.81836pt x 107.12521pt>
 File: fig/CompositionOperator.pdf Graphic file (type pdf)
 
 <use fig/CompositionOperator.pdf>
 Package pdftex.def Info: fig/CompositionOperator.pdf used on input line 251.
 (pdftex.def)             Requested size: 142.26378pt x 43.56526pt.
- [10]
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
 (Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 259.
 
@@ -254,11 +253,16 @@ sertation/fig/ArrOperator.pdf> <C:/Users/David/Documents/Visual Studio 2010/Pro
 jects/ArrowDataBinding/Dissertation/fig/CompositionOperator.pdf> <C:/Users/Davi
 d/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dissertation/fig/First
 Operator.pdf>]
+Underfull \hbox (badness 1082) in paragraph at lines 283--284
+[]\OT1/cmr/m/n/12 This is com-monly thought of as com-bin-ing lef-t-Ar-row and 
+rightAr-row
+ []
+
 <fig/AndOperator.pdf, id=106, 565.02242pt x 248.2334pt>
 File: fig/AndOperator.pdf Graphic file (type pdf)
 
 <use fig/AndOperator.pdf>
-Package pdftex.def Info: fig/AndOperator.pdf used on input line 285.
+Package pdftex.def Info: fig/AndOperator.pdf used on input line 287.
 (pdftex.def)             Requested size: 142.26378pt x 62.50134pt.
  [12 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
 sertation/fig/AndOperator.pdf>] [13] [14] [15]
@@ -266,32 +270,32 @@ sertation/fig/AndOperator.pdf>] [13] [14] [15]
 File: fig/BindingFramework.pdf Graphic file (type pdf)
 
 <use fig/BindingFramework.pdf>
-Package pdftex.def Info: fig/BindingFramework.pdf used on input line 423.
+Package pdftex.def Info: fig/BindingFramework.pdf used on input line 425.
 (pdftex.def)             Requested size: 411.93877pt x 189.23434pt.
  [17] [18 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBindin
 g/Dissertation/fig/BindingFramework.pdf>]
 [19] [20]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 488.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 490.
 
  ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 488.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 490.
  [21]
 [22] <fig/ArgumentMarshalling.pdf, id=178, 511.24123pt x 147.77261pt>
 File: fig/ArgumentMarshalling.pdf Graphic file (type pdf)
 
 <use fig/ArgumentMarshalling.pdf>
-Package pdftex.def Info: fig/ArgumentMarshalling.pdf used on input line 520.
+Package pdftex.def Info: fig/ArgumentMarshalling.pdf used on input line 522.
 (pdftex.def)             Requested size: 411.93877pt x 119.07281pt.
- [23 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
-sertation/fig/ArgumentMarshalling.pdf>]
-[24] <fig/WPFIntegrationDemo.png, id=195, 571.13374pt x 203.76125pt>
+ [23] [24 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBindin
+g/Dissertation/fig/ArgumentMarshalling.pdf>]
+<fig/WPFIntegrationDemo.png, id=195, 571.13374pt x 203.76125pt>
 File: fig/WPFIntegrationDemo.png Graphic file (type png)
 
 <use fig/WPFIntegrationDemo.png>
-Package pdftex.def Info: fig/WPFIntegrationDemo.png used on input line 555.
+Package pdftex.def Info: fig/WPFIntegrationDemo.png used on input line 557.
 (pdftex.def)             Requested size: 411.93877pt x 146.96603pt.
  [25] [26 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBindin
 g/Dissertation/fig/WPFIntegrationDemo.png>]
@@ -304,7 +308,7 @@ Chapter 4.
 File: fig/CaseStudyNameBinding.png Graphic file (type png)
 
 <use fig/CaseStudyNameBinding.png>
-Package pdftex.def Info: fig/CaseStudyNameBinding.png used on input line 680.
+Package pdftex.def Info: fig/CaseStudyNameBinding.png used on input line 682.
 (pdftex.def)             Requested size: 283.0568pt x 210.78699pt.
  [32 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
 sertation/fig/CaseStudyNameBinding.png>]
@@ -312,7 +316,7 @@ sertation/fig/CaseStudyNameBinding.png>]
 File: fig/CaseStudyListBinding.png Graphic file (type png)
 
 <use fig/CaseStudyListBinding.png>
-Package pdftex.def Info: fig/CaseStudyListBinding.png used on input line 701.
+Package pdftex.def Info: fig/CaseStudyListBinding.png used on input line 703.
 (pdftex.def)             Requested size: 411.93877pt x 292.66003pt.
  [33] [34 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBindin
 g/Dissertation/fig/CaseStudyListBinding.png>] [35]
@@ -321,7 +325,7 @@ File: fig/SimpleFunctionPerformanceChart.pdf Graphic file (type pdf)
 
 <use fig/SimpleFunctionPerformanceChart.pdf>
 Package pdftex.def Info: fig/SimpleFunctionPerformanceChart.pdf used on input l
-ine 758.
+ine 760.
 (pdftex.def)             Requested size: 411.93877pt x 214.71175pt.
  [36]
 <fig/ListFunctionPerformanceChart.pdf, id=237, 496.4172pt x 244.72725pt>
@@ -329,7 +333,7 @@ File: fig/ListFunctionPerformanceChart.pdf Graphic file (type pdf)
 
 <use fig/ListFunctionPerformanceChart.pdf>
 Package pdftex.def Info: fig/ListFunctionPerformanceChart.pdf used on input lin
-e 777.
+e 779.
 (pdftex.def)             Requested size: 411.93877pt x 203.08247pt.
  [37 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
 sertation/fig/SimpleFunctionPerformanceChart.pdf>] <fig/IdentityChains.pdf, id=
@@ -337,7 +341,7 @@ sertation/fig/SimpleFunctionPerformanceChart.pdf>] <fig/IdentityChains.pdf, id=
 File: fig/IdentityChains.pdf Graphic file (type pdf)
 
 <use fig/IdentityChains.pdf>
-Package pdftex.def Info: fig/IdentityChains.pdf used on input line 791.
+Package pdftex.def Info: fig/IdentityChains.pdf used on input line 793.
 (pdftex.def)             Requested size: 411.93877pt x 179.69122pt.
  [38 <C:/Users/David/Documents/Visual Studio 2010/Projects/ArrowDataBinding/Dis
 sertation/fig/ListFunctionPerformanceChart.pdf>]
@@ -354,7 +358,8 @@ Chapter 5.
 ("C:\Users\David\Documents\Visual Studio 2010\Projects\ArrowDataBinding\Dissert
 ation\Dissertation.bbl"
 Underfull \hbox (badness 10000) in paragraph at lines 4--8
-\OT1/cmr/m/n/12 http://www.codeproject.com/Articles/337564/Aspect-Oriented-
+$\OT1/cmtt/m/n/12 http : / / www . codeproject . com / Articles / 337564 / Aspe
+ct -[] Oriented -[]$
  []
 
 
@@ -396,9 +401,15 @@ $\OT1/cmtt/m/n/12 microsoft . com / en -[] us / library / system . diagnostics
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 123--127
-\OT1/cmr/m/n/12 http://www.haskell.org/ghc/docs/latest/html/libraries/base/Cont
-rol-
+Underfull \hbox (badness 1308) in paragraph at lines 90--94
+[]\OT1/cmr/m/n/12 MSDN.  The Roslyn Project.  $\OT1/cmtt/m/n/12 http : / / msdn
+ . microsoft . com / en -[] us /$
+ []
+
+
+Underfull \hbox (badness 1478) in paragraph at lines 129--133
+[]\OT1/cmr/m/n/12 Haskell Wiki.  Con-trol.Arrow.  $\OT1/cmtt/m/n/12 http : / / 
+www . haskell . org / ghc / docs /$
  []
 
 ) [46]
@@ -410,7 +421,7 @@ Appendix A.
 ]
 Appendix B.
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <8> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 974.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 976.
 [51
 
 ] [52
@@ -422,33 +433,33 @@ Appendix C.
 \pc@column@2=\box30
 \pc@column@width@2=\dimen120
 Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
-ne 1018.
+ne 1020.
 Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
-ne 1018.
+ne 1020.
 [53
 
 ]
 Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
-ne 1073.
+ne 1075.
 Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
-ne 1073.
+ne 1075.
  [54]
 Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
-ne 1118.
+ne 1120.
 Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
-ne 1118.
+ne 1120.
  [55] [56]
 Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
-ne 1160.
+ne 1162.
 Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
-ne 1160.
+ne 1162.
  [57
 
 ]
 Package parcolumns Info: Width of column 1 calculated as 194.2195pt on input li
-ne 1202.
+ne 1204.
 Package parcolumns Info: Width of column 2 calculated as 194.2195pt on input li
-ne 1202.
+ne 1204.
  [58]
 Appendix D.
 
@@ -475,10 +486,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 3079 strings out of 494045
- 45292 string characters out of 3148387
+ 3081 strings out of 494045
+ 45312 string characters out of 3148387
  245619 words of memory out of 3000000
- 6341 multiletter control sequences out of 15000+200000
+ 6343 multiletter control sequences out of 15000+200000
  13106 words of font info for 47 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
  27i,8n,40p,1424b,1506s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -496,7 +507,7 @@ iles/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Program Files/MiK
 TeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files/MiKTeX 2.9/
 fonts/type1/public/amsfonts/cm/cmtt12.pfb><C:/Program Files/MiKTeX 2.9/fonts/ty
 pe1/public/amsfonts/cm/cmtt8.pfb>
-Output written on Dissertation.pdf (78 pages, 599313 bytes).
+Output written on Dissertation.pdf (78 pages, 600047 bytes).
 PDF statistics:
  667 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
