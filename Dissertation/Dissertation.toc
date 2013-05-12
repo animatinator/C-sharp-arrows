@@ -14,20 +14,20 @@
 \contentsline {subsection}{\numberline {3.2.1}Overview}{9}
 \contentsline {subsection}{\numberline {3.2.2}Simple arrows}{10}
 \contentsline {subsubsection}{Challenges encountered}{13}
-\contentsline {subsection}{\numberline {3.2.3}Invertible arrows}{14}
+\contentsline {subsection}{\numberline {3.2.3}Invertible arrows}{15}
 \contentsline {subsection}{\numberline {3.2.4}List arrows}{15}
-\contentsline {subsection}{\numberline {3.2.5}Further utility arrows}{16}
+\contentsline {subsection}{\numberline {3.2.5}Further utility arrows}{17}
 \contentsline {section}{\numberline {3.3}Data binding}{17}
 \contentsline {subsection}{\numberline {3.3.1}Overall architecture}{17}
 \contentsline {subsection}{\numberline {3.3.2}Creating bindable sources and destinations}{18}
 \contentsline {subsection}{\numberline {3.3.3}Creating bindings}{20}
 \contentsline {subsubsection}{Syntax and usage}{20}
 \contentsline {subsubsection}{Two-way binding}{21}
-\contentsline {subsubsection}{Cycle and conflict detection}{21}
+\contentsline {subsubsection}{Cycle and conflict detection}{22}
 \contentsline {subsubsection}{Many-to-many bindings}{23}
 \contentsline {subsubsection}{Problems encountered}{24}
 \contentsline {paragraph}{Type safety}{24}
-\contentsline {paragraph}{Binding to lists}{24}
+\contentsline {paragraph}{Binding to lists}{25}
 \contentsline {subsection}{\numberline {3.3.4}Integration work with WPF}{25}
 \contentsline {chapter}{\numberline {4}Evaluation}{27}
 \contentsline {section}{\numberline {4.1}Correctness of arrow implementations}{27}
@@ -54,9 +54,9 @@
 \contentsline {subsection}{\numberline {5.1.4}Syntax enhancements}{42}
 \contentsline {subsection}{\numberline {5.1.5}Performance}{42}
 \contentsline {section}{\numberline {5.2}Final words}{42}
-\contentsline {chapter}{\numberline {A}Arrow laws}{47}
-\contentsline {section}{\numberline {A.1}Normal arrow laws}{47}
-\contentsline {section}{\numberline {A.2}Invertible arrow laws}{48}
+\contentsline {chapter}{\numberline {A}Arrow laws}{48}
+\contentsline {section}{\numberline {A.1}Normal arrow laws}{48}
+\contentsline {section}{\numberline {A.2}Invertible arrow laws}{49}
 \contentsline {chapter}{\numberline {B}WPF integration demo -- code listings}{51}
 \contentsline {section}{\numberline {B.1}Creating the bindable source}{51}
 \contentsline {section}{\numberline {B.2}The binding arrow}{51}

@@ -13,6 +13,23 @@ Reza Ahmadi.
 \newblock In {\em Proceedings of the 2005 ACM SIGPLAN workshop on Haskell},
   pages 86--97. ACM Press, 2006.
 
+\bibitem{backbonejs}
+Jeremy Ashkenas.
+\newblock {Backbone.js}.
+\newblock \url{http://backbonejs.org} (accessed on 12/05/2013).
+
+\bibitem{beanfabrics}
+Beanfabrics.
+\newblock {Beanfabrics}.
+\newblock \url{https://code.google.com/p/beanfabrics/} (accessed on
+  12/05/2013).
+
+\bibitem{bbb}
+BetterBeansBinding.
+\newblock {BetterBeansBinding}.
+\newblock \url{https://kenai.com/projects/betterbeansbinding/pages/Home}
+  (accessed on 12/05/2013).
+
 \bibitem{bitbucket}
 BitBucket.
 \newblock {BitBucket}.

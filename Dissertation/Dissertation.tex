@@ -69,7 +69,7 @@ College:            & \bf Jesus College \\
 Project Title:      & \bf Functional Reactive Programming for \\
 					& \bf Data Binding in C$\sharp$ \\
 Examination:        & \bf Computer Science Tripos Part II \\
-Word Count:         & \bf TBC \\
+Word Count:         & \bf 12,000 approx \\
 Project Originator: & Tomas Petricek \\
 Supervisor:         & Tomas Petricek \\
 \end{tabular}
@@ -83,9 +83,6 @@ The project aimed to provide a general-purpose data binding framework for C$\sha
 \section*{Work Completed}
 
 All the original goals were met: a general-purpose data binding framework based on arrows has been implemented, and an extensive arrow implementation has been completed. As well as the standard operators, a series of more complex extra operators has also been added, and some additional arrow types have been included -- for instance, `list arrows' which map between enumerable data types. The framework allows bindings in both directions, between multiple sources and multiple destinations, and the arrows can be used in conjunction with WPF data binding with reasonable ease.
-
-%TODO
-%Continue this?
 
 \section*{Special Difficulties}
 
@@ -140,7 +137,7 @@ It has become a firmly established practice when writing applications to separat
 
 Data binding presents a mechanism for bridging the gap between the separated layers by allowing the developer to specify that some value in the user interface code should be bound to a property of the model. This usually simply means that whenever the value in the model changes, the data binding framework will ensure that the value in the user interface is also updated to the same value. However, bindings can often be more complex: for instance, there could be a text box in the user interface which reflects backend data but can also be used to change it (two-way binding). Alternatively, there might be a user interface component whose value is determined by some function of a variable in the model - consider a list view which displays a filtered and sorted version of a list stored in the model. There could even be values which depend on multiple sources, or more complex many-to-many bindings.
 
-Many current languages and frameworks provide data binding features with varying levels of complexity. Java has a variety of extension libraries which allow the programmer to use data binding with Swing. Javascript too offers a number of possibilities, with a prominent example being the backbone.js MVC framework. Unfortunately, many of these are quite limited and difficult to use - backbone.js, for example, only provides one-way binding and requires a lot of boilerplate code from the programmer.
+Many current languages and frameworks provide data binding features with varying levels of complexity. Java has a variety of extension libraries (for example~\cite{bbb} and~\cite{beanfabrics}) which allow the programmer to use data binding with Swing. Javascript too offers a number of possibilities, with a prominent example being the backbone.js MVC framework~\cite{backbonejs}. Unfortunately, many of these are quite limited and difficult to use - backbone.js, for example, only provides one-way binding and requires a lot of boilerplate code from the programmer.
 
 \section{Data binding in .NET}
 
@@ -225,7 +222,7 @@ A further problem was how best to allow arrows from multiple inputs to multiple 
 
 \subsection{Simple arrows} \label{sec:simple_arrow_implementation}
 
-The first objective in implementing arrows was to get the simple function-based arrow working, as all the others derive from this. As mentioned earlier, it was implemented using the C$\sharp$ \texttt{Func<A, B>} class to hold its function. An \texttt{Invoke} method is then exposed for using the arrow.
+The first objective in implementing arrows was to get the simple function-based arrow working, as all the others derive from this. As mentioned earlier, it was implemented using the C$\sharp$ \texttt{Func<A, B>} class to hold its function. An \texttt{Invoke} method is then exposed for using the arrow. An arrow could therefore be considered a wrapper around a \texttt{Func}, but there are numerous advantages to this custom type. For instance, the \texttt{Arrow} type provides many combinators for building up more complex functions. These are then re-usable for special arrow types which may work slightly differently, as the arrow subtype need only re-implement the basic functions \texttt{arr}, \texttt{>>>} (composition) and \texttt{first} to be compatible with all the more complex operators. The simple \texttt{Func<A, B>} arrows are also only the simple case: invertible arrows, for instance, manage a function for each direction, and list arrows abstract away the lists they operate on letting the programmer concentrate on high-level operations like filtering and mapping. These advantage of implementing arrows rather than simply using \texttt{Func} objects came into play often throughout the project.
 
 While arrows can be constructed using \texttt{new Arrow<A, B>(function)}\footnote{\texttt{function} is a \texttt{Func<A, B>} here}, a simpler syntax is provided by an extension method:
 
