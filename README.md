@@ -7,3 +7,5 @@ The project aimed to provide a general-purpose data binding framework for C# usi
 All the original goals were met: a general-purpose data binding framework based on arrows has been implemented, and an extensive arrow implementation has been completed. As well as the standard operators, a series of more complex extra operators has also been added, and some additional arrow types have been included -- for instance, `list arrows' which map between enumerable data types. The framework allows bindings in both directions, between multiple sources and multiple destinations, and the arrows can be used in conjunction with WPF data binding with reasonable ease.
 
 For more information, see the dissertation (included in this repository).
+
+The main code is in the `ArrowDataBinding` folder.
